@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Work — GN Labs</title>
+<meta name="description" content="Projects across control and instrumentation engineering and software automation.">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="wrap">
+    <a href="index.html" class="mark"><span>GN</span><span class="rule"></span><span class="labs">Labs</span></a>
+    <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false"><span></span></button>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="work.html" aria-current="page">Work</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main>
+  <section class="section hero section-tight">
+    <div class="wrap">
+      <h1>Work, across both tracks.</h1>
+      <p class="lede">A running list, not a highlight reel. Pulled live from Contentful when it's configured &mdash; the entries below are what's shown otherwise.</p>
+    </div>
+  </section>
+
+  <section class="section" id="project-list">
+    <div class="wrap">
+      <div class="work-item">
+        <span class="tag">Hardware / IoT</span>
+        <div>
+          <h3>IoT multi-sensor fire alarm</h3>
+          <p>Built on an ESP32, fusing gas (MQ-2), temperature/humidity (DHT11), and flame (KY-026) readings through both threshold logic and a weighted-scoring model, so no single sensor failure trips a false negative. Notification routes across Wi-Fi, GSM SMS, and Twilio depending on what's actually available at the time, with GPS tagging on every alert and a local LCD readout for anyone standing in front of the unit.</p>
+          <span class="meta">Group research project, supervised</span>
+        </div>
+      </div>
+      <div class="work-item">
+        <span class="tag">Software</span>
+        <div>
+          <h3>Pulsar Flows &mdash; reading experience</h3>
+          <p>Ongoing frontend work on a content platform: a theme toggle scoped to article content rather than the whole page, persisted across visits, and navigation touches like a scroll-to-top control that matches the rest of the interface instead of standing out from it.</p>
+          <span class="meta">Frontend, ongoing</span>
+        </div>
+      </div>
+      <div class="work-item">
+        <span class="tag">Automation</span>
+        <div>
+          <h3>[Add a named automation project]</h3>
+          <p>Workflow and content-pipeline builds &mdash; n8n/Make orchestration, scraping, and the retry/rate-limit logic that keeps an unattended pipeline from quietly failing. Swap this entry for a specific project once you've picked which one to feature.</p>
+          <span class="meta">[Add client / project name]</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap tracks">
+      <div class="track">
+        <h2>Control &amp; Instrumentation</h2>
+        <div class="tag-row">
+          <span class="tag-chip">Structured Text / Ladder Logic</span>
+          <span class="tag-chip">CODESYS</span>
+          <span class="tag-chip">HIL simulation</span>
+          <span class="tag-chip">OPC UA</span>
+          <span class="tag-chip">Modbus</span>
+          <span class="tag-chip">ESP32</span>
+          <span class="tag-chip">PID tuning</span>
+          <span class="tag-chip">State-space control</span>
+        </div>
+      </div>
+      <div class="track">
+        <h2>Digital Systems</h2>
+        <div class="tag-row">
+          <span class="tag-chip">n8n</span>
+          <span class="tag-chip">Make</span>
+          <span class="tag-chip">Webhook / API integration</span>
+          <span class="tag-chip">Technical SEO</span>
+          <span class="tag-chip">Schema markup</span>
+          <span class="tag-chip">Python scraping</span>
+          <span class="tag-chip">Stack auditing</span>
+          <span class="tag-chip">Analytics dashboards</span>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <p>GN Labs. Built on Cloudflare Pages, content from Contentful.</p>
+  </div>
+</footer>
+
+<script src="content.js"></script>
+<script>
+  // If Contentful is configured (see content.js), replace the static list above
+  // with live entries. Until then this does nothing and the static list stands.
+  loadFromContentful('project', document.getElementById('project-list').querySelector('.wrap'), (items) => {
+    return items.map((item) => {
+      const f = item.fields || {};
+      return `<div class="work-item">
+        <span class="tag">${f.category || ''}</span>
+        <div>
+          <h3>${f.title || ''}</h3>
+          <p>${f.description || ''}</p>
+          <span class="meta">${f.meta || ''}</span>
+        </div>
+      </div>`;
+    }).join('');
+  });
+</script>
+</body>
+</html>

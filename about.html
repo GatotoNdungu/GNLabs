@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About — GN Labs</title>
+<meta name="description" content="How GN Labs ended up working across control systems and software, and what that overlap looks like in practice.">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="wrap">
+    <a href="index.html" class="mark"><span>GN</span><span class="rule"></span><span class="labs">Labs</span></a>
+    <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false"><span></span></button>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html" aria-current="page">About</a></li>
+      <li><a href="work.html">Work</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main>
+  <section class="section hero section-tight">
+    <div class="wrap">
+      <h1>Two ways of asking the same question.</h1>
+      <p class="lede">Both halves of what I do come down to: what happens when this fails, and how do I keep that from mattering.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <p>I studied Control and Instrumentation Engineering, which is a formal way of saying I spent several years learning how physical systems misbehave, and how to write logic that keeps them from doing that too often. PID loops, plant models, ladder logic, the occasional sensor that lies to you under the wrong conditions.</p>
+      <p>Somewhere alongside that, I picked up the other half of what's here: the software and automation work that keeps information moving with the same discipline. A fire alarm system doesn't care whether the failure is a burnt-out sensor or a dropped MQTT packet &mdash; it just has to still work. I've found that's just as true of an automation pipeline or a content system with no operator watching it.</p>
+      <p>Most of what interests me sits in that overlap: tracing a fault back to its actual cause instead of the first plausible one, weighing edge versus cloud the same way I'd weigh a quick script against a full service, and building in the retry logic or fallback path before something forces the issue. The tools differ. The judgment doesn't.</p>
+      <p>Outside of the two tracks above, I've also spent time on the more commercial side of digital work &mdash; site structure, search performance, that kind of thing &mdash; which is where the Digital Systems track comes from.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <h2>Background</h2>
+      <div class="timeline">
+        <div class="row">
+          <span class="when">2022 &ndash; 2026</span>
+          <div>
+            <strong>BSc, Control &amp; Instrumentation Engineering</strong> &mdash; Jomo Kenyatta University of Agriculture and Technology
+          </div>
+        </div>
+        <div class="row">
+          <span class="when">Ongoing</span>
+          <div>
+            <strong>Frontend contributor, Pulsar Flows</strong> &mdash; reading-experience improvements on a content platform
+          </div>
+        </div>
+        <div class="row">
+          <span class="when">Ongoing</span>
+          <div>
+            <strong>Research project &mdash; IoT fire alarm system</strong> &mdash; multi-sensor fusion and remote notification, supervised research
+          </div>
+        </div>
+        <div class="row">
+          <span class="when">[Add role / dates]</span>
+          <div>
+            <em>Space held for professional roles &mdash; drop in current or past positions here.</em>
+          </div>
+        </div>
+      </div>
+      <p class="resume-note">Prefer the long version? <a href="#" id="resume-link">Download the full resume (PDF)</a> &mdash; add your file and link here.</p>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <p>GN Labs. Built on Cloudflare Pages, content from Contentful.</p>
+  </div>
+</footer>
+
+<script src="content.js"></script>
+</body>
+</html>
