@@ -171,10 +171,12 @@
   }
 
   .capability-card {
-    transition: border-color 200ms ease-in-out;
+    transition: border-color 200ms ease-in-out, transform 200ms ease-in-out, box-shadow 200ms ease-in-out;
   }
   .capability-card:hover {
     border-color: var(--accent-amber);
+    transform: translateY(-3px);
+    box-shadow: 0 12px 24px -16px rgba(17,24,39,0.25);
   }
 
   .project-card {
@@ -193,17 +195,34 @@
   .article-card:hover .article-card-title {
     color: var(--accent-amber);
   }
+
+  /* Header: compacts and gains depth once the page scrolls, RaftLabs-style */
+  #siteHeader {
+    transition: height 260ms ease-in-out, box-shadow 260ms ease-in-out, background-color 260ms ease-in-out;
+  }
+  #siteHeader .header-inner {
+    transition: height 260ms ease-in-out;
+  }
+  #siteHeader.is-scrolled {
+    box-shadow: 0 1px 0 rgba(17,24,39,0.06), 0 12px 24px -18px rgba(17,24,39,0.25);
+  }
+  #siteHeader.is-scrolled .header-inner {
+    height: 4.25rem;
+  }
+  #siteHeader:not(.is-scrolled) .header-inner {
+    height: 5rem;
+  }
 </style>
 </head>
 <body class="bg-base text-ink antialiased">
 
 <!-- ============ HEADER ============ -->
-<header class="sticky top-0 z-40 bg-base/95 backdrop-blur border-b border-gray-200">
+<header id="siteHeader" class="sticky top-0 z-40 bg-base/95 backdrop-blur border-b border-gray-200">
   <div class="max-w-7xl mx-auto px-6 lg:px-10">
-    <div class="flex items-center justify-between h-20">
+    <div class="header-inner flex items-center justify-between h-20">
 
       <!-- Logo -->
-      <a href="#home" class="flex items-center gap-3 group">
+      <a href="/" class="flex items-center gap-3 group">
         <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
           <rect x="1" y="1" width="28" height="28" stroke="#111827" stroke-width="1.6"/>
           <rect x="7" y="7" width="8" height="8" fill="#D97706"/>
@@ -215,15 +234,15 @@
 
       <!-- Desktop nav -->
       <nav class="hidden lg:flex items-center gap-9" aria-label="Primary">
-        <a href="#home" class="nav-link text-sm font-semibold">Home</a>
-        <a href="#about" class="nav-link text-sm font-semibold">About</a>
-        <a href="#projects" class="nav-link text-sm font-semibold">Projects</a>
-        <a href="#practice" class="nav-link text-sm font-semibold">Practice</a>
-        <a href="#blog" class="nav-link text-sm font-semibold">Blog</a>
+        <a href="/" class="nav-link text-sm font-semibold">Home</a>
+        <a href="/about/" class="nav-link text-sm font-semibold">About</a>
+        <a href="/projects/" class="nav-link text-sm font-semibold">Projects</a>
+        <a href="/practice/" class="nav-link text-sm font-semibold">Practice</a>
+        <a href="/blog/" class="nav-link text-sm font-semibold">Blog</a>
       </nav>
 
       <div class="flex items-center gap-4">
-        <a href="#contact" class="hidden lg:inline-flex btn-primary text-sm font-bold px-5 py-2.5">
+        <a href="/contact/" class="hidden lg:inline-flex btn-primary text-sm font-bold px-5 py-2.5">
           Start Conversation
         </a>
 
@@ -248,46 +267,60 @@
     <button id="menuClose" aria-label="Close navigation menu" class="w-9 h-9 flex items-center justify-center text-2xl leading-none text-steel">&times;</button>
   </div>
   <nav class="flex flex-col px-6 py-8 gap-6" aria-label="Mobile primary">
-    <a href="#home" class="mobile-link text-lg font-semibold text-ink">Home</a>
-    <a href="#about" class="mobile-link text-lg font-semibold text-ink">About</a>
-    <a href="#projects" class="mobile-link text-lg font-semibold text-ink">Projects</a>
-    <a href="#practice" class="mobile-link text-lg font-semibold text-ink">Practice</a>
-    <a href="#blog" class="mobile-link text-lg font-semibold text-ink">Blog</a>
-    <a href="#contact" class="btn-primary text-center font-bold px-5 py-3 mt-4">Start Conversation</a>
+    <a href="/" class="mobile-link text-lg font-semibold text-ink">Home</a>
+    <a href="/about/" class="mobile-link text-lg font-semibold text-ink">About</a>
+    <a href="/projects/" class="mobile-link text-lg font-semibold text-ink">Projects</a>
+    <a href="/practice/" class="mobile-link text-lg font-semibold text-ink">Practice</a>
+    <a href="/blog/" class="mobile-link text-lg font-semibold text-ink">Blog</a>
+    <a href="/contact/" class="btn-primary text-center font-bold px-5 py-3 mt-4">Start Conversation</a>
   </nav>
 </aside>
 
 <!-- ============ HERO ============ -->
-<section id="home" class="relative overflow-hidden border-b border-gray-200 min-h-[92vh] flex items-center">
+<section id="home" class="relative overflow-hidden border-b border-gray-200 min-h-[100svh] flex items-center">
   <div class="absolute inset-0 z-0">
+    <!-- Fallback image sits underneath and is always visible. The video, if
+         it loads, layers on top and covers it — but a network hiccup, a
+         hotlink block, or a slow mobile connection can never leave an empty
+         hole here, because we only ever hide the <video>, never this <img>. -->
+    <img
+      src="https://images.pexels.com/videos/32386532/pexels-photo-32386532.jpeg?auto=compress&cs=tinysrgb&w=1920"
+      alt=""
+      class="absolute inset-0 w-full h-full object-cover"
+      aria-hidden="true">
     <video
       id="heroVideo"
-      class="w-full h-full object-cover"
-      poster="https://images.pexels.com/videos/32386532/pexels-photo-32386532.jpeg?auto=compress&cs=tinysrgb&w=1920"
-      autoplay muted loop playsinline preload="auto"
+      class="absolute inset-0 w-full h-full object-cover"
+      autoplay muted loop playsinline preload="metadata"
       aria-hidden="true">
       <source src="https://videos.pexels.com/video-files/32386532/13814827_2560_1440_100fps.mp4" type="video/mp4">
     </video>
-    <div class="absolute inset-0 bg-gradient-to-r from-graphite/95 via-graphite/80 to-graphite/40"></div>
-    <div class="absolute inset-0 bg-gradient-to-t from-graphite/70 via-transparent to-transparent"></div>
+    <div class="absolute inset-0 bg-gradient-to-r from-graphite/95 via-graphite/75 to-graphite/45"></div>
+    <div class="absolute inset-0 bg-gradient-to-t from-graphite/80 via-transparent to-transparent"></div>
   </div>
 
-  <div class="relative z-10 max-w-7xl mx-auto px-6 lg:px-10 py-20 w-full">
+  <div class="relative z-10 max-w-7xl mx-auto px-6 lg:px-10 py-24 sm:py-28 w-full">
     <div class="max-w-2xl fade-in">
-      <p class="inline-flex items-center gap-2 text-sm font-semibold text-white bg-white/10 border border-white/20 backdrop-blur px-3.5 py-1.5 mb-6">
+      <p class="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold text-white bg-white/10 border border-white/20 backdrop-blur px-3.5 py-1.5 mb-6">
         <span class="w-2 h-2 bg-amber rounded-full"></span>
         Available for new engagements
       </p>
-      <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.05] text-white">
+      <h1 class="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.15] sm:leading-[1.05] text-white">
         Engineering deterministic systems and scalable software architecture.
       </h1>
-      <p class="mt-6 text-lg text-gray-200 leading-relaxed max-w-xl">
+      <p class="mt-5 sm:mt-6 text-base sm:text-lg text-gray-300 leading-relaxed max-w-xl">
         I design and build the layer that connects PLC control logic and edge hardware to production software pipelines — from IEC 61131-3 structured text on the plant floor to the APIs and automation running in the cloud above it.
       </p>
-      <div class="mt-9 flex flex-wrap gap-4">
-        <a href="#contact" class="btn-primary font-bold px-6 py-3.5 text-sm">Start Conversation</a>
-        <a href="#projects" class="font-bold px-6 py-3.5 text-sm border-2 border-white text-white transition-colors duration-200 hover:bg-white hover:text-ink">See Projects</a>
-        <a href="#blog" class="font-bold px-6 py-3.5 text-sm text-gray-300 transition-colors duration-200 hover:text-white">Read Blog</a>
+      <div class="mt-8 sm:mt-9 flex flex-wrap gap-3 sm:gap-4">
+        <a href="/contact/" class="btn-primary font-bold px-5 sm:px-6 py-3 sm:py-3.5 text-sm">Start Conversation</a>
+        <a href="/projects/" class="font-bold px-5 sm:px-6 py-3 sm:py-3.5 text-sm border-2 border-white text-white transition-colors duration-200 hover:bg-white hover:text-ink">See Projects</a>
+        <a href="/blog/" class="font-bold px-5 sm:px-6 py-3 sm:py-3.5 text-sm text-gray-300 transition-colors duration-200 hover:text-white">Read Blog</a>
+      </div>
+
+      <div class="mt-12 sm:mt-16 flex flex-wrap items-center gap-x-8 gap-y-3 text-xs sm:text-sm text-gray-400 font-mono">
+        <span class="flex items-center gap-2"><span class="w-1.5 h-1.5 bg-techblue rounded-full status-dot"></span>Response within 1 business day</span>
+        <span class="hidden sm:inline text-gray-600">/</span>
+        <span>Remote-first, on-site by arrangement</span>
       </div>
     </div>
   </div>
@@ -297,14 +330,14 @@
 <section id="about" class="bg-alt border-b border-gray-200 py-20 lg:py-28">
   <div class="max-w-7xl mx-auto px-6 lg:px-10">
     <div class="max-w-2xl fade-in">
-      <h2 class="text-3xl lg:text-4xl font-extrabold tracking-tight text-ink">Four domains, one execution path</h2>
+      <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-ink">Four domains, one execution path</h2>
       <p class="mt-4 text-steel leading-relaxed">
         Every engagement moves through some combination of these disciplines. Systems rarely fail at one layer — they fail at the seams between them.
       </p>
     </div>
 
-    <div class="mt-14 grid sm:grid-cols-2 lg:grid-cols-4 gap-0.5 bg-gray-200 border border-gray-200">
-      <div class="capability-card bg-alt border border-transparent fade-in">
+    <div class="mt-14 grid sm:grid-cols-2 lg:grid-cols-4 gap-5 lg:gap-6">
+      <div class="capability-card bg-base border border-gray-200 fade-in">
         <div class="aspect-[4/3] overflow-hidden">
           <img src="https://images.pexels.com/photos/7174676/pexels-photo-7174676.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Close-up of a microcontroller circuit board" class="w-full h-full object-cover" loading="lazy">
         </div>
@@ -314,7 +347,7 @@
         </div>
       </div>
 
-      <div class="capability-card bg-alt border border-transparent fade-in">
+      <div class="capability-card bg-base border border-gray-200 fade-in">
         <div class="aspect-[4/3] overflow-hidden">
           <img src="https://images.pexels.com/photos/35072831/pexels-photo-35072831.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Technician operating an industrial control panel" class="w-full h-full object-cover" loading="lazy">
         </div>
@@ -324,7 +357,7 @@
         </div>
       </div>
 
-      <div class="capability-card bg-alt border border-transparent fade-in">
+      <div class="capability-card bg-base border border-gray-200 fade-in">
         <div class="aspect-[4/3] overflow-hidden">
           <img src="https://images.pexels.com/photos/18471567/pexels-photo-18471567.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Digital oscilloscope on a laboratory workbench" class="w-full h-full object-cover" loading="lazy">
         </div>
@@ -334,7 +367,7 @@
         </div>
       </div>
 
-      <div class="capability-card bg-alt border border-transparent fade-in">
+      <div class="capability-card bg-base border border-gray-200 fade-in">
         <div class="aspect-[4/3] overflow-hidden">
           <img src="https://images.pexels.com/photos/18471532/pexels-photo-18471532.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Server rack and computer workspace" class="w-full h-full object-cover" loading="lazy">
         </div>
@@ -351,8 +384,8 @@
 <section id="projects" class="py-20 lg:py-28 border-b border-gray-200">
   <div class="max-w-7xl mx-auto px-6 lg:px-10">
     <div class="flex items-end justify-between flex-wrap gap-4 fade-in">
-      <h2 class="text-3xl lg:text-4xl font-extrabold tracking-tight text-ink">Featured projects</h2>
-      <a href="#" class="btn-ghost font-semibold text-sm">Full archive</a>
+      <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-ink">Featured projects</h2>
+      <a href="/projects/" class="btn-ghost font-semibold text-sm">Full archive</a>
     </div>
 
     <div class="mt-12 grid lg:grid-cols-3 gap-6">
@@ -392,7 +425,7 @@
 <!-- ============ FEATURED ARTICLES ============ -->
 <section id="blog" class="bg-alt py-20 lg:py-28 border-b border-gray-200">
   <div class="max-w-7xl mx-auto px-6 lg:px-10">
-    <h2 class="text-3xl lg:text-4xl font-extrabold tracking-tight text-ink fade-in">Recent articles</h2>
+    <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-ink fade-in">Recent articles</h2>
 
     <div id="articleGrid" class="mt-12 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
       <!-- Populated by renderArticles() below. Cards render from the `articles` data array,
@@ -405,7 +438,7 @@
 <section id="practice" class="py-20 lg:py-28 border-b border-gray-200">
   <div class="max-w-7xl mx-auto px-6 lg:px-10 grid lg:grid-cols-5 gap-14">
     <div class="lg:col-span-2 fade-in">
-      <h2 class="text-3xl lg:text-4xl font-extrabold tracking-tight text-ink">Working principles</h2>
+      <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-ink">Working principles</h2>
       <p class="mt-5 text-steel leading-relaxed">
         Every engagement holds to the same discipline: define the failure modes before writing control logic, model before deploying to hardware, and document each system to a standard a second engineer could pick up without a handover call.
       </p>
@@ -465,11 +498,11 @@
     <div>
       <h4 class="text-white font-semibold text-sm mb-4">Quick Links</h4>
       <ul class="space-y-3 text-sm text-gray-400">
-        <li><a href="#home" class="hover:text-white transition-colors">Home</a></li>
-        <li><a href="#about" class="hover:text-white transition-colors">About</a></li>
-        <li><a href="#projects" class="hover:text-white transition-colors">Projects</a></li>
-        <li><a href="#practice" class="hover:text-white transition-colors">Practice</a></li>
-        <li><a href="#blog" class="hover:text-white transition-colors">Blog</a></li>
+        <li><a href="/" class="hover:text-white transition-colors">Home</a></li>
+        <li><a href="/about/" class="hover:text-white transition-colors">About</a></li>
+        <li><a href="/projects/" class="hover:text-white transition-colors">Projects</a></li>
+        <li><a href="/practice/" class="hover:text-white transition-colors">Practice</a></li>
+        <li><a href="/blog/" class="hover:text-white transition-colors">Blog</a></li>
       </ul>
     </div>
 
@@ -486,8 +519,8 @@
     <div>
       <h4 class="text-white font-semibold text-sm mb-4">Legal / Compliance</h4>
       <ul class="space-y-3 text-sm text-gray-400 mb-6">
-        <li><a href="#" class="hover:text-white transition-colors">Privacy Policy</a></li>
-        <li><a href="#" class="hover:text-white transition-colors">Terms of Service</a></li>
+        <li><a href="/privacy-policy/" class="hover:text-white transition-colors">Privacy Policy</a></li>
+        <li><a href="/terms-of-service/" class="hover:text-white transition-colors">Terms of Service</a></li>
       </ul>
       <div class="flex gap-4">
         <a href="#" aria-label="GitHub" class="text-gray-400 hover:text-white transition-colors">
@@ -577,19 +610,41 @@
     grid.querySelectorAll('.fade-in').forEach(el => fadeObserver.observe(el));
   }
 
-  // Hero background video: respect reduced-motion, and fall back to the
-  // poster frame quietly if the video can't load.
+  // Hero background video: sits on top of a plain <img> fallback of the same
+  // frame. If autoplay is blocked, the connection drops mid-load, or the
+  // source 404s (all more likely on mobile / on a refresh), we only ever
+  // hide the <video> element — the <img> underneath was there the whole
+  // time and simply becomes visible. Nothing goes blank.
   const heroVideo = document.getElementById('heroVideo');
   if (heroVideo) {
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (prefersReducedMotion) {
       heroVideo.removeAttribute('autoplay');
       heroVideo.pause();
+      heroVideo.style.display = 'none';
     }
     heroVideo.addEventListener('error', () => {
       heroVideo.style.display = 'none';
     });
+    heroVideo.addEventListener('stalled', () => {
+      // A stalled network fetch on mobile is exactly the scenario that used
+      // to leave a blank hero. Give it a moment, then fail over to the image
+      // if the video still hasn't produced a frame.
+      setTimeout(() => {
+        if (heroVideo.readyState < 2) heroVideo.style.display = 'none';
+      }, 4000);
+    });
   }
+  const siteHeader = document.getElementById('siteHeader');
+  function updateHeaderOnScroll() {
+    if (window.scrollY > 24) {
+      siteHeader.classList.add('is-scrolled');
+    } else {
+      siteHeader.classList.remove('is-scrolled');
+    }
+  }
+  updateHeaderOnScroll();
+  window.addEventListener('scroll', updateHeaderOnScroll, { passive: true });
 
   // Mobile drawer toggle
   const menuToggle = document.getElementById('menuToggle');
