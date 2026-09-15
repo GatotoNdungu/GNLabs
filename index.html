@@ -2,70 +2,548 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>GN Labs — Control, Technology & Systems Strategy</title>
-<meta name="description" content="GN Labs is an engineering and technology practice working across control systems, industrial technology, software, connected systems and technology strategy.">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>GN Labs — Control Systems, Industrial Data & Technology Strategy</title>
+<meta name="description" content="GN Labs designs, models and instruments industrial systems — control engineering, telemetry, software and the technology strategy that connects them.">
 <link rel="canonical" href="https://gnlabs.site">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="GN Labs">
+<meta property="og:title" content="GN Labs — Control Systems, Industrial Data & Technology Strategy">
+<meta property="og:description" content="Control engineering, telemetry, software and the technology strategy that connects them.">
+<meta property="og:url" content="https://gnlabs.site">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="GN Labs — Control Systems, Industrial Data & Technology Strategy">
+<meta name="twitter:description" content="Control engineering, telemetry, software and the technology strategy that connects them.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='13' fill='%23151b25'/%3E%3Crect x='10' y='10' width='44' height='44' rx='10' fill='none' stroke='%23d5aa3a' stroke-width='2'/%3E%3Ctext x='32' y='40' text-anchor='middle' font-family='Georgia,serif' font-size='20' font-weight='700' fill='%23d5aa3a'%3EGN%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500,600,700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Serif:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"ProfessionalService","name":"GN Labs","url":"https://gnlabs.site","email":"contact@gnlabs.site","areaServed":"Worldwide","address":{"@type":"PostalAddress","addressLocality":"Nairobi","addressCountry":"KE"},"sameAs":["https://www.linkedin.com/company/gnlabs","https://github.com/gnlabs"]}
+</script>
 <style>
 :root{
-  --navy:#151b25;--navy2:#1c2531;--navy3:#232d38;
-  --paper:#fbfbfa;--paper2:#f3f4f2;--white:#fff;
-  --ink:#18212a;--body:#56616c;--muted:#7a858e;--line:#e1e4e6;
-  --gold:#c59b32;--gold2:#d7b45a;--darkline:rgba(255,255,255,.12);
-  --serif:'Source Serif 4',Georgia,serif;--sans:'Inter',system-ui,sans-serif;
+  --navy:#151b25; --navy2:#1d2631; --navy3:#232d38;
+  --paper:#fbfbfa; --paper2:#f2f2f0; --white:#fff;
+  --ink:#18212a; --body:#4d5860; --muted:#727d85; --line:#e1e4e6; --line-dark:rgba(255,255,255,.14);
+  --gold:#c59b32; --gold-soft:#d7b45a; --gold-deep:#8a6a1f;
+  --serif:'IBM Plex Serif',Georgia,serif; --sans:'IBM Plex Sans',Arial,sans-serif;
   --max:1180px;
+  --pad-section:clamp(64px,8vw,112px);
+  --radius:3px;
+  --ease:cubic-bezier(.4,0,.2,1);
 }
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:13px;line-height:1.65;-webkit-font-smoothing:antialiased}a{text-decoration:none;color:inherit}img{display:block;max-width:100%}button{font:inherit}.wrap{width:min(var(--max),calc(100% - 56px));margin:auto}.eyebrow,.section-label,.micro{font-size:9.5px;line-height:1;letter-spacing:.16em;text-transform:uppercase;font-weight:700}.section-label{color:var(--gold);margin-bottom:14px}.section-title{font-family:var(--serif);font-size:36px;line-height:1.15;letter-spacing:-.02em;font-weight:500;margin:0;color:var(--ink)}.body-copy{font-size:13px;color:var(--body);line-height:1.8}
-/* HEADER */
-.site-header{height:68px;position:sticky;top:0;z-index:100;background:rgba(21,27,37,.96);backdrop-filter:blur(16px);border-bottom:1px solid rgba(255,255,255,.08)}.header-inner{height:100%;display:flex;align-items:center;justify-content:space-between}.brand{display:flex;align-items:center;gap:10px}.brand-mark{width:29px;height:29px}.brand-name{font-size:12px;letter-spacing:.17em;text-transform:uppercase;font-weight:600;color:#f4f5f6}.nav{display:flex;gap:30px;margin-left:70px}.nav a{font-size:12px;color:#aeb7c1;padding:25px 0 21px;border-bottom:1px solid transparent}.nav a:hover,.nav a.active{color:#fff;border-bottom-color:var(--gold2)}.header-actions{display:flex;align-items:center;gap:13px}.header-cta{font-size:11px;font-weight:600;padding:8px 15px;border:1px solid rgba(255,255,255,.7);color:#fff;min-height:34px}.header-cta:hover{background:#fff;color:var(--navy)}.menu{display:none;background:none;border:0;padding:7px}.menu span{display:block;width:19px;height:1.5px;background:#fff;margin:4px}
-/* HERO */
-.hero{position:relative;min-height:650px;overflow:hidden;background:linear-gradient(116deg,#131a23 0%,#18212c 54%,#212c37 100%);color:#fff}.hero:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 76% 48%,rgba(197,155,50,.12),transparent 30%),linear-gradient(90deg,rgba(15,20,28,.25),transparent 58%);pointer-events:none}.hero-grid{min-height:650px;display:grid;grid-template-columns:48% 52%;align-items:center;position:relative;z-index:2}.hero-copy{padding:76px 0}.hero .eyebrow{display:inline-flex;color:var(--gold2);border-left:2px solid var(--gold);padding-left:11px;margin-bottom:21px}.hero h1{font-family:var(--serif);font-size:clamp(40px,5vw,61px);font-weight:500;line-height:1.02;letter-spacing:-.032em;max-width:610px;margin:0}.hero h1 span{color:#fff}.hero h1 em{font-style:normal;color:var(--gold2)}.hero-lead{max-width:485px;margin:24px 0 30px;color:#b8c1c9;font-size:14px;line-height:1.8}.hero-actions{display:flex;gap:11px}.btn{display:inline-flex;align-items:center;justify-content:center;min-height:38px;padding:9px 16px;font-size:11.5px;font-weight:600;transition:.2s ease}.btn-gold{background:var(--gold);border:1px solid var(--gold);color:#171717}.btn-gold:hover{background:var(--gold2);border-color:var(--gold2)}.btn-ghost{border:1px solid rgba(255,255,255,.3);color:#fff}.btn-ghost:hover{border-color:#fff;background:rgba(255,255,255,.05)}
-.hero-media{height:650px;position:relative;display:flex;align-items:stretch;justify-content:flex-end}.hero-media:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#18212c 0%,rgba(24,33,44,.72) 8%,rgba(24,33,44,.10) 32%,rgba(24,33,44,0) 70%),linear-gradient(0deg,rgba(18,25,34,.3),transparent 35%,rgba(18,25,34,.12));z-index:2;pointer-events:none}.hero-photo{width:100%;height:100%;object-fit:cover;object-position:center;filter:saturate(.68) contrast(1.03);-webkit-mask-image:linear-gradient(90deg,transparent 0%,black 18%,black 100%);mask-image:linear-gradient(90deg,transparent 0%,black 18%,black 100%)}.hero-caption{position:absolute;z-index:3;right:0;bottom:28px;display:flex;align-items:center;gap:10px;font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:rgba(255,255,255,.6)}.hero-caption:before{content:"";width:28px;height:1px;background:var(--gold)}
-/* STRIP */
-.signal-strip{background:#fff;border-bottom:1px solid var(--line)}.signal-grid{display:grid;grid-template-columns:repeat(4,1fr)}.signal{min-height:108px;padding:25px 24px 22px;border-left:1px solid var(--line)}.signal:first-child{border-left:0}.signal-no{font-size:9px;color:#a1a9af;letter-spacing:.1em}.signal h3{font-family:var(--serif);font-size:16px;font-weight:600;margin:5px 0 2px}.signal p{font-size:10.5px;color:#7b858e;margin:0;line-height:1.5}
-/* FEATURE INTRO */
-.feature{padding:100px 0 92px;background:var(--paper)}.feature-grid{display:grid;grid-template-columns:42% 58%;gap:72px;align-items:center}.feature-copy .section-title{max-width:450px}.feature-copy .body-copy{max-width:48ch;margin:19px 0 25px}.quiet-list{border-top:1px solid var(--line);max-width:500px}.quiet-row{display:grid;grid-template-columns:31px 1fr;gap:12px;padding:13px 0;border-bottom:1px solid var(--line)}.quiet-row b{font-size:9px;color:var(--gold);padding-top:2px}.quiet-row strong{font-size:11.5px;color:#28323c}.quiet-row span{display:block;font-size:10.5px;color:#7b858d;margin-top:2px}
-.feature-media{height:470px;position:relative}.feature-image{width:82%;height:100%;margin-left:auto;object-fit:cover;object-position:center;filter:saturate(.72);clip-path:polygon(9% 0,100% 0,100% 100%,0 100%,0 10%);}.feature-image:after{content:""}.feature-frame{position:absolute;left:0;bottom:28px;width:45%;height:180px;border:1px solid rgba(197,155,50,.55);padding:18px;background:rgba(21,27,37,.93);color:#fff}.feature-frame .micro{color:#89939c;margin-bottom:14px}.feature-frame strong{display:block;font-family:var(--serif);font-size:22px;line-height:1.2;font-weight:500}.feature-frame span{display:block;color:#9ba5ae;font-size:10.5px;line-height:1.6;margin-top:9px}
-/* MOSAIC */
-.mosaic-section{background:#fff;border-top:1px solid var(--line);padding:88px 0 96px}.mosaic-head{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:end;margin-bottom:40px}.mosaic-head .body-copy{max-width:44ch}.mosaic{display:grid;grid-template-columns:1.28fr .72fr;gap:16px}.mosaic-main{height:470px;position:relative;overflow:hidden;background:#202832}.mosaic-main img{width:100%;height:100%;object-fit:cover;filter:saturate(.72);transition:transform .7s ease}.mosaic-main:hover img,.mosaic-small:hover img{transform:scale(1.035)}.mosaic-main:after,.mosaic-small:after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(8,12,16,.75),transparent 52%)}.mosaic-label{position:absolute;left:26px;bottom:25px;z-index:2;color:#fff;max-width:440px}.mosaic-label .micro{color:var(--gold2);margin-bottom:10px}.mosaic-label h3{font-family:var(--serif);font-size:28px;line-height:1.15;font-weight:500;margin:0 0 7px}.mosaic-label p{font-size:11px;color:#c1c8ce;margin:0;max-width:46ch}.mosaic-side{display:grid;grid-template-rows:1fr 1fr;gap:16px}.mosaic-small{position:relative;overflow:hidden;min-height:227px;background:#202832}.mosaic-small img{width:100%;height:100%;object-fit:cover;filter:saturate(.7);transition:transform .7s ease}.mosaic-small .small-label{position:absolute;left:20px;bottom:19px;z-index:2;color:#fff}.small-label .micro{color:var(--gold2);margin-bottom:6px}.small-label strong{font-family:var(--serif);font-size:19px;font-weight:500}
-/* PRACTICE */
-.practice{padding:92px 0;background:var(--paper2)}.practice-head{display:flex;justify-content:space-between;align-items:end;margin-bottom:37px}.practice-head .body-copy{max-width:42ch}.practice-grid{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}.practice-item{min-height:230px;padding:24px 23px;border-left:1px solid var(--line);position:relative}.practice-item:first-child{border-left:0}.practice-no{font-size:9px;color:#9da5ab;letter-spacing:.08em}.practice-item h3{font-family:var(--serif);font-size:19px;font-weight:600;margin:24px 0 8px}.practice-item p{font-size:11.5px;line-height:1.7;color:#737e87;margin:0;max-width:28ch}.practice-item a{position:absolute;left:23px;bottom:23px;font-size:10px;color:#9c7820;font-weight:700}.practice-item:hover{background:#f8f8f6}
-/* WORK */
-.work{padding:96px 0;background:#fff}.work-head{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:end;margin-bottom:38px}.work-head .body-copy{max-width:45ch}.work-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.work-card{background:#fff;border:1px solid var(--line);overflow:hidden}.work-image{height:205px;overflow:hidden;position:relative}.work-image img{width:100%;height:100%;object-fit:cover;filter:saturate(.65);transition:transform .65s ease}.work-card:hover .work-image img{transform:scale(1.04)}.work-image:after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(15,21,28,.35),transparent 60%)}.work-body{padding:18px 19px 20px}.work-meta{display:flex;justify-content:space-between;color:#9aa2a8;font-size:8.5px;letter-spacing:.08em;text-transform:uppercase}.work-body h3{font-family:var(--serif);font-size:18px;line-height:1.25;font-weight:600;margin:10px 0 7px}.work-body p{font-size:11px;color:#737d86;line-height:1.65;margin:0}.work-link{display:inline-block;margin-top:15px;font-size:9.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#9a7720}
-/* POV */
-.pov{padding:96px 0;background:var(--navy);color:#fff;position:relative;overflow:hidden}.pov:before{content:"";position:absolute;right:-180px;top:-220px;width:560px;height:560px;border:1px solid rgba(197,155,50,.11);border-radius:50%}.pov-grid{display:grid;grid-template-columns:39% 61%;gap:70px;position:relative;z-index:1}.pov .section-title{color:#fff;max-width:420px}.pov .body-copy{color:#9faab3;max-width:46ch;margin-top:18px}.pov-list{display:grid;grid-template-columns:repeat(3,1fr);gap:0}.pov-item{padding:0 22px;border-left:1px solid var(--darkline)}.pov-item:first-child{border-left:0;padding-left:0}.pov-no{font-family:var(--serif);font-size:27px;color:#8d98a1}.pov-item h3{font-family:var(--serif);font-size:18px;font-weight:500;line-height:1.25;margin:10px 0 7px}.pov-item p{font-size:10.8px;color:#89949e;line-height:1.7;margin:0}
-/* CTA */
-.cta{background:#fff;padding:73px 0;border-bottom:1px solid var(--line)}.cta-inner{display:flex;align-items:center;justify-content:space-between;gap:35px}.cta h2{font-family:var(--serif);font-size:31px;font-weight:500;margin:0}.cta p{font-size:11.5px;color:#7a848d;margin:6px 0 0}.cta .btn-gold{min-width:170px}
-/* FOOTER */
-footer{background:#202833;color:#9aa4ad;padding:54px 0 24px}.footer-grid{display:grid;grid-template-columns:1.45fr 1fr 1.1fr 1fr;gap:38px;padding-bottom:38px;border-bottom:1px solid var(--darkline)}.footer-brand p{font-size:11.5px;max-width:34ch;line-height:1.7;color:#7e8992;margin:13px 0 0}.footer-title{font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:#f0f2f3;font-weight:600;margin-bottom:15px}.footer-links{display:grid;gap:9px}.footer-links a,.footer-links span{font-size:11.5px;color:#9aa4ad}.footer-links a:hover{color:#fff}.footer-bottom{display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap;padding-top:21px;font-size:10px;color:#69747e}
-/* MOBILE */
-.mobile-nav{position:fixed;inset:0;z-index:200;background:#151b25;transform:translateX(100%);transition:transform .3s ease;padding:20px;display:flex;flex-direction:column}.mobile-nav.open{transform:translateX(0)}.mobile-top{display:flex;justify-content:space-between;align-items:center}.mobile-close{background:none;border:0;color:#fff;font-size:28px;line-height:1}.mobile-links{display:grid;margin-top:48px}.mobile-links a{font-family:var(--serif);font-size:26px;padding:14px 0;border-bottom:1px solid var(--darkline)}.mobile-links a:hover{color:var(--gold2)}.mobile-nav .btn{align-self:flex-start;margin-top:28px}
-@media(max-width:920px){.nav,.header-cta{display:none}.menu{display:block}.hero-grid{grid-template-columns:1fr;min-height:0}.hero{min-height:0}.hero-copy{padding:76px 0 35px}.hero-media{height:360px;margin:0 -28px}.hero-photo{-webkit-mask-image:linear-gradient(180deg,transparent 0%,black 25%,black 100%);mask-image:linear-gradient(180deg,transparent 0%,black 25%,black 100%)}.hero-media:after{background:linear-gradient(180deg,#18212c 0%,rgba(24,33,44,.15) 28%,rgba(24,33,44,0) 55%),linear-gradient(0deg,rgba(18,25,34,.35),transparent)}.feature-grid,.pov-grid{grid-template-columns:1fr}.feature-media{height:420px}.pov-list{margin-top:25px}.practice-grid{grid-template-columns:1fr 1fr}.practice-item:nth-child(3){border-left:0}.mosaic{grid-template-columns:1fr}.mosaic-side{grid-template-columns:1fr 1fr;grid-template-rows:none}.mosaic-small{min-height:230px}.signal-grid{grid-template-columns:1fr 1fr}.signal:nth-child(3){border-left:0;border-top:1px solid var(--line)}.signal:nth-child(4){border-top:1px solid var(--line)}.work-grid{grid-template-columns:1fr 1fr}.footer-grid{grid-template-columns:1.4fr 1fr 1fr}.footer-grid>div:last-child{grid-column:2/-1}.wrap{width:min(var(--max),calc(100% - 40px))}}
-@media(max-width:640px){body{font-size:12.5px}.wrap{width:calc(100% - 32px)}.site-header{height:62px}.brand-mark{width:27px;height:27px}.hero-copy{padding:58px 0 20px}.hero h1{font-size:39px;max-width:430px}.hero-lead{font-size:13px;margin-top:19px}.hero-actions{flex-wrap:wrap}.hero-media{height:300px;margin:0 -16px}.hero-caption{right:16px;bottom:17px}.signal-grid{grid-template-columns:1fr}.signal{border-left:0;border-top:1px solid var(--line);min-height:0;padding:19px 18px}.signal:first-child{border-top:0}.feature,.mosaic-section,.practice,.work,.pov{padding:70px 0}.feature-grid{gap:45px}.feature-media{height:350px}.feature-image{width:89%;clip-path:polygon(12% 0,100% 0,100% 100%,0 100%,0 13%)}.feature-frame{width:62%;height:auto;min-height:145px;bottom:16px;padding:14px}.feature-frame strong{font-size:19px}.mosaic-head,.work-head{grid-template-columns:1fr;gap:17px}.mosaic{gap:10px}.mosaic-main{height:360px}.mosaic-side{grid-template-columns:1fr;gap:10px}.mosaic-small{min-height:220px}.practice-head{display:block;margin-bottom:28px}.practice-head .body-copy{margin-top:15px}.practice-grid{grid-template-columns:1fr}.practice-item{border-left:0;border-top:1px solid var(--line);min-height:190px}.practice-item:first-child{border-top:0}.practice-item:nth-child(3){border-left:0}.work-grid{grid-template-columns:1fr}.work-image{height:220px}.pov-list{grid-template-columns:1fr;gap:0}.pov-item{border-left:0;border-top:1px solid var(--darkline);padding:20px 0}.pov-item:first-child{border-top:0;padding-top:0}.cta{padding:58px 0}.cta-inner{display:block}.cta .btn-gold{margin-top:22px}.footer-grid{grid-template-columns:1fr 1fr;gap:30px}.footer-grid>div:last-child{grid-column:auto}.footer-brand{grid-column:1/-1}.footer-bottom{display:grid;gap:7px}.mobile-links a{font-size:24px}}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+body.nav-open{overflow:hidden}
+a{text-decoration:none;color:inherit}
+button{font:inherit;cursor:pointer}
+img,svg{display:block;max-width:100%}
+.wrap{width:min(var(--max),calc(100% - 56px));margin:auto}
+.copy{font-size:16px;color:var(--body);line-height:1.75}
+.reading-time{font-size:13px;color:var(--muted)}
+
+.skip-link{position:absolute;left:-999px;top:auto;background:var(--gold);color:#171310;padding:10px 16px;z-index:1000;font-weight:600;font-size:13px}
+.skip-link:focus{left:16px;top:16px}
+
+a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:2px solid var(--gold-soft);outline-offset:3px}
+.site-header a:focus-visible{outline-offset:-2px}
+
+h1,h2,h3,h4{font-family:var(--serif);font-weight:500;color:var(--ink);margin:0}
+.h1{font-size:clamp(40px,5vw,60px);line-height:1.08;letter-spacing:-.01em}
+.h2{font-size:clamp(30px,3.6vw,42px);line-height:1.14;letter-spacing:-.008em}
+.h3{font-size:22px;line-height:1.28}
+
+.site-header{position:sticky;top:0;z-index:100;background:rgba(21,27,37,.97);backdrop-filter:blur(14px);border-bottom:1px solid var(--line-dark)}
+.header-inner{height:72px;display:flex;align-items:center;justify-content:space-between}
+.brand{display:flex;align-items:center;gap:10px}
+.brand-mark{width:30px;height:30px;flex:none}
+.brand-name{font-family:var(--serif);font-size:17px;font-weight:500;color:#f4f5f6}
+.nav{display:flex;gap:8px;margin-left:56px}
+.nav a{font-size:15px;color:#c3cad0;padding:9px 14px;border-radius:var(--radius);transition:color .18s var(--ease),background .18s var(--ease)}
+.nav a:hover{color:#fff;background:rgba(255,255,255,.06)}
+.nav a.active{color:#fff}
+.nav a.active::after{content:"";display:block;height:2px;background:var(--gold-soft);margin-top:9px;border-radius:2px}
+.header-actions{display:flex;align-items:center;gap:12px}
+.menu{display:none;background:transparent;border:0;padding:8px;color:#fff}
+.menu svg{width:22px;height:22px}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:46px;padding:0 22px;font-size:15px;font-weight:600;border-radius:var(--radius);border:1px solid transparent;transition:background .18s var(--ease),border-color .18s var(--ease),color .18s var(--ease)}
+.btn-primary{background:var(--gold);border-color:var(--gold);color:#171310}
+.btn-primary:hover{background:var(--gold-soft);border-color:var(--gold-soft)}
+.btn-outline-light{border-color:rgba(255,255,255,.4);color:#fff}
+.btn-outline-light:hover{border-color:#fff;background:rgba(255,255,255,.07)}
+
+.hero{position:relative;overflow:hidden;background:var(--navy);color:#fff}
+.hero-grid{display:grid;grid-template-columns:52% 48%;align-items:center;min-height:640px}
+.hero-copy{padding:96px 0 80px}
+.hero-copy p.lede{max-width:46ch}
+.hero .h1{color:#fff;max-width:600px}
+.hero-copy .copy{color:#b9c1c8;margin:22px 0 32px}
+.hero-actions{display:flex;flex-wrap:wrap;gap:12px}
+.hero-meta{display:flex;gap:28px;margin-top:44px;padding-top:28px;border-top:1px solid var(--line-dark)}
+.hero-meta div strong{display:block;font-family:var(--serif);font-size:22px;color:#fff;font-weight:500}
+.hero-meta div span{font-size:13px;color:#8b96a0}
+.hero-visual{height:100%;display:flex;align-items:center;justify-content:center;padding:40px 0}
+.gauge-caption{font-size:13px;color:#8b96a0;text-align:center;margin-top:14px}
+
+.capabilities{background:var(--white);border-bottom:1px solid var(--line)}
+.cap-grid{display:grid;grid-template-columns:repeat(4,1fr)}
+.cap{padding:32px 26px;border-left:1px solid var(--line)}
+.cap:first-child{border-left:0}
+.cap svg{width:26px;height:26px;color:var(--gold-deep);margin-bottom:16px}
+.cap h3{font-size:17px;font-weight:600;margin-bottom:6px}
+.cap p{font-size:14px;color:var(--muted);line-height:1.6;margin:0}
+
+.manifesto{padding:var(--pad-section) 0;background:var(--paper)}
+.manifesto-grid{display:grid;grid-template-columns:44% 56%;gap:64px;align-items:center}
+.manifesto-copy .copy{max-width:48ch;margin:18px 0 30px}
+.principle-list{display:grid;gap:0;border-top:1px solid var(--line)}
+.principle{display:flex;gap:16px;padding:18px 0;border-bottom:1px solid var(--line)}
+.principle svg{width:20px;height:20px;flex:none;margin-top:3px;color:var(--gold-deep)}
+.principle strong{display:block;font-size:15.5px;color:var(--ink);font-weight:600}
+.principle span{display:block;font-size:14px;color:var(--muted);margin-top:3px;line-height:1.6}
+.manifesto-visual{background:var(--navy);border-radius:4px;padding:28px}
+
+.editorial{background:var(--white);padding:var(--pad-section) 0;border-top:1px solid var(--line)}
+.editorial-head{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:end;margin-bottom:40px}
+.editorial-head .copy{max-width:44ch}
+.editorial-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.edit-tile{background:var(--navy2);border-radius:4px;padding:30px 26px 26px;color:#fff;display:flex;flex-direction:column;min-height:300px}
+.edit-tile .tile-art{flex:1;display:flex;align-items:center;justify-content:center;margin-bottom:18px}
+.edit-tile svg{width:100%;height:auto;max-height:120px}
+.edit-tile h3{color:#fff;font-size:19px;margin-bottom:8px}
+.edit-tile p{font-size:14px;color:#aab4bc;line-height:1.65;margin:0}
+
+.practice{padding:var(--pad-section) 0;background:var(--paper2)}
+.practice-top{display:flex;justify-content:space-between;align-items:end;gap:50px;margin-bottom:36px;flex-wrap:wrap}
+.practice-top .copy{max-width:44ch}
+.practice-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line)}
+.practice-item{background:var(--paper2);min-height:250px;padding:28px 24px;display:flex;flex-direction:column;transition:background .18s var(--ease)}
+.practice-item:hover{background:var(--white)}
+.practice-item svg{width:24px;height:24px;color:var(--gold-deep);margin-bottom:20px}
+.practice-item h3{font-size:19px;margin-bottom:10px}
+.practice-item p{font-size:14px;line-height:1.7;color:var(--muted);margin:0;flex:1}
+.practice-item a{font-size:14px;color:var(--gold-deep);font-weight:600;margin-top:16px;display:inline-block}
+.practice-item a:hover{text-decoration:underline}
+
+.projects{background:var(--white);padding:var(--pad-section) 0}
+.projects-head{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:end;margin-bottom:40px}
+.projects-head .copy{max-width:44ch}
+.project-list{display:grid;gap:1px;background:var(--line);border:1px solid var(--line)}
+.project{background:var(--white);display:grid;grid-template-columns:200px 1fr auto;gap:28px;align-items:center;padding:26px 28px}
+.project-mark{width:56px;height:56px;border:1px solid var(--line);border-radius:4px;display:flex;align-items:center;justify-content:center;background:var(--paper2)}
+.project-mark svg{width:26px;height:26px;color:var(--gold-deep)}
+.project-tag{font-size:13px;color:var(--muted);margin-top:10px}
+.project h3{font-size:19px;margin-bottom:6px}
+.project p{font-size:14.5px;color:var(--body);line-height:1.65;margin:0 0 8px;max-width:56ch}
+.project-outcome{font-size:14px;color:var(--gold-deep);font-weight:600}
+.project-link{font-size:14px;font-weight:600;color:var(--ink);white-space:nowrap;border:1px solid var(--line);border-radius:var(--radius);padding:10px 16px;transition:border-color .18s var(--ease)}
+.project-link:hover{border-color:var(--gold-deep)}
+
+.journal{background:var(--navy);color:#fff;padding:var(--pad-section) 0}
+.journal-head{display:flex;justify-content:space-between;align-items:end;gap:40px;margin-bottom:36px;flex-wrap:wrap}
+.journal-head .h2{color:#fff}
+.journal-head .copy{color:#9da8b1;max-width:42ch}
+.journal-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.journal-item{background:var(--navy2);border-radius:4px;padding:26px;display:flex;flex-direction:column;min-height:200px;transition:background .18s var(--ease)}
+.journal-item:hover{background:var(--navy3)}
+.journal-item h3{color:#fff;font-size:18px;line-height:1.32;margin-bottom:10px}
+.journal-item p{font-size:14px;color:#aab4bc;line-height:1.65;margin:0 0 18px;flex:1}
+.journal-item .reading-time{color:#7c8791}
+
+.perspective{padding:var(--pad-section) 0;background:var(--paper)}
+.perspective-grid{display:grid;grid-template-columns:40% 60%;gap:64px}
+.perspective .copy{max-width:44ch;margin-top:18px}
+.perspective-list{display:grid;grid-template-columns:repeat(3,1fr);gap:32px}
+.perspective-item h3{font-size:18px;margin-bottom:8px}
+.perspective-item p{font-size:14px;color:var(--muted);line-height:1.7;margin:0}
+.perspective-item svg{width:22px;height:22px;color:var(--gold-deep);margin-bottom:14px}
+
+.contact{background:var(--white);border-top:1px solid var(--line);padding:var(--pad-section) 0}
+.contact-grid{display:grid;grid-template-columns:.85fr 1.15fr;gap:64px}
+.contact-info h2{margin-bottom:14px}
+.contact-info .copy{max-width:40ch;margin-bottom:32px}
+.contact-detail{display:flex;flex-direction:column;gap:16px;margin-bottom:32px}
+.contact-detail div{display:flex;gap:12px;align-items:flex-start;font-size:14.5px;color:var(--body)}
+.contact-detail svg{width:18px;height:18px;color:var(--gold-deep);flex:none;margin-top:2px}
+.contact-detail a{color:var(--ink);font-weight:600}
+.contact-detail a:hover{color:var(--gold-deep)}
+.social-inline{display:flex;gap:8px}
+.social-inline a{width:38px;height:38px;border:1px solid var(--line);border-radius:var(--radius);display:grid;place-items:center;color:var(--body);transition:.18s var(--ease)}
+.social-inline a:hover{border-color:var(--gold-deep);color:var(--gold-deep)}
+.social-inline svg{width:16px;height:16px}
+
+.contact-form{background:var(--paper2);border:1px solid var(--line);border-radius:6px;padding:32px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.form-group{display:flex;flex-direction:column;gap:7px;margin-bottom:18px}
+.form-group label{font-size:13.5px;font-weight:600;color:var(--ink)}
+.form-group .hint{font-size:12.5px;color:var(--muted);font-weight:400}
+.form-group input,.form-group select,.form-group textarea{font-family:var(--sans);font-size:15px;padding:12px 14px;border:1px solid var(--line);border-radius:4px;background:var(--white);color:var(--ink);transition:border-color .18s var(--ease),box-shadow .18s var(--ease);width:100%}
+.form-group input:hover,.form-group select:hover,.form-group textarea:hover{border-color:#b9c0c5}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--gold-deep);box-shadow:0 0 0 3px rgba(197,155,50,.15);outline:none}
+.form-group textarea{resize:vertical;min-height:120px}
+.form-foot{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:6px;flex-wrap:wrap}
+.form-foot p{font-size:12.5px;color:var(--muted);margin:0;max-width:32ch}
+.form-status{font-size:13.5px;margin-top:14px;padding:10px 12px;border-radius:4px;display:none}
+.form-status.show{display:block}
+.form-status.ok{background:#eef6ec;color:#2f6b34;border:1px solid #cfe5cc}
+
+footer{background:var(--navy);color:#9aa4ad;padding:64px 0 26px}
+.footer-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:40px;padding-bottom:40px;border-bottom:1px solid var(--line-dark)}
+.footer-brand .brand-name{color:#fff}
+.footer-brand p{font-size:14.5px;max-width:36ch;line-height:1.7;color:#8b95a0;margin:16px 0 0}
+.footer-social{display:flex;gap:8px;margin-top:18px}
+.footer-social a{width:34px;height:34px;border:1px solid var(--line-dark);border-radius:var(--radius);display:grid;place-items:center;color:#aeb7be;transition:.18s var(--ease)}
+.footer-social a:hover{border-color:var(--gold);color:var(--gold-soft)}
+.footer-social svg{width:16px;height:16px}
+.footer-title{font-size:14px;font-weight:600;color:#f0f2f3;margin-bottom:16px}
+.footer-links{display:grid;gap:11px}
+.footer-links a,.footer-links span{font-size:14.5px;color:#9aa4ad}
+.footer-links a:hover{color:#fff}
+.footer-bottom{display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap;padding-top:22px;font-size:13px;color:#69747e}
+.footer-bottom a{color:#8b95a0}
+.footer-bottom a:hover{color:#fff}
+
+.mobile-nav{position:fixed;inset:0;z-index:300;background:var(--navy);color:#fff;transform:translateX(100%);transition:transform .28s var(--ease);display:flex;flex-direction:column;padding:18px 24px max(22px,env(safe-area-inset-bottom))}
+.mobile-nav.open{transform:translateX(0)}
+.mobile-top{display:flex;align-items:center;justify-content:space-between}
+.mobile-close{width:42px;height:42px;border:1px solid rgba(255,255,255,.2);background:transparent;color:#fff;border-radius:var(--radius);display:grid;place-items:center}
+.mobile-close svg{width:20px;height:20px}
+.mobile-links{display:grid;margin-top:40px;border-top:1px solid var(--line-dark)}
+.mobile-links a{font-family:var(--serif);font-size:20px;font-weight:500;color:#fff;padding:18px 2px;border-bottom:1px solid var(--line-dark)}
+.mobile-links a:hover{color:var(--gold-soft)}
+.mobile-contact{margin-top:auto;padding-top:30px}
+.mobile-contact p{font-size:14px;color:#929da6;margin:0 0 16px}
+.mobile-nav .btn{width:100%}
+
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}.needle,.pulse-dot{animation:none !important}}
+
+@media(max-width:980px){
+  .wrap{width:min(var(--max),calc(100% - 40px))}
+  .nav,.header-actions .btn{display:none}
+  .menu{display:block}
+  .hero-grid{grid-template-columns:1fr;min-height:0}
+  .hero-copy{padding:56px 0 40px;text-align:left}
+  .hero-visual{padding:0 0 40px}
+  .hero-meta{flex-wrap:wrap;row-gap:18px}
+  .cap-grid{grid-template-columns:1fr 1fr}
+  .cap:nth-child(3){border-left:0}
+  .cap:nth-child(3),.cap:nth-child(4){border-top:1px solid var(--line)}
+  .manifesto-grid,.perspective-grid,.editorial-head,.projects-head,.contact-grid{grid-template-columns:1fr;gap:32px}
+  .editorial-grid{grid-template-columns:1fr 1fr}
+  .practice-grid{grid-template-columns:1fr 1fr}
+  .project{grid-template-columns:1fr;text-align:left;gap:16px}
+  .project-link{justify-self:start}
+  .journal-grid{grid-template-columns:1fr 1fr}
+  .perspective-list{grid-template-columns:1fr}
+  .footer-grid{grid-template-columns:1fr 1fr}
+  .footer-brand{grid-column:1/-1}
+  .form-row{grid-template-columns:1fr}
+}
+@media(max-width:640px){
+  body{font-size:15px}
+  .wrap{width:calc(100% - 32px)}
+  .header-inner{height:64px}
+  .brand-mark{width:27px;height:27px}
+  .manifesto,.editorial,.practice,.projects,.journal,.perspective,.contact{padding:56px 0}
+  .cap-grid,.editorial-grid,.journal-grid{grid-template-columns:1fr}
+  .cap:nth-child(n){border-left:0 !important;border-top:1px solid var(--line)}
+  .cap:first-child{border-top:0}
+  .practice-grid{grid-template-columns:1fr}
+  .contact-form{padding:22px}
+  .footer-grid{grid-template-columns:1fr 1fr;gap:28px}
+  .footer-bottom{display:grid;gap:8px;text-align:left}
+}
 </style>
 </head>
 <body>
+<a class="skip-link" href="#main">Skip to content</a>
 <header class="site-header"><div class="wrap header-inner">
-  <a class="brand" href="/" aria-label="GN Labs home"><svg class="brand-mark" viewBox="0 0 30 30" fill="none"><rect x="1" y="1" width="28" height="28" rx="6" stroke="#d5aa3a" stroke-width="1.3"/><text x="15" y="19.5" text-anchor="middle" font-family="Georgia,serif" font-size="12" font-weight="700" fill="#d5aa3a">GN</text></svg><span class="brand-name">Labs</span></a>
-  <nav class="nav" aria-label="Primary"><a href="/" class="active">Home</a><a href="/about">About</a><a href="/projects">Projects</a><a href="/practice">Practice</a><a href="/blog">Blog</a></nav>
-  <div class="header-actions"><a class="header-cta" href="#contact">Get in Touch</a><button class="menu" id="menu" aria-label="Open menu"><span></span><span></span><span></span></button></div>
+<a class="brand" href="/" aria-label="GN Labs home"><svg class="brand-mark" viewBox="0 0 30 30" fill="none" aria-hidden="true"><rect x="1" y="1" width="28" height="28" rx="6" stroke="#d5aa3a" stroke-width="1.3"/><text x="15" y="19.5" text-anchor="middle" font-family="Georgia,serif" font-size="12" font-weight="700" fill="#d5aa3a">GN</text></svg><span class="brand-name">GN Labs</span></a>
+<nav class="nav" aria-label="Primary"><a href="/" class="active">Home</a><a href="/about">About</a><a href="/projects">Projects</a><a href="/practice">Practice</a><a href="/blog">Journal</a></nav>
+<div class="header-actions"><a class="btn btn-outline-light" href="#contact">Start a conversation</a><button class="menu" id="menu" aria-label="Open menu" aria-controls="mobileNav" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><line x1="3" y1="7" x2="21" y2="7"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="17" x2="21" y2="17"/></svg></button></div>
 </div></header>
-<div class="mobile-nav" id="mobileNav" aria-hidden="true"><div class="mobile-top"><a class="brand" href="/"><svg class="brand-mark" viewBox="0 0 30 30" fill="none"><rect x="1" y="1" width="28" height="28" rx="6" stroke="#d5aa3a" stroke-width="1.3"/><text x="15" y="19.5" text-anchor="middle" font-family="Georgia,serif" font-size="12" font-weight="700" fill="#d5aa3a">GN</text></svg><span class="brand-name">Labs</span></a><button class="mobile-close" id="close">×</button></div><nav class="mobile-links"><a href="/">Home</a><a href="/about">About</a><a href="/projects">Projects</a><a href="/practice">Practice</a><a href="/blog">Blog</a></nav><a href="#contact" class="btn btn-gold">Get in Touch</a></div>
-<main>
-<section class="hero"><div class="wrap hero-grid"><div class="hero-copy"><div class="eyebrow">Engineering · Technology · Strategy</div><h1>Designing the systems behind <em>better technology.</em></h1><p class="hero-lead">GN Labs works across control, instrumentation, software and connected systems — turning complex technical problems into clear architectures, useful products and decisions that hold up in the real world.</p><div class="hero-actions"><a class="btn btn-gold" href="/projects">Explore the work</a><a class="btn btn-ghost" href="#contact">Start a conversation</a></div></div><div class="hero-media"><img class="hero-photo" src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=1500&q=88" alt="Engineer working with technology in an industrial environment"><div class="hero-caption">Engineering in the physical world</div></div></div></section>
-<section class="signal-strip"><div class="wrap signal-grid"><div class="signal"><span class="signal-no">01</span><h3>Control & automation</h3><p>Machines, processes, instrumentation and dependable behaviour.</p></div><div class="signal"><span class="signal-no">02</span><h3>Connected systems</h3><p>Telemetry, industrial data, IoT and the interfaces around them.</p></div><div class="signal"><span class="signal-no">03</span><h3>Software & models</h3><p>Tools, simulations and digital systems that accelerate engineering.</p></div><div class="signal"><span class="signal-no">04</span><h3>Technology strategy</h3><p>Architecture and choices that connect today's problem to tomorrow.</p></div></div></section>
-<section class="feature"><div class="wrap feature-grid"><div class="feature-copy"><div class="section-label">The GN Labs approach</div><h2 class="section-title">The interesting problems live between disciplines.</h2><p class="body-copy">A control problem can become a data problem. A software decision can become an architecture problem. A technology investment can become a strategy problem. GN Labs sits deliberately in that space — close enough to the engineering to understand the details, broad enough to see the system around them.</p><div class="quiet-list"><div class="quiet-row"><b>01</b><div><strong>Understand the system</strong><span>Constraints, signals, people, process and the outcome that actually matters.</span></div></div><div class="quiet-row"><b>02</b><div><strong>Make the architecture visible</strong><span>Models, interfaces and decisions that make complexity easier to reason about.</span></div></div><div class="quiet-row"><b>03</b><div><strong>Build with leverage</strong><span>Prototype, test and automate the parts that create durable advantage.</span></div></div></div></div><div class="feature-media"><img class="feature-image" src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1200&q=88" alt="Close view of a high-technology circuit board"><div class="feature-frame"><div class="micro">Systems thinking</div><strong>Physical reality → digital capability</strong><span>The goal is not more technology. It is better technology, placed where it creates leverage.</span></div></div></div></section>
-<section class="mosaic-section"><div class="wrap"><div class="mosaic-head"><div><div class="section-label">Where technology meets reality</div><h2 class="section-title">From the plant floor to the digital layer.</h2></div><p class="body-copy">The work is intentionally cross-disciplinary. Hardware, software, data and strategy become more valuable when they are designed as one system.</p></div><div class="mosaic"><a class="mosaic-main" href="/practice"><img src="https://images.unsplash.com/photo-1565610222536-ef125c59da2e?auto=format&fit=crop&w=1500&q=88" alt="Industrial robotics and automated manufacturing"><div class="mosaic-label"><div class="micro">Automation</div><h3>Machines that behave predictably.</h3><p>Control architecture, instrumentation and automation designed around real operating conditions.</p></div></a><div class="mosaic-side"><a class="mosaic-small" href="/practice"><img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1000&q=88" alt="Modern data infrastructure"><div class="small-label"><div class="micro">Infrastructure</div><strong>Data that can be trusted.</strong></div></a><a class="mosaic-small" href="/practice"><img src="https://images.unsplash.com/photo-1531297484001-80022131f5a1?auto=format&fit=crop&w=1000&q=88" alt="Technology and software workspace"><div class="small-label"><div class="micro">Digital systems</div><strong>Software that extends engineering.</strong></div></a></div></div></div></section>
-<section class="practice"><div class="wrap"><div class="practice-head"><div><div class="section-label">Areas of practice</div><h2 class="section-title">Deep engineering. Wider perspective.</h2></div><p class="body-copy">A focused set of capabilities, connected by one systems-oriented way of thinking.</p></div><div class="practice-grid"><article class="practice-item"><span class="practice-no">01 / CONTROL</span><h3>Control systems</h3><p>Control logic, instrumentation, sequencing, commissioning and the engineering discipline behind reliable machine behaviour.</p><a href="/practice#control">View capability →</a></article><article class="practice-item"><span class="practice-no">02 / DATA</span><h3>Industrial data</h3><p>Telemetry, diagnostics, historians, dashboards and connected systems that make operations more visible.</p><a href="/practice#data">View capability →</a></article><article class="practice-item"><span class="practice-no">03 / SOFTWARE</span><h3>Software & models</h3><p>Digital twins, engineering tools and software systems that let ideas be tested before they become expensive.</p><a href="/practice#software">View capability →</a></article><article class="practice-item"><span class="practice-no">04 / STRATEGY</span><h3>Technology strategy</h3><p>Architecture, priorities and technology choices that connect today's engineering problem to tomorrow's capability.</p><a href="/practice#strategy">View capability →</a></article></div></div></section>
-<section class="work"><div class="wrap"><div class="work-head"><div><div class="section-label">Selected work</div><h2 class="section-title">Evidence over adjectives.</h2></div><p class="body-copy">A small selection of engineering problems where modelling, control, software and systems thinking come together.</p></div><div class="work-grid"><article class="work-card"><div class="work-image"><img src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=1100&q=88" alt="Industrial engineering equipment and instrumentation"></div><div class="work-body"><div class="work-meta"><span>Mar 2026</span><span>Diagnostics</span></div><h3>Telemetry for a legacy bottling line</h3><p>Added sensor telemetry and a diagnostic dashboard without disturbing the existing control logic.</p><a class="work-link" href="/projects/telemetry-bottling-line">Read project →</a></div></article><article class="work-card"><div class="work-image"><img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1100&q=88" alt="Software and engineering analysis on a computer"></div><div class="work-body"><div class="work-meta"><span>Jan 2026</span><span>Digital twin</span></div><h3>Plant model for a batch mixing process</h3><p>Built a Python model of tank dynamics and dosing lag to tune a PID loop before deployment.</p><a class="work-link" href="/projects/batch-mixing-twin">Read project →</a></div></article><article class="work-card"><div class="work-image"><img src="https://images.unsplash.com/photo-1581091870627-3d2e0c1c9a7a?auto=format&fit=crop&w=1100&q=88" alt="Industrial automation and control environment"></div><div class="work-body"><div class="work-meta"><span>Nov 2025</span><span>HIL testing</span></div><h3>HIL rig for a conveyor safety interlock</h3><p>Simulated I/O to test interlock behaviour against fault conditions impractical to trigger on the real line.</p><a class="work-link" href="/projects/conveyor-hil-rig">Read project →</a></div></article></div></div></section>
-<section class="pov"><div class="wrap pov-grid"><div><div class="section-label">Point of view</div><h2 class="section-title">Technology is valuable when it improves the quality of a decision.</h2><p class="body-copy">The strongest technical work is rarely about adding another tool. It is about understanding the system well enough to know what deserves to be changed.</p></div><div class="pov-list"><div class="pov-item"><div class="pov-no">01</div><h3>Make complexity legible.</h3><p>Architecture should help people understand how the pieces behave together — not hide complexity behind jargon.</p></div><div class="pov-item"><div class="pov-no">02</div><h3>Prototype before committing.</h3><p>Models, simulations and small experiments expose bad assumptions while changing them is still cheap.</p></div><div class="pov-item"><div class="pov-no">03</div><h3>Build for leverage.</h3><p>The most sophisticated solution is not always the best one. Build what makes the next decision better.</p></div></div></div></section>
-<section class="cta" id="contact"><div class="wrap cta-inner"><div><h2>Have a system worth thinking through?</h2><p>Engineering enquiries, collaborations and technology conversations.</p></div><a class="btn btn-gold" href="mailto:contact@gnlabs.site">contact@gnlabs.site</a></div></section>
+
+<div class="mobile-nav" id="mobileNav" aria-hidden="true">
+<div class="mobile-top"><a class="brand" href="/"><svg class="brand-mark" viewBox="0 0 30 30" fill="none" aria-hidden="true"><rect x="1" y="1" width="28" height="28" rx="6" stroke="#d5aa3a" stroke-width="1.3"/><text x="15" y="19.5" text-anchor="middle" font-family="Georgia,serif" font-size="12" font-weight="700" fill="#d5aa3a">GN</text></svg><span class="brand-name">GN Labs</span></a><button class="mobile-close" id="close" aria-label="Close menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><line x1="5" y1="5" x2="19" y2="19"/><line x1="19" y1="5" x2="5" y2="19"/></svg></button></div>
+<nav class="mobile-links" aria-label="Mobile navigation"><a href="/">Home</a><a href="/about">About</a><a href="/projects">Projects</a><a href="/practice">Practice</a><a href="/blog">Journal</a></nav>
+<div class="mobile-contact"><p>Control systems, industrial data and software</p><a href="#contact" class="btn btn-primary">Start a conversation</a></div>
+</div>
+
+<main id="main">
+
+<section class="hero"><div class="wrap hero-grid">
+  <div class="hero-copy">
+    <h1 class="h1">Control systems built to be understood, not just operated.</h1>
+    <p class="copy lede">GN Labs designs, models and instruments industrial systems so the people running them can see what's actually happening and act on it — control engineering, telemetry and software under one roof.</p>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="/projects">See recent work</a>
+      <a class="btn btn-outline-light" href="#contact">Start a conversation</a>
+    </div>
+    <div class="hero-meta">
+      <div><strong>12+</strong><span>Control &amp; automation projects delivered</span></div>
+      <div><strong>3</strong><span>Disciplines under one practice</span></div>
+      <div><strong>Nairobi</strong><span>Based here, working worldwide</span></div>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div>
+      <svg viewBox="0 0 360 360" width="360" height="360" role="img" aria-label="Illustrated control system dial with tick marks and a swept needle">
+        <defs>
+          <radialGradient id="dialglow" cx="50%" cy="45%" r="65%">
+            <stop offset="0%" stop-color="#2a3542"/>
+            <stop offset="100%" stop-color="#151b25"/>
+          </radialGradient>
+        </defs>
+        <circle cx="180" cy="180" r="168" fill="url(#dialglow)" stroke="rgba(255,255,255,.08)"/>
+        <circle cx="180" cy="180" r="132" fill="none" stroke="rgba(255,255,255,.14)"/>
+        <g stroke="#3a4652" stroke-width="1.5" fill="none">
+          <path d="M60 180 A120 120 0 0 1 300 180" />
+        </g>
+        <g stroke="#c59b32" stroke-width="3" fill="none" stroke-linecap="round">
+          <path d="M60 180 A120 120 0 0 1 232 82" />
+        </g>
+        <g stroke="rgba(255,255,255,.4)" stroke-width="2" stroke-linecap="round">
+          <line x1="180" y1="48" x2="180" y2="64"/>
+          <line x1="253" y1="68" x2="245" y2="82"/>
+          <line x1="308" y1="122" x2="294" y2="132"/>
+          <line x1="328" y1="180" x2="312" y2="180"/>
+          <line x1="308" y1="238" x2="294" y2="228"/>
+          <line x1="253" y1="292" x2="245" y2="278"/>
+          <line x1="107" y1="292" x2="115" y2="278"/>
+          <line x1="52" y1="238" x2="66" y2="228"/>
+          <line x1="32" y1="180" x2="48" y2="180"/>
+          <line x1="52" y1="122" x2="66" y2="132"/>
+          <line x1="107" y1="68" x2="115" y2="82"/>
+        </g>
+        <g class="needle" style="transform-origin:180px 180px;animation:sweep 3.2s var(--ease) 1 both">
+          <line x1="180" y1="180" x2="112" y2="108" stroke="#e7cd8a" stroke-width="3" stroke-linecap="round"/>
+          <circle cx="180" cy="180" r="9" fill="#e7cd8a"/>
+          <circle cx="180" cy="180" r="3.5" fill="#151b25"/>
+        </g>
+        <circle class="pulse-dot" cx="245" cy="82" r="4" fill="#c59b32" style="animation:pulse 2.4s ease-in-out infinite"/>
+        <text x="180" y="230" text-anchor="middle" font-family="IBM Plex Sans" font-size="11" letter-spacing=".04em" fill="#8b96a0">LOOP STABLE</text>
+      </svg>
+      <p class="gauge-caption">A closed control loop, instrumented and legible</p>
+    </div>
+  </div>
+</div></section>
+
+<section class="capabilities"><div class="wrap cap-grid">
+  <div class="cap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 12 L16 7"/><circle cx="12" cy="12" r="1.4" fill="currentColor" stroke="none"/></svg><h3>Control &amp; automation</h3><p>Control logic, instrumentation and sequencing that behaves the same way on a hard day as it does on an easy one.</p></div>
+  <div class="cap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 17 L8 10 L13 14 L21 5"/><path d="M3 21 L21 21"/></svg><h3>Industrial data</h3><p>Telemetry and diagnostics that turn what a machine is doing into something a person can read at a glance.</p></div>
+  <div class="cap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M8 4 L3 12 L8 20"/><path d="M16 4 L21 12 L16 20"/></svg><h3>Software &amp; models</h3><p>Digital twins and engineering tools that let an idea be tested on screen before it costs anything on the floor.</p></div>
+  <div class="cap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 20 L4 12 L9 12 L9 20 M9 20 L9 6 L15 6 L15 20 M15 20 L15 9 L20 9 L20 20"/></svg><h3>Technology strategy</h3><p>Architecture and sequencing decisions that connect what you're building this quarter to what you'll need next year.</p></div>
+</div></section>
+
+<section class="manifesto"><div class="wrap manifesto-grid">
+  <div class="manifesto-copy">
+    <h2 class="h2">Most valuable problems don't stay inside one discipline.</h2>
+    <p class="copy">A control problem turns into a data problem. A software decision becomes an architecture problem. A technology investment turns into a strategy conversation. GN Labs works across those seams without losing the engineering underneath.</p>
+    <div class="principle-list">
+      <div class="principle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.2" y2="16.2"/></svg><div><strong>Understand the system before adding to it.</strong><span>Start with the constraints and the outcome that matters, not the newest tool available.</span></div></div>
+      <div class="principle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 12 L9 12 L11 6 L14 18 L16 12 L21 12"/></svg><div><strong>Make what's invisible legible.</strong><span>Models, data and clear diagrams should expose what's really happening, not just decorate a report.</span></div></div>
+      <div class="principle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="4" y="4" width="7" height="7" rx="1"/><rect x="13" y="4" width="7" height="7" rx="1"/><rect x="4" y="13" width="7" height="7" rx="1"/><rect x="13" y="13" width="7" height="7" rx="1"/></svg><div><strong>Build what creates leverage.</strong><span>The most sophisticated answer isn't always the useful one — durable capability wins over complexity.</span></div></div>
+    </div>
+  </div>
+  <div class="manifesto-visual">
+    <svg viewBox="0 0 480 420" width="100%" height="auto" role="img" aria-label="Blueprint-style diagram showing a physical machine connected to sensors, a controller and a dashboard">
+      <g fill="none" stroke="rgba(255,255,255,.22)" stroke-width="1">
+        <line x1="40" y1="40" x2="440" y2="40"/><line x1="40" y1="380" x2="440" y2="380"/>
+        <line x1="40" y1="40" x2="40" y2="380"/><line x1="440" y1="40" x2="440" y2="380"/>
+      </g>
+      <rect x="66" y="150" width="110" height="90" rx="3" fill="none" stroke="#8b96a0" stroke-width="1.4"/>
+      <line x1="66" y1="176" x2="176" y2="176" stroke="#8b96a0" stroke-width="1"/>
+      <circle cx="121" cy="210" r="14" fill="none" stroke="#8b96a0" stroke-width="1.4"/>
+      <text x="121" y="264" text-anchor="middle" fill="#8b96a0" font-family="IBM Plex Sans" font-size="11">Machine</text>
+      <circle cx="238" cy="90" r="16" fill="none" stroke="#c59b32" stroke-width="1.6"/>
+      <path d="M232 90 a6 6 0 0 1 12 0" stroke="#c59b32" stroke-width="1.4" fill="none"/>
+      <text x="238" y="126" text-anchor="middle" fill="#c59b32" font-family="IBM Plex Sans" font-size="11">Sensor</text>
+      <rect x="272" y="170" width="90" height="60" rx="3" fill="none" stroke="#c59b32" stroke-width="1.6"/>
+      <path d="M286 200 h14 l6 -14 l8 28 l6 -14 h16" stroke="#c59b32" stroke-width="1.4" fill="none"/>
+      <text x="317" y="252" text-anchor="middle" fill="#c59b32" font-family="IBM Plex Sans" font-size="11">Controller</text>
+      <rect x="352" y="270" width="64" height="46" rx="3" fill="none" stroke="#8b96a0" stroke-width="1.4"/>
+      <path d="M362 306 l8 -14 l7 8 l10 -18" stroke="#8b96a0" stroke-width="1.4" fill="none"/>
+      <text x="384" y="336" text-anchor="middle" fill="#8b96a0" font-family="IBM Plex Sans" font-size="11">Dashboard</text>
+      <path d="M176 190 L272 195" stroke="rgba(255,255,255,.3)" stroke-width="1.2" stroke-dasharray="3 4"/>
+      <path d="M238 106 L238 170 L272 190" stroke="rgba(255,255,255,.3)" stroke-width="1.2" stroke-dasharray="3 4" fill="none"/>
+      <path d="M362 200 L384 200 L384 270" stroke="rgba(255,255,255,.3)" stroke-width="1.2" stroke-dasharray="3 4" fill="none"/>
+    </svg>
+  </div>
+</div></section>
+
+<section class="editorial"><div class="wrap">
+  <div class="editorial-head">
+    <div><h2 class="h2">The work lives between the machine and the decision.</h2></div>
+    <p class="copy">Three views of the same practice — the physical process, the data it produces, and the software that makes both easier to reason about.</p>
+  </div>
+  <div class="editorial-grid">
+    <div class="edit-tile">
+      <div class="tile-art"><svg viewBox="0 0 220 120" width="100%" role="img" aria-label="Diagram of a sensor to controller to actuator feedback loop"><g fill="none" stroke="#d7b45a" stroke-width="1.6"><rect x="10" y="46" width="42" height="28" rx="2"/><rect x="90" y="46" width="42" height="28" rx="2"/><rect x="170" y="46" width="42" height="28" rx="2"/><path d="M52 60 L90 60"/><path d="M132 60 L170 60"/><path d="M191 74 L191 96 L31 96 L31 74" stroke-dasharray="3 4"/></g><text x="31" y="65" text-anchor="middle" fill="#f4f0e4" font-family="IBM Plex Sans" font-size="9">Sensor</text><text x="111" y="65" text-anchor="middle" fill="#f4f0e4" font-family="IBM Plex Sans" font-size="9">Logic</text><text x="191" y="65" text-anchor="middle" fill="#f4f0e4" font-family="IBM Plex Sans" font-size="9">Actuator</text></svg></div>
+      <h3>Automation</h3>
+      <p>Designing machines and their control logic for the conditions they'll actually meet, not the ones on the datasheet.</p>
+    </div>
+    <div class="edit-tile">
+      <div class="tile-art"><svg viewBox="0 0 220 120" width="100%" role="img" aria-label="Diagram of telemetry data flowing from multiple field points into a network"><g fill="none" stroke="#d7b45a" stroke-width="1.6"><circle cx="30" cy="30" r="7"/><circle cx="30" cy="90" r="7"/><circle cx="70" cy="60" r="7"/><circle cx="150" cy="60" r="9"/><circle cx="190" cy="30" r="6"/><circle cx="190" cy="90" r="6"/><path d="M36 33 L64 57 M36 87 L64 63 M77 60 L141 60 M159 56 L184 33 M159 64 L184 87"/></g></svg></div>
+      <h3>Infrastructure</h3>
+      <p>Field telemetry, historians and dashboards built so the data people already have becomes something they trust.</p>
+    </div>
+    <div class="edit-tile">
+      <div class="tile-art"><svg viewBox="0 0 220 120" width="100%" role="img" aria-label="Waveform diagram representing a simulated process model"><g fill="none" stroke="#d7b45a" stroke-width="1.6"><path d="M6 70 C 26 20, 46 20, 66 70 S 106 120, 126 70 S 166 20, 186 70 S 206 95, 214 70"/></g><g stroke="rgba(255,255,255,.3)" stroke-width="1" stroke-dasharray="2 4"><line x1="6" y1="70" x2="214" y2="70"/></g></svg></div>
+      <h3>Software &amp; digital twins</h3>
+      <p>Process models that let a control strategy get tuned and broken safely on screen, long before it meets the plant.</p>
+    </div>
+  </div>
+</div></section>
+
+<section class="practice"><div class="wrap">
+  <div class="practice-top">
+    <div><h2 class="h2">Deep engineering. Wider perspective.</h2></div>
+    <p class="copy">Four capabilities, connected by one way of thinking about systems.</p>
+  </div>
+  <div class="practice-grid">
+    <article class="practice-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 12 L16 7"/></svg><h3>Control systems</h3><p>Control logic, instrumentation, sequencing and commissioning support for equipment that needs to behave predictably.</p><a href="/practice#control">View this capability</a></article>
+    <article class="practice-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 17 L8 10 L13 14 L21 5"/></svg><h3>Industrial data</h3><p>Telemetry, diagnostics, historians and dashboards that improve visibility without disturbing what already works.</p><a href="/practice#data">View this capability</a></article>
+    <article class="practice-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M8 4 L3 12 L8 20 M16 4 L21 12 L16 20"/></svg><h3>Software &amp; models</h3><p>Digital twins, engineering tools and internal software that let ideas be tested cheaply before they're built.</p><a href="/practice#software">View this capability</a></article>
+    <article class="practice-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 20 L4 12 L9 12 L9 20 M9 20 L9 6 L15 6 L15 20 M15 20 L15 9 L20 9 L20 20"/></svg><h3>Technology strategy</h3><p>Architecture and prioritisation work that connects today's fix to a system that still makes sense in three years.</p><a href="/practice#strategy">View this capability</a></article>
+  </div>
+</div></section>
+
+<section class="projects"><div class="wrap">
+  <div class="projects-head">
+    <div><h2 class="h2">Recent work, with what changed.</h2></div>
+    <p class="copy">A few problems where modelling, control and software came together to move a real number.</p>
+  </div>
+  <div class="project-list">
+    <article class="project">
+      <div><div class="project-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 17 L8 10 L13 14 L21 5"/></svg></div><div class="project-tag">Diagnostics retrofit</div></div>
+      <div><h3>Telemetry for a legacy bottling line</h3><p>Sensor telemetry and a diagnostics layer added to a line that had no spare capacity for downtime, without touching the existing control system underneath.</p><span class="project-outcome">Fault diagnosis time dropped from roughly four hours to under twenty minutes.</span></div>
+      <a class="project-link" href="/projects/telemetry-bottling-line">Read the case study</a>
+    </article>
+    <article class="project">
+      <div><div class="project-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M8 4 L3 12 L8 20 M16 4 L21 12 L16 20"/></svg></div><div class="project-tag">Digital twin</div></div>
+      <div><h3>Process model for a batch mixing line</h3><p>A dynamic model of the mixing process, used to test control assumptions and pre-tune the loops before anything was deployed on site.</p><span class="project-outcome">On-site commissioning time fell from about three weeks to eight days.</span></div>
+      <a class="project-link" href="/projects/batch-mixing-twin">Read the case study</a>
+    </article>
+    <article class="project">
+      <div><div class="project-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 12 L16 7"/></svg></div><div class="project-tag">Hardware-in-the-loop</div></div>
+      <div><h3>HIL rig for a conveyor safety interlock</h3><p>A hardware-in-the-loop rig used to run fault conditions against the interlock logic before it ever touched the live conveyor.</p><span class="project-outcome">Surfaced two sequencing faults that would otherwise have caused an unplanned stop.</span></div>
+      <a class="project-link" href="/projects/conveyor-hil-rig">Read the case study</a>
+    </article>
+  </div>
+</div></section>
+
+<section class="journal"><div class="wrap">
+  <div class="journal-head">
+    <div><h2 class="h2">Notes from the practice.</h2></div>
+    <p class="copy">Shorter pieces on engineering decisions, written as they came up on real projects.</p>
+  </div>
+  <div class="journal-grid">
+    <a class="journal-item" href="/blog"><h3>What gets missed when a system is read one layer at a time.</h3><p>A practical case for treating control, data, software and the people running them as one operating system, not four separate reviews.</p><span class="reading-time">8 min read</span></a>
+    <a class="journal-item" href="/blog"><h3>When does an industrial problem become a software problem?</h3><p>Some fixes belong in the PLC. Some belong in a model. Here's a rough test for telling the two apart before you commit.</p><span class="reading-time">5 min read</span></a>
+    <a class="journal-item" href="/blog"><h3>The real cost of hiding complexity instead of managing it.</h3><p>A simplified diagram can be worse than an honest, complicated one — if it hides the part that's actually load-bearing.</p><span class="reading-time">4 min read</span></a>
+  </div>
+</div></section>
+
+<section class="perspective"><div class="wrap perspective-grid">
+  <div>
+    <h2 class="h2">Technology earns its place when it improves a decision.</h2>
+    <p class="copy">The strongest technical work is rarely about adding another tool. It's about understanding a system well enough to know what actually deserves to change.</p>
+  </div>
+  <div class="perspective-list">
+    <div class="perspective-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 20 L4 12 L9 12 L9 20 M9 20 L9 6 L15 6 L15 20 M15 20 L15 9 L20 9 L20 20"/></svg><h3>Make complexity legible</h3><p>An architecture diagram should help someone predict how the pieces behave together, not just where they sit.</p></div>
+    <div class="perspective-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M8 4 L3 12 L8 20 M16 4 L21 12 L16 20"/></svg><h3>Prototype before committing</h3><p>Small models and early experiments surface bad assumptions while they're still cheap to fix.</p></div>
+    <div class="perspective-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="4" y="4" width="7" height="7" rx="1"/><rect x="13" y="13" width="7" height="7" rx="1"/></svg><h3>Build for leverage</h3><p>The clever solution isn't always the useful one — the goal is whatever improves the next decision that gets made.</p></div>
+  </div>
+</div></section>
+
+<section class="contact" id="contact"><div class="wrap contact-grid">
+  <div class="contact-info">
+    <h2 class="h2">Have a system worth thinking through?</h2>
+    <p class="copy">Send a note about what you're working on. Engineering enquiries, collaborations and early-stage technology conversations are all welcome.</p>
+    <div class="contact-detail">
+      <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7 L12 13 L21 7"/></svg><span><a href="mailto:contact@gnlabs.site">contact@gnlabs.site</a></span></div>
+      <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0 1 18 0Z"/><circle cx="12" cy="10" r="3"/></svg><span>Nairobi, Kenya — working with teams worldwide</span></div>
+    </div>
+    <div class="social-inline" aria-label="Social links">
+      <a href="https://www.linkedin.com/company/gnlabs" target="_blank" rel="noopener" aria-label="GN Labs on LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5.001 2.5 2.5 0 0 1 0-5.001ZM3 9h4v12H3zM9 9h3.8v1.7h.05c.53-.95 1.83-1.95 3.77-1.95 4.03 0 4.78 2.5 4.78 5.75V21h-4v-5.2c0-1.24-.02-2.84-1.73-2.84-1.74 0-2 1.36-2 2.75V21H9z"/></svg></a>
+      <a href="https://github.com/gnlabs" target="_blank" rel="noopener" aria-label="GN Labs on GitHub"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.19-3.37-1.19-.46-1.15-1.11-1.46-1.11-1.46-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.89 1.53 2.34 1.09 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.56-1.11-4.56-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02a9.4 9.4 0 0 1 5 0c1.91-1.3 2.75-1.02 2.75-1.02.55 1.38.2 2.4.1 2.65.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.85v2.75c0 .27.18.58.69.48A10 10 0 0 0 12 2Z"/></svg></a>
+    </div>
+  </div>
+
+  <form class="contact-form" id="contactForm" novalidate>
+    <div class="form-row">
+      <div class="form-group"><label for="name">Name</label><input id="name" name="name" type="text" autocomplete="name" required></div>
+      <div class="form-group"><label for="email">Email</label><input id="email" name="email" type="email" autocomplete="email" required></div>
+    </div>
+    <div class="form-group">
+      <label for="project-type">Project type <span class="hint">(optional)</span></label>
+      <select id="project-type" name="project-type">
+        <option value="">Select one</option>
+        <option value="control">Control &amp; automation</option>
+        <option value="data">Industrial data &amp; telemetry</option>
+        <option value="software">Software &amp; digital twins</option>
+        <option value="strategy">Technology strategy</option>
+        <option value="other">Something else</option>
+      </select>
+    </div>
+    <div class="form-group"><label for="message">What are you working on?</label><textarea id="message" name="message" required></textarea></div>
+    <div class="form-foot">
+      <p>Sent straight to contact@gnlabs.site — expect a reply within two business days.</p>
+      <button class="btn btn-primary" type="submit">Send message</button>
+    </div>
+    <div class="form-status" id="formStatus" role="status"></div>
+  </form>
+</div></section>
+
 </main>
-<footer><div class="wrap"><div class="footer-grid"><div class="footer-brand"><a class="brand" href="/"><svg class="brand-mark" viewBox="0 0 30 30" fill="none"><rect x="1" y="1" width="28" height="28" rx="6" stroke="#d5aa3a" stroke-width="1.3"/><text x="15" y="19.5" text-anchor="middle" font-family="Georgia,serif" font-size="12" font-weight="700" fill="#d5aa3a">GN</text></svg><span class="brand-name">Labs</span></a><p>Control systems, industrial technology, software and the strategic thinking that connects them.</p></div><div><div class="footer-title">Explore</div><div class="footer-links"><a href="/">Home</a><a href="/about">About</a><a href="/projects">Projects</a><a href="/practice">Practice</a><a href="/blog">Blog</a></div></div><div><div class="footer-title">Focus</div><div class="footer-links"><a href="/practice#control">Control & Automation</a><a href="/practice#data">Industrial Data</a><a href="/practice#software">Software & IoT</a><a href="/practice#strategy">Technology Strategy</a></div></div><div><div class="footer-title">Connect</div><div class="footer-links"><a href="mailto:contact@gnlabs.site">contact@gnlabs.site</a><a href="https://www.linkedin.com/company/gnlabs" rel="me">LinkedIn</a><a href="https://github.com/gnlabs" rel="me">GitHub</a><span>Nairobi, Kenya · Remote worldwide</span></div></div></div><div class="footer-bottom"><span>© 2026 GN Labs. All rights reserved.</span><span><a href="/privacy">Privacy</a> · <a href="/terms">Terms</a></span><span>gnlabs.site</span></div></div></footer>
-<script>const menu=document.getElementById('menu'),mobile=document.getElementById('mobileNav'),close=document.getElementById('close');function openNav(){mobile.classList.add('open');mobile.setAttribute('aria-hidden','false');document.body.style.overflow='hidden'}function closeNav(){mobile.classList.remove('open');mobile.setAttribute('aria-hidden','true');document.body.style.overflow=''}menu.addEventListener('click',openNav);close.addEventListener('click',closeNav);mobile.querySelectorAll('a').forEach(a=>a.addEventListener('click',closeNav));</script>
-</body>
-</html>
+
+<footer><div class="wrap">
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a class="brand" href="/"><svg class="brand-mark" viewBox="0 0 30 30" fill="none" aria-hidden="true"><rect x="1" y="1" width="28" height="28" rx="6" stroke="#d5aa3a" stroke-width="1.3"/><text x="15" y="19.5" text-anchor="middle" font-family="Georgia,serif" font-size="12" font-weight="700" fill="#d5aa3a">GN</text></svg><span class="brand-name">GN Labs</span></a>
+      <p>Control systems, industrial data, software and the technology strategy that connects them.</p>
+      <div class="footer-social">
+        <a href="https://www.linkedin.com/company/gnlabs" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5.001 2.5 2.5 0 0 1 0-5.001ZM3 9h4v12H3zM9 9h3.8v1.7h.05c.53-.95 1.83-1.95 3.77-1.95 4.03 0 4.78 2.5 4.78 5.75V21h-4v-5.2c0-1.24-.02-2.84-1.73-2.84-1.74 0-2 1.36-2 2.75V21H9z"/></svg></a>
+        <a href="https://github.com/gnlabs" target="_blank" rel="noopener" aria-label="GitHub"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.19-3.37-1.19-.46-1.15-1.11-1.46-1.11-1.46-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.89 1.53 2.34 1.09 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.56-1.11-4.56-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02a9.4 9.4 0 0 1 5 0c1.91-1.3 2.75-1.02 2.75-1.02.55 1.38.2 2.4.1 2.65.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.85v2.75c0 .27.18.58.69.48A10 10 0 0 0 12 2Z"/></svg></a>
+        <a href="mailto:contact@gnlabs.site" aria-label="Email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7 L12 13 L21 7"/></svg></a>
+      </div>
+    </div>
+    <div><div class="footer-title">Explore</div><div class="footer-links"><a href="/">Home</a><a href="/about">About</a><a href="/projects">Projects</a><a href="/practice">Practice</a><a href="/blog">Journal</a></div></div>
+    <div><div class="footer-title">Focus</div><div class="footer-links"><a href="/practice#control">Control &amp; automation</a><a href="/practice#data">Industrial data</a><a href="/practice#software">Software &amp; models</a><a href="/practice#strategy">Technology strategy</a></div></div>
+    <div><div class="footer-title">Connect</div><div class="footer-links"><a href="mailto:contact@gnlabs.site">contact@gnlabs.site</a><a href="https://www.linkedin.com/company/gnlabs" target="_blank" rel="noopener">LinkedIn</a><a href="https://github.com/gnlabs" target="_blank" rel="noopener">GitHub</a><span>Nairobi, Kenya</span></div></div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 GN Labs. All rights reserved.</span>
+    <span><a href="/privacy">Privacy</a> · <a href="/terms">Terms</a></span>
+  </div>
+</div></footer>
+
+<script>
+const menu=document.getElementById('menu'),mobile=document.getElementById('mobileNav'),close=document.getElementById('close');
+function openNav(){mobile.classList.add('open');mobile.setAttribute('aria-hidden','false');menu.setAttribute('aria-expanded','true');document.body.classList.add('nav-open');setTimeout(()=>mobile.querySelector('.mobile-links a')?.focus(),280)}
+function closeNav(){mobile.classList.remove('open');mobile.setAttribute('aria-hidden','true');menu.setAttribute('aria-expanded','false');document.body.classList.remove('nav-open');menu.focus()}
+menu.addEventListener('click',openNav);
+close.addEventListener('click',closeNav);
+mobile.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{if(a.getAttribute('href')?.startsWith('#'))closeNav()}));
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&mobile.classList.contains('open'))closeNav()});
+
+const form=document.getElementById('contactForm'),status=document.getElementById('formStatus');
+form.addEventListener('submit',function(e){
+  e.preventDefault();
+  const name=form.name.value.trim(),email=form.email.value.trim(),typeSel=form['project-type'],message=form.message.value.trim();
+  const typeText=typeSel.value?typeSel.options[typeSel.selectedIndex].text:'';
+  const subject=encodeURIComponent('New enquiry from '+name+(typeText?' — '+typeText:''));
+  const body=encodeURIComponent(message+'\n\n—\n'+name+'\n'+email);
+  window.location.href='mailto:contact@gnlabs.site?subject='+subject+'&body='+body;
+  status.textContent='Your email client should open with this message ready to send.';
+  status.className='form-status show ok';
+});
+</script>
+<style>
+@keyframes sweep{from{transform:rotate(-46deg)}to{transform:rotate(0deg)}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.25}}
+</style>
+</body></html>
