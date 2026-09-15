@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About — GN Labs | Independent Engineering Practice</title>
+<meta name="description" content="GN Labs is an independent engineering practice spanning embedded systems, industrial automation, control theory, and the software that connects them. Here's the story, the principles, and the track record.">
+<link rel="canonical" href="https://gnlabs.site/about">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          base: '#FFFFFF',
+          alt: '#F8F9FA',
+          slate: '#181C20',
+          graphite: '#0F1215',
+          ink: '#111827',
+          steel: '#4B5563',
+          amber: '#D97706',
+          techblue: '#1E40AF',
+        },
+        fontFamily: {
+          sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'system-ui', 'sans-serif'],
+          mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace'],
+        },
+      }
+    }
+  }
+</script>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Crect width='30' height='30' fill='%23FFFFFF'/%3E%3Crect x='1' y='1' width='28' height='28' fill='none' stroke='%23111827' stroke-width='2'/%3E%3Crect x='7' y='7' width='8' height='8' fill='%23D97706'/%3E%3Crect x='16' y='16' width='7' height='7' fill='none' stroke='%23111827' stroke-width='2'/%3E%3Cline x1='15' y1='11' x2='19.5' y2='16' stroke='%23111827' stroke-width='2'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-base: #FFFFFF;
+    --bg-alt: #F8F9FA;
+    --dark-slate: #181C20;
+    --dark-graphite: #0F1215;
+    --text-ink: #111827;
+    --text-steel: #4B5563;
+    --accent-amber: #D97706;
+    --accent-blue: #1E40AF;
+  }
+
+  * { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    color: var(--text-ink);
+    background: var(--bg-base);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { scroll-behavior: auto !important; animation: none !important; transition: none !important; }
+  }
+
+  .fade-in {
+    opacity: 0;
+    transform: translateY(14px);
+    transition: opacity 500ms ease-out, transform 500ms ease-out;
+  }
+  .fade-in.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .grid-texture {
+    background-image:
+      linear-gradient(to right, rgba(17,24,39,0.06) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(17,24,39,0.06) 1px, transparent 1px);
+    background-size: 28px 28px;
+  }
+
+  .schematic-line {
+    stroke-dasharray: 4 4;
+  }
+
+  .btn-primary {
+    background: var(--accent-amber);
+    color: #FFFFFF;
+    transition: background-color 200ms ease-in-out, transform 200ms ease-in-out;
+  }
+  .btn-primary:hover { background: #B45F04; }
+  .btn-primary:focus-visible { outline: 3px solid #92400E; outline-offset: 2px; }
+
+  .btn-secondary {
+    border: 1.5px solid var(--text-ink);
+    color: var(--text-ink);
+    transition: background-color 200ms ease-in-out, color 200ms ease-in-out;
+  }
+  .btn-secondary:hover { background: var(--text-ink); color: #fff; }
+  .btn-secondary:focus-visible { outline: 3px solid var(--text-ink); outline-offset: 2px; }
+
+  .btn-ghost {
+    color: var(--text-steel);
+    transition: color 200ms ease-in-out;
+  }
+  .btn-ghost:hover { color: var(--text-ink); }
+  .btn-ghost:focus-visible { outline: 2px solid var(--text-steel); outline-offset: 3px; }
+
+  a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible {
+    outline: 2px solid var(--accent-amber);
+    outline-offset: 2px;
+  }
+
+  .nav-link {
+    position: relative;
+    color: var(--text-steel);
+    transition: color 200ms ease-in-out;
+  }
+  .nav-link:hover { color: var(--text-ink); }
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -4px;
+    height: 2px;
+    width: 0;
+    background: var(--accent-amber);
+    transition: width 200ms ease-in-out;
+  }
+  .nav-link:hover::after { width: 100%; }
+  .nav-link[aria-current="page"] { color: var(--text-ink); }
+  .nav-link[aria-current="page"]::after { width: 100%; }
+  .mobile-link[aria-current="page"] { color: var(--accent-amber); }
+
+  .status-dot {
+    box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.15);
+  }
+
+  #mobileDrawer {
+    transform: translateX(100%);
+    transition: transform 260ms ease-in-out;
+  }
+  #mobileDrawer.open { transform: translateX(0); }
+  #mobileOverlay {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 260ms ease-in-out;
+  }
+  #mobileOverlay.open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  #scrollTopBtn {
+    opacity: 0;
+    transform: translateY(10px);
+    pointer-events: none;
+    transition: opacity 200ms ease-in-out, transform 200ms ease-in-out;
+  }
+  #scrollTopBtn.show {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+
+  #newsletterOverlay {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 250ms ease-in-out, visibility 250ms ease-in-out;
+  }
+  #newsletterOverlay.show {
+    opacity: 1;
+    visibility: visible;
+  }
+  #newsletterModal {
+    transform: scale(0.96);
+    transition: transform 250ms ease-in-out;
+  }
+  #newsletterOverlay.show #newsletterModal {
+    transform: scale(1);
+  }
+
+  .capability-card, .value-card {
+    transition: border-color 200ms ease-in-out, transform 200ms ease-in-out, box-shadow 200ms ease-in-out;
+  }
+  .capability-card:hover, .value-card:hover {
+    border-color: var(--accent-amber);
+    transform: translateY(-3px);
+    box-shadow: 0 12px 24px -16px rgba(17,24,39,0.25);
+  }
+
+  /* Header: compacts and gains depth once the page scrolls, RaftLabs-style */
+  #siteHeader {
+    transition: height 260ms ease-in-out, box-shadow 260ms ease-in-out, background-color 260ms ease-in-out;
+  }
+  #siteHeader .header-inner {
+    transition: height 260ms ease-in-out;
+  }
+  #siteHeader.is-scrolled {
+    box-shadow: 0 1px 0 rgba(17,24,39,0.06), 0 12px 24px -18px rgba(17,24,39,0.25);
+  }
+  #siteHeader.is-scrolled .header-inner {
+    height: 4.25rem;
+  }
+  #siteHeader:not(.is-scrolled) .header-inner {
+    height: 5rem;
+  }
+
+  /* Timeline */
+  .timeline-item {
+    position: relative;
+    padding-left: 2.25rem;
+  }
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.35rem;
+    width: 10px;
+    height: 10px;
+    background: var(--accent-amber);
+  }
+  .timeline-item::after {
+    content: '';
+    position: absolute;
+    left: 4px;
+    top: 1.1rem;
+    bottom: -2.5rem;
+    width: 1px;
+    background: #E5E7EB;
+  }
+  .timeline-item:last-child::after { display: none; }
+
+  /* Toolkit pills */
+  .pill {
+    border: 1px solid #E5E7EB;
+    color: var(--text-steel);
+    transition: border-color 200ms ease-in-out, color 200ms ease-in-out;
+  }
+  .pill:hover {
+    border-color: var(--text-ink);
+    color: var(--text-ink);
+  }
+</style>
+</head>
+<body class="bg-base text-ink antialiased">
+
+<!-- ============ HEADER ============ -->
+<header id="siteHeader" class="sticky top-0 z-40 bg-base/95 backdrop-blur border-b border-gray-200">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10">
+    <div class="header-inner flex items-center justify-between h-20">
+
+      <!-- Logo -->
+      <a href="/" class="flex items-center gap-3 group">
+        <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect x="1" y="1" width="28" height="28" stroke="#111827" stroke-width="1.6"/>
+          <rect x="7" y="7" width="8" height="8" fill="#D97706"/>
+          <rect x="16" y="16" width="7" height="7" stroke="#111827" stroke-width="1.6"/>
+          <line x1="15" y1="11" x2="19.5" y2="16" stroke="#111827" stroke-width="1.6"/>
+        </svg>
+        <span class="tracking-tighter font-extrabold text-xl text-ink">GN<span class="text-amber">Labs</span></span>
+      </a>
+
+      <!-- Desktop nav -->
+      <nav class="hidden lg:flex items-center gap-9" aria-label="Primary">
+        <a href="/" class="nav-link text-sm font-semibold">Home</a>
+        <a href="/about/" class="nav-link text-sm font-semibold" aria-current="page">About</a>
+        <a href="/projects/" class="nav-link text-sm font-semibold">Projects</a>
+        <a href="/practice/" class="nav-link text-sm font-semibold">Practice</a>
+        <a href="/blog/" class="nav-link text-sm font-semibold">Blog</a>
+      </nav>
+
+      <div class="flex items-center gap-4">
+        <a href="/contact/" class="hidden lg:inline-flex btn-primary text-sm font-bold px-5 py-2.5">
+          Start Conversation
+        </a>
+
+        <!-- Mobile hamburger -->
+        <button id="menuToggle" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobileDrawer" class="lg:hidden flex flex-col justify-center gap-1.5 w-9 h-9">
+          <span class="block h-0.5 w-6 bg-ink"></span>
+          <span class="block h-0.5 w-6 bg-ink"></span>
+          <span class="block h-0.5 w-4 bg-ink self-start ml-3"></span>
+        </button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- Mobile drawer overlay -->
+<div id="mobileOverlay" class="fixed inset-0 bg-ink/50 z-40 lg:hidden"></div>
+
+<!-- Mobile drawer -->
+<aside id="mobileDrawer" class="fixed top-0 right-0 h-full w-72 bg-base z-50 border-l border-gray-200 lg:hidden" aria-label="Mobile navigation">
+  <div class="flex items-center justify-between h-20 px-6 border-b border-gray-200">
+    <span class="font-extrabold tracking-tighter text-lg">Menu</span>
+    <button id="menuClose" aria-label="Close navigation menu" class="w-9 h-9 flex items-center justify-center text-2xl leading-none text-steel">&times;</button>
+  </div>
+  <nav class="flex flex-col px-6 py-8 gap-6" aria-label="Mobile primary">
+    <a href="/" class="mobile-link text-lg font-semibold text-ink">Home</a>
+    <a href="/about/" class="mobile-link text-lg font-semibold text-ink" aria-current="page">About</a>
+    <a href="/projects/" class="mobile-link text-lg font-semibold text-ink">Projects</a>
+    <a href="/practice/" class="mobile-link text-lg font-semibold text-ink">Practice</a>
+    <a href="/blog/" class="mobile-link text-lg font-semibold text-ink">Blog</a>
+    <a href="/contact/" class="btn-primary text-center font-bold px-5 py-3 mt-4">Start Conversation</a>
+  </nav>
+</aside>
+
+<!-- ============ ABOUT HERO ============ -->
+<section class="bg-alt border-b border-gray-200 py-16 sm:py-20 lg:py-24">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10 grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+    <div class="fade-in order-2 lg:order-1">
+      <p class="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold text-steel bg-white border border-gray-200 px-3.5 py-1.5 mb-6">
+        <span class="w-2 h-2 bg-amber rounded-full"></span>
+        About
+      </p>
+      <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-[1.15] sm:leading-[1.05] text-ink">
+        An engineering practice, not an agency.
+      </h1>
+      <p class="mt-5 sm:mt-6 text-base sm:text-lg text-steel leading-relaxed max-w-xl">
+        GN Labs is the independent practice of one engineer who got tired of watching plant-floor control logic and cloud software get built by two teams that never talked to each other. I work the whole stack myself — PLC to API — so nothing gets lost at the handover.
+      </p>
+      <div class="mt-8 sm:mt-9 flex flex-wrap gap-3 sm:gap-4">
+        <a href="/contact/" class="btn-primary font-bold px-5 sm:px-6 py-3 sm:py-3.5 text-sm">Start Conversation</a>
+        <a href="/projects/" class="btn-secondary font-bold px-5 sm:px-6 py-3 sm:py-3.5 text-sm">See the Work</a>
+      </div>
+    </div>
+    <div class="order-1 lg:order-2 fade-in">
+      <div class="relative aspect-[4/5] max-w-md mx-auto lg:max-w-none overflow-hidden border border-gray-200">
+        <img src="https://picsum.photos/seed/gnlabs-about-portrait/800/1000" alt="Engineer at a workbench reviewing a control system schematic" class="w-full h-full object-cover" loading="lazy">
+        <div class="absolute inset-0 bg-gradient-to-t from-ink/25 via-transparent to-transparent"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stat strip -->
+  <div class="max-w-7xl mx-auto px-6 lg:px-10 mt-14 sm:mt-16">
+    <dl class="grid grid-cols-2 sm:grid-cols-4 gap-6 sm:gap-8 border-t border-gray-300 pt-8 fade-in">
+      <div>
+        <dt class="text-2xl sm:text-3xl font-extrabold text-ink">9<span class="text-amber">+</span></dt>
+        <dd class="mt-1 text-xs sm:text-sm text-steel">Years in controls &amp; software</dd>
+      </div>
+      <div>
+        <dt class="text-2xl sm:text-3xl font-extrabold text-ink">40<span class="text-amber">+</span></dt>
+        <dd class="mt-1 text-xs sm:text-sm text-steel">Systems shipped to production</dd>
+      </div>
+      <div>
+        <dt class="text-2xl sm:text-3xl font-extrabold text-ink">3</dt>
+        <dd class="mt-1 text-xs sm:text-sm text-steel">Industries served</dd>
+      </div>
+      <div>
+        <dt class="text-2xl sm:text-3xl font-extrabold text-ink">1</dt>
+        <dd class="mt-1 text-xs sm:text-sm text-steel">Engineer, start to finish</dd>
+      </div>
+    </dl>
+  </div>
+</section>
+
+<!-- ============ STORY ============ -->
+<section class="py-20 lg:py-28 border-b border-gray-200">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10 grid lg:grid-cols-5 gap-14">
+    <div class="lg:col-span-2 fade-in">
+      <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-ink">From the plant floor to the API layer</h2>
+    </div>
+    <div class="lg:col-span-3 fade-in space-y-5 text-steel leading-relaxed">
+      <p>
+        I started as a controls engineer, commissioning PLCs on factory floors where a bug doesn't throw a stack trace — it stalls a line, or worse. That environment teaches a particular kind of discipline: you define the failure modes before you write a single rung of logic, because the cost of guessing wrong is measured in downtime, not just an ugly changelog.
+      </p>
+      <p>
+        Over time the boundary between that world and the software world kept blurring. Plants wanted telemetry in the cloud. Dashboards needed to talk to fieldbus networks. Every project seemed to need one person who was fluent on both sides of the OT/IT line — and comfortable admitting when a "simple integration" was actually a control system problem wearing a software costume.
+      </p>
+      <p>
+        GN Labs is that role, formalized. I take on a small number of engagements at a time, work directly with the people who'll operate the system, and document everything to a standard where a second engineer could pick it up without a handover call. No account managers, no bench of juniors learning on your dime — just the person doing the work.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ VALUES / PRINCIPLES ============ -->
+<section class="bg-alt py-20 lg:py-28 border-b border-gray-200">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10">
+    <div class="max-w-2xl fade-in">
+      <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-ink">How the work gets done</h2>
+      <p class="mt-4 text-steel leading-relaxed">
+        Three habits carry across every engagement, regardless of whether the deliverable is a PLC program or a Python service.
+      </p>
+    </div>
+
+    <div class="mt-14 grid sm:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-6">
+      <div class="value-card bg-base border border-gray-200 p-7 fade-in">
+        <p class="font-mono text-xs text-amber mb-3">01</p>
+        <h3 class="font-bold text-ink text-lg mb-2">Failure modes first</h3>
+        <p class="text-sm text-steel leading-relaxed">Before any logic gets written, we map out what happens when a sensor lies, a network drops, or an operator does the unexpected thing.</p>
+      </div>
+      <div class="value-card bg-base border border-gray-200 p-7 fade-in">
+        <p class="font-mono text-xs text-amber mb-3">02</p>
+        <h3 class="font-bold text-ink text-lg mb-2">Model before you deploy</h3>
+        <p class="text-sm text-steel leading-relaxed">Control loops get simulated and hardware-in-the-loop tested before they ever touch live equipment. Hardware time is expensive; modeling time is cheap.</p>
+      </div>
+      <div class="value-card bg-base border border-gray-200 p-7 fade-in">
+        <p class="font-mono text-xs text-amber mb-3">03</p>
+        <h3 class="font-bold text-ink text-lg mb-2">Document for a stranger</h3>
+        <p class="text-sm text-steel leading-relaxed">Every system ships with documentation written for an engineer who's never met me — because eventually, someone else will maintain it.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TIMELINE ============ -->
+<section class="py-20 lg:py-28 border-b border-gray-200">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10 grid lg:grid-cols-5 gap-14">
+    <div class="lg:col-span-2 fade-in">
+      <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-ink">Track record</h2>
+      <p class="mt-4 text-steel leading-relaxed">The short version of how this practice took shape.</p>
+    </div>
+
+    <div class="lg:col-span-3 space-y-10 fade-in">
+      <div class="timeline-item">
+        <p class="font-mono text-xs text-steel mb-1">2016</p>
+        <h3 class="font-bold text-ink">First control-room commission</h3>
+        <p class="text-sm text-steel leading-relaxed mt-1">Started as a controls engineer, commissioning relay and early PLC systems on manufacturing lines.</p>
+      </div>
+      <div class="timeline-item">
+        <p class="font-mono text-xs text-steel mb-1">2019</p>
+        <h3 class="font-bold text-ink">Moved into systems &amp; control design</h3>
+        <p class="text-sm text-steel leading-relaxed mt-1">Took on closed-loop control design and hardware-in-the-loop testing for multi-tank process lines.</p>
+      </div>
+      <div class="timeline-item">
+        <p class="font-mono text-xs text-steel mb-1">2021</p>
+        <h3 class="font-bold text-ink">Founded GN Labs</h3>
+        <p class="text-sm text-steel leading-relaxed mt-1">Went independent to take on the projects that fell in the gap between OT integrators and software shops.</p>
+      </div>
+      <div class="timeline-item">
+        <p class="font-mono text-xs text-steel mb-1">2024</p>
+        <h3 class="font-bold text-ink">Expanded into edge &amp; cloud telemetry</h3>
+        <p class="text-sm text-steel leading-relaxed mt-1">Built out an ESP32-based sensor mesh practice, connecting field data to production cloud pipelines.</p>
+      </div>
+      <div class="timeline-item">
+        <p class="font-mono text-xs text-steel mb-1">Today</p>
+        <h3 class="font-bold text-ink">Full-stack, plant-to-cloud engagements</h3>
+        <p class="text-sm text-steel leading-relaxed mt-1">Taking on a small number of embedded, automation, and software engagements at a time — see current work on the <a href="/projects/" class="text-ink underline decoration-amber decoration-2 underline-offset-2 hover:text-amber">projects page</a>.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TOOLKIT ============ -->
+<section class="bg-alt py-20 lg:py-28 border-b border-gray-200">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10">
+    <div class="max-w-2xl fade-in">
+      <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-ink">The toolkit</h2>
+      <p class="mt-4 text-steel leading-relaxed">Not a novelty-chasing stack — tools chosen because they hold up under real operating conditions.</p>
+    </div>
+
+    <div class="mt-10 flex flex-wrap gap-3 fade-in">
+      <span class="pill bg-base px-4 py-2 text-sm font-medium">IEC 61131-3</span>
+      <span class="pill bg-base px-4 py-2 text-sm font-medium">CODESYS</span>
+      <span class="pill bg-base px-4 py-2 text-sm font-medium">Modbus TCP</span>
+      <span class="pill bg-base px-4 py-2 text-sm font-medium">PROFIBUS</span>
+      <span class="pill bg-base px-4 py-2 text-sm font-medium">ESP32</span>
+      <span class="pill bg-base px-4 py-2 text-sm font-medium">MQTT</span>
+      <span class="pill bg-base px-4 py-2 text-sm font-medium">Python</span>
+      <span class="pill bg-base px-4 py-2 text-sm font-medium">REST APIs</span>
+      <span class="pill bg-base px-4 py-2 text-sm font-medium">Grafana</span>
+      <span class="pill bg-base px-4 py-2 text-sm font-medium">Docker</span>
+      <span class="pill bg-base px-4 py-2 text-sm font-medium">Git</span>
+      <span class="pill bg-base px-4 py-2 text-sm font-medium">MATLAB / Simulink</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<section class="py-20 lg:py-28 border-b border-gray-200">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10 grid lg:grid-cols-5 gap-14">
+    <div class="lg:col-span-2 fade-in">
+      <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-ink">Let's talk about your system</h2>
+      <p class="mt-5 text-steel leading-relaxed">
+        Tell me what you're working with and what's not working. I'll reply within one business day, and if it's not a fit, I'll say so and point you toward someone who is.
+      </p>
+      <dl class="mt-8 space-y-5 text-sm">
+        <div class="flex gap-4">
+          <dt class="font-mono text-steel w-24 shrink-0">Response</dt>
+          <dd class="text-ink">Within 1 business day</dd>
+        </div>
+        <div class="flex gap-4">
+          <dt class="font-mono text-steel w-24 shrink-0">Format</dt>
+          <dd class="text-ink">Fixed-scope or ongoing retainer</dd>
+        </div>
+        <div class="flex gap-4">
+          <dt class="font-mono text-steel w-24 shrink-0">Location</dt>
+          <dd class="text-ink">Remote, on-site by arrangement</dd>
+        </div>
+      </dl>
+    </div>
+
+    <div id="contact" class="lg:col-span-3 fade-in">
+      <form class="border border-gray-300 p-8" id="contactForm">
+        <div class="grid sm:grid-cols-2 gap-6">
+          <div>
+            <label for="name" class="block text-xs font-semibold uppercase tracking-wide text-steel mb-2">Name</label>
+            <input type="text" id="name" name="name" required class="w-full border border-gray-300 px-4 py-3 text-sm focus:border-ink outline-none">
+          </div>
+          <div>
+            <label for="email" class="block text-xs font-semibold uppercase tracking-wide text-steel mb-2">Email</label>
+            <input type="email" id="email" name="email" required class="w-full border border-gray-300 px-4 py-3 text-sm focus:border-ink outline-none">
+          </div>
+        </div>
+        <div class="mt-6">
+          <label for="scope" class="block text-xs font-semibold uppercase tracking-wide text-steel mb-2">System Scope</label>
+          <input type="text" id="scope" name="scope" placeholder="e.g. PLC retrofit, edge telemetry, control loop review" class="w-full border border-gray-300 px-4 py-3 text-sm focus:border-ink outline-none">
+        </div>
+        <div class="mt-6">
+          <label for="message" class="block text-xs font-semibold uppercase tracking-wide text-steel mb-2">Message</label>
+          <textarea id="message" name="message" rows="4" required class="w-full border border-gray-300 px-4 py-3 text-sm focus:border-ink outline-none"></textarea>
+        </div>
+        <button type="submit" id="submitBtn" class="btn-primary font-bold px-7 py-3.5 text-sm mt-7">Send Message</button>
+        <p id="formStatus" class="text-sm text-techblue font-semibold mt-4 hidden">Message received. I'll reply within one business day.</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="bg-slate text-gray-300">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10 py-16 grid sm:grid-cols-2 lg:grid-cols-4 gap-10">
+    <div>
+      <span class="tracking-tighter font-extrabold text-xl text-white">GN<span class="text-amber">Labs</span></span>
+      <p class="mt-4 text-sm text-gray-400 leading-relaxed max-w-xs">
+        Independent engineering practice covering embedded systems, industrial automation, and the software that connects them.
+      </p>
+    </div>
+
+    <div>
+      <h4 class="text-white font-semibold text-sm mb-4">Quick Links</h4>
+      <ul class="space-y-3 text-sm text-gray-400">
+        <li><a href="/" class="hover:text-white transition-colors">Home</a></li>
+        <li><a href="/about/" class="hover:text-white transition-colors">About</a></li>
+        <li><a href="/projects/" class="hover:text-white transition-colors">Projects</a></li>
+        <li><a href="/practice/" class="hover:text-white transition-colors">Practice</a></li>
+        <li><a href="/blog/" class="hover:text-white transition-colors">Blog</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <h4 class="text-white font-semibold text-sm mb-4">Core Technical Domains</h4>
+      <ul class="space-y-3 text-sm text-gray-400">
+        <li>Embedded &amp; Hardware</li>
+        <li>Industrial Automation</li>
+        <li>Systems &amp; Control</li>
+        <li>Software &amp; Cloud</li>
+      </ul>
+    </div>
+
+    <div>
+      <h4 class="text-white font-semibold text-sm mb-4">Legal / Compliance</h4>
+      <ul class="space-y-3 text-sm text-gray-400 mb-6">
+        <li><a href="/privacy-policy/" class="hover:text-white transition-colors">Privacy Policy</a></li>
+        <li><a href="/terms-of-service/" class="hover:text-white transition-colors">Terms of Service</a></li>
+      </ul>
+      <div class="flex gap-4">
+        <a href="#" aria-label="GitHub" class="text-gray-400 hover:text-white transition-colors">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.38 7.86 10.9.58.1.79-.25.79-.56 0-.28-.01-1.02-.02-2-3.2.7-3.88-1.54-3.88-1.54-.52-1.34-1.28-1.7-1.28-1.7-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.68 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.04 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.79 0c2.21-1.49 3.18-1.18 3.18-1.18.63 1.58.23 2.75.11 3.04.74.81 1.19 1.83 1.19 3.09 0 4.41-2.69 5.39-5.25 5.67.41.36.78 1.07.78 2.16 0 1.56-.01 2.82-.01 3.2 0 .32.21.67.8.56A10.52 10.52 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5Z"/></svg>
+        </a>
+        <a href="#" aria-label="LinkedIn" class="text-gray-400 hover:text-white transition-colors">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.36V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29ZM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12ZM7.12 20.45H3.56V9h3.56v11.45ZM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0Z"/></svg>
+        </a>
+        <a href="#" aria-label="RSS Feed" class="text-gray-400 hover:text-white transition-colors">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M4 4a16 16 0 0 1 16 16h-3a13 13 0 0 0-13-13V4Zm0 6a10 10 0 0 1 10 10h-3a7 7 0 0 0-7-7v-3Zm2.5 6.5A2.5 2.5 0 1 1 4 19a2.5 2.5 0 0 1 2.5-2.5Z"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="border-t border-white/10">
+    <div class="max-w-7xl mx-auto px-6 lg:px-10 py-6 text-xs text-gray-500">
+      © 2026 GN Labs. All specifications subject to revision without notice.
+    </div>
+  </div>
+</footer>
+
+<!-- ============ NEWSLETTER POPUP (triggers once, near the footer) ============ -->
+<div id="newsletterOverlay" class="fixed inset-0 z-50 bg-ink/60 flex items-center justify-center p-4" aria-hidden="true">
+  <div id="newsletterModal" class="relative bg-graphite text-white w-full max-w-2xl border border-white/10 p-10 sm:p-14">
+    <button id="dismissBanner" aria-label="Close newsletter signup" class="absolute top-5 right-5 text-gray-400 hover:text-white text-2xl leading-none w-9 h-9 flex items-center justify-center">&times;</button>
+    <p class="text-xs font-mono text-amber uppercase tracking-wide mb-4">Before you go</p>
+    <h3 class="text-2xl sm:text-3xl font-extrabold tracking-tight">Get new writing on control systems and edge software</h3>
+    <p class="text-gray-400 mt-3 text-sm">One email, roughly monthly. No spam.</p>
+    <form id="newsletterForm" class="flex flex-col sm:flex-row gap-3 mt-8">
+      <input type="email" required placeholder="you@company.com" class="flex-1 bg-white/5 border border-white/20 px-4 py-3 text-sm text-white placeholder-gray-500 outline-none focus:border-amber">
+      <button type="submit" class="btn-primary font-bold px-6 py-3 text-sm whitespace-nowrap">Subscribe</button>
+    </form>
+  </div>
+</div>
+
+<!-- ============ SCROLL TO TOP ============ -->
+<button id="scrollTopBtn" aria-label="Scroll to top" class="fixed bottom-6 right-6 z-40 w-11 h-11 bg-ink text-white flex items-center justify-center">
+  <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 13V3M8 3L3 8M8 3l5 5" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</button>
+
+<script>
+  // Header: compacts and picks up a shadow once the page scrolls.
+  const siteHeader = document.getElementById('siteHeader');
+  function updateHeaderOnScroll() {
+    if (window.scrollY > 24) {
+      siteHeader.classList.add('is-scrolled');
+    } else {
+      siteHeader.classList.remove('is-scrolled');
+    }
+  }
+  updateHeaderOnScroll();
+  window.addEventListener('scroll', updateHeaderOnScroll, { passive: true });
+
+  // Mobile drawer toggle
+  const menuToggle = document.getElementById('menuToggle');
+  const menuClose = document.getElementById('menuClose');
+  const mobileDrawer = document.getElementById('mobileDrawer');
+  const mobileOverlay = document.getElementById('mobileOverlay');
+
+  function openDrawer() {
+    mobileDrawer.classList.add('open');
+    mobileOverlay.classList.add('open');
+    menuToggle.setAttribute('aria-expanded', 'true');
+  }
+  function closeDrawer() {
+    mobileDrawer.classList.remove('open');
+    mobileOverlay.classList.remove('open');
+    menuToggle.setAttribute('aria-expanded', 'false');
+  }
+  menuToggle.addEventListener('click', openDrawer);
+  menuClose.addEventListener('click', closeDrawer);
+  mobileOverlay.addEventListener('click', closeDrawer);
+  document.querySelectorAll('.mobile-link').forEach(link => {
+    link.addEventListener('click', closeDrawer);
+  });
+
+  // Scroll-to-top button visibility
+  const scrollTopBtn = document.getElementById('scrollTopBtn');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 500) {
+      scrollTopBtn.classList.add('show');
+    } else {
+      scrollTopBtn.classList.remove('show');
+    }
+  });
+  scrollTopBtn.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  // Newsletter popup — fires once when the footer comes into view, then stays
+  // dismissed for the rest of the session either way.
+  const newsletterOverlay = document.getElementById('newsletterOverlay');
+  const footer = document.querySelector('footer');
+  const dismissBanner = document.getElementById('dismissBanner');
+  let newsletterShown = false;
+
+  function closeNewsletter() {
+    newsletterOverlay.classList.remove('show');
+    newsletterOverlay.setAttribute('aria-hidden', 'true');
+  }
+
+  const footerObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting && !newsletterShown) {
+        newsletterShown = true;
+        newsletterOverlay.classList.add('show');
+        newsletterOverlay.setAttribute('aria-hidden', 'false');
+        footerObserver.disconnect();
+      }
+    });
+  }, { threshold: 0.1 });
+  footerObserver.observe(footer);
+
+  dismissBanner.addEventListener('click', closeNewsletter);
+  newsletterOverlay.addEventListener('click', (e) => {
+    if (e.target === newsletterOverlay) closeNewsletter();
+  });
+
+  const newsletterForm = document.getElementById('newsletterForm');
+  newsletterForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    newsletterForm.innerHTML = '<p class="text-sm font-semibold text-white py-2">Subscribed. First issue lands next cycle.</p>';
+  });
+
+  // Contact form submission state
+  const contactForm = document.getElementById('contactForm');
+  const submitBtn = document.getElementById('submitBtn');
+  const formStatus = document.getElementById('formStatus');
+  contactForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    submitBtn.textContent = 'Sending…';
+    submitBtn.disabled = true;
+    setTimeout(() => {
+      submitBtn.textContent = 'Send Message';
+      submitBtn.disabled = false;
+      formStatus.classList.remove('hidden');
+      contactForm.reset();
+    }, 700);
+  });
+
+  // Scroll-triggered fade-ins
+  const fadeEls = document.querySelectorAll('.fade-in');
+  const fadeObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        fadeObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  fadeEls.forEach(el => fadeObserver.observe(el));
+</script>
+
+</body>
+</html>
