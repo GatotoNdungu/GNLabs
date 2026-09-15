@@ -258,35 +258,36 @@
 </aside>
 
 <!-- ============ HERO ============ -->
-<section id="home" class="relative overflow-hidden border-b border-gray-200">
-  <div class="max-w-7xl mx-auto px-6 lg:px-10 py-16 lg:py-24 grid lg:grid-cols-5 gap-12 items-center">
+<section id="home" class="relative overflow-hidden border-b border-gray-200 min-h-[92vh] flex items-center">
+  <div class="absolute inset-0 z-0">
+    <video
+      id="heroVideo"
+      class="w-full h-full object-cover"
+      poster="https://images.pexels.com/videos/32386532/pexels-photo-32386532.jpeg?auto=compress&cs=tinysrgb&w=1920"
+      autoplay muted loop playsinline preload="auto"
+      aria-hidden="true">
+      <source src="https://videos.pexels.com/video-files/32386532/13814827_2560_1440_100fps.mp4" type="video/mp4">
+    </video>
+    <div class="absolute inset-0 bg-gradient-to-r from-graphite/95 via-graphite/80 to-graphite/40"></div>
+    <div class="absolute inset-0 bg-gradient-to-t from-graphite/70 via-transparent to-transparent"></div>
+  </div>
 
-    <div class="lg:col-span-3 fade-in">
-      <p class="text-sm font-semibold text-techblue mb-5 flex items-center gap-2">
-        <span class="w-2 h-2 bg-techblue status-dot rounded-full"></span>
+  <div class="relative z-10 max-w-7xl mx-auto px-6 lg:px-10 py-20 w-full">
+    <div class="max-w-2xl fade-in">
+      <p class="inline-flex items-center gap-2 text-sm font-semibold text-white bg-white/10 border border-white/20 backdrop-blur px-3.5 py-1.5 mb-6">
+        <span class="w-2 h-2 bg-amber rounded-full"></span>
         Available for new engagements
       </p>
-      <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.05] text-ink">
+      <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.05] text-white">
         Engineering deterministic systems and scalable software architecture.
       </h1>
-      <p class="mt-6 text-lg text-steel leading-relaxed max-w-xl">
+      <p class="mt-6 text-lg text-gray-200 leading-relaxed max-w-xl">
         I design and build the layer that connects PLC control logic and edge hardware to production software pipelines — from IEC 61131-3 structured text on the plant floor to the APIs and automation running in the cloud above it.
       </p>
       <div class="mt-9 flex flex-wrap gap-4">
         <a href="#contact" class="btn-primary font-bold px-6 py-3.5 text-sm">Start Conversation</a>
-        <a href="#projects" class="btn-secondary font-bold px-6 py-3.5 text-sm">See Projects</a>
-        <a href="#blog" class="btn-ghost font-bold px-6 py-3.5 text-sm">Read Blog</a>
-      </div>
-    </div>
-
-    <div class="lg:col-span-2 fade-in">
-      <div class="border-2 border-ink relative overflow-hidden">
-        <img
-          src="https://images.pexels.com/photos/18471525/pexels-photo-18471525.jpeg?auto=compress&cs=tinysrgb&w=1280"
-          alt="Modern electronics and controls engineering lab with workstations and test equipment"
-          class="w-full h-full object-cover aspect-[4/3]"
-          loading="eager">
-        <div class="absolute top-0 left-0 bg-ink text-white text-xs font-mono px-3 py-1.5">SYS-ARCH.001</div>
+        <a href="#projects" class="font-bold px-6 py-3.5 text-sm border-2 border-white text-white transition-colors duration-200 hover:bg-white hover:text-ink">See Projects</a>
+        <a href="#blog" class="font-bold px-6 py-3.5 text-sm text-gray-300 transition-colors duration-200 hover:text-white">Read Blog</a>
       </div>
     </div>
   </div>
@@ -574,6 +575,20 @@
 
     // Newly injected cards need their own fade-in observers.
     grid.querySelectorAll('.fade-in').forEach(el => fadeObserver.observe(el));
+  }
+
+  // Hero background video: respect reduced-motion, and fall back to the
+  // poster frame quietly if the video can't load.
+  const heroVideo = document.getElementById('heroVideo');
+  if (heroVideo) {
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion) {
+      heroVideo.removeAttribute('autoplay');
+      heroVideo.pause();
+    }
+    heroVideo.addEventListener('error', () => {
+      heroVideo.style.display = 'none';
+    });
   }
 
   // Mobile drawer toggle
