@@ -1,549 +1,683 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>GN Labs — Control Systems, Industrial Data & Technology Strategy</title>
-<meta name="description" content="GN Labs designs, models and instruments industrial systems — control engineering, telemetry, software and the technology strategy that connects them.">
-<link rel="canonical" href="https://gnlabs.site">
-<meta property="og:type" content="website">
-<meta property="og:site_name" content="GN Labs">
-<meta property="og:title" content="GN Labs — Control Systems, Industrial Data & Technology Strategy">
-<meta property="og:description" content="Control engineering, telemetry, software and the technology strategy that connects them.">
-<meta property="og:url" content="https://gnlabs.site">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="GN Labs — Control Systems, Industrial Data & Technology Strategy">
-<meta name="twitter:description" content="Control engineering, telemetry, software and the technology strategy that connects them.">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='13' fill='%23151b25'/%3E%3Crect x='10' y='10' width='44' height='44' rx='10' fill='none' stroke='%23d5aa3a' stroke-width='2'/%3E%3Ctext x='32' y='40' text-anchor='middle' font-family='Georgia,serif' font-size='20' font-weight='700' fill='%23d5aa3a'%3EGN%3C/text%3E%3C/svg%3E">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GN Labs — Engineering Deterministic Systems &amp; Scalable Software Architecture</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          base: '#FFFFFF',
+          alt: '#F8F9FA',
+          slate: '#181C20',
+          graphite: '#0F1215',
+          ink: '#111827',
+          steel: '#4B5563',
+          amber: '#D97706',
+          techblue: '#1E40AF',
+        },
+        fontFamily: {
+          sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'system-ui', 'sans-serif'],
+          mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace'],
+        },
+      }
+    }
+  }
+</script>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Crect width='30' height='30' fill='%23FFFFFF'/%3E%3Crect x='1' y='1' width='28' height='28' fill='none' stroke='%23111827' stroke-width='2'/%3E%3Crect x='7' y='7' width='8' height='8' fill='%23D97706'/%3E%3Crect x='16' y='16' width='7' height='7' fill='none' stroke='%23111827' stroke-width='2'/%3E%3Cline x1='15' y1='11' x2='19.5' y2='16' stroke='%23111827' stroke-width='2'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Serif:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
-<script type="application/ld+json">
-{"@context":"https://schema.org","@type":"ProfessionalService","name":"GN Labs","url":"https://gnlabs.site","email":"contact@gnlabs.site","areaServed":"Worldwide","address":{"@type":"PostalAddress","addressLocality":"Nairobi","addressCountry":"KE"},"sameAs":["https://www.linkedin.com/company/gnlabs","https://github.com/gnlabs"]}
-</script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
-:root{
-  --navy:#151b25; --navy2:#1d2631; --navy3:#232d38;
-  --paper:#fbfbfa; --paper2:#f2f2f0; --white:#fff;
-  --ink:#18212a; --body:#4d5860; --muted:#727d85; --line:#e1e4e6; --line-dark:rgba(255,255,255,.14);
-  --gold:#c59b32; --gold-soft:#d7b45a; --gold-deep:#8a6a1f;
-  --serif:'IBM Plex Serif',Georgia,serif; --sans:'IBM Plex Sans',Arial,sans-serif;
-  --max:1180px;
-  --pad-section:clamp(64px,8vw,112px);
-  --radius:3px;
-  --ease:cubic-bezier(.4,0,.2,1);
-}
-*{box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
-body.nav-open{overflow:hidden}
-a{text-decoration:none;color:inherit}
-button{font:inherit;cursor:pointer}
-img,svg{display:block;max-width:100%}
-.wrap{width:min(var(--max),calc(100% - 56px));margin:auto}
-.copy{font-size:16px;color:var(--body);line-height:1.75}
-.reading-time{font-size:13px;color:var(--muted)}
+  :root {
+    --bg-base: #FFFFFF;
+    --bg-alt: #F8F9FA;
+    --dark-slate: #181C20;
+    --dark-graphite: #0F1215;
+    --text-ink: #111827;
+    --text-steel: #4B5563;
+    --accent-amber: #D97706;
+    --accent-blue: #1E40AF;
+  }
 
-.skip-link{position:absolute;left:-999px;top:auto;background:var(--gold);color:#171310;padding:10px 16px;z-index:1000;font-weight:600;font-size:13px}
-.skip-link:focus{left:16px;top:16px}
+  * { scroll-behavior: smooth; }
 
-a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:2px solid var(--gold-soft);outline-offset:3px}
-.site-header a:focus-visible{outline-offset:-2px}
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    color: var(--text-ink);
+    background: var(--bg-base);
+  }
 
-h1,h2,h3,h4{font-family:var(--serif);font-weight:500;color:var(--ink);margin:0}
-.h1{font-size:clamp(40px,5vw,60px);line-height:1.08;letter-spacing:-.01em}
-.h2{font-size:clamp(30px,3.6vw,42px);line-height:1.14;letter-spacing:-.008em}
-.h3{font-size:22px;line-height:1.28}
+  @media (prefers-reduced-motion: reduce) {
+    * { scroll-behavior: auto !important; animation: none !important; transition: none !important; }
+  }
 
-.site-header{position:sticky;top:0;z-index:100;background:rgba(21,27,37,.97);backdrop-filter:blur(14px);border-bottom:1px solid var(--line-dark)}
-.header-inner{height:72px;display:flex;align-items:center;justify-content:space-between}
-.brand{display:flex;align-items:center;gap:10px}
-.brand-mark{width:30px;height:30px;flex:none}
-.brand-name{font-family:var(--serif);font-size:17px;font-weight:500;color:#f4f5f6}
-.nav{display:flex;gap:8px;margin-left:56px}
-.nav a{font-size:15px;color:#c3cad0;padding:9px 14px;border-radius:var(--radius);transition:color .18s var(--ease),background .18s var(--ease)}
-.nav a:hover{color:#fff;background:rgba(255,255,255,.06)}
-.nav a.active{color:#fff}
-.nav a.active::after{content:"";display:block;height:2px;background:var(--gold-soft);margin-top:9px;border-radius:2px}
-.header-actions{display:flex;align-items:center;gap:12px}
-.menu{display:none;background:transparent;border:0;padding:8px;color:#fff}
-.menu svg{width:22px;height:22px}
+  .fade-in {
+    opacity: 0;
+    transform: translateY(14px);
+    transition: opacity 500ms ease-out, transform 500ms ease-out;
+  }
+  .fade-in.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
 
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:46px;padding:0 22px;font-size:15px;font-weight:600;border-radius:var(--radius);border:1px solid transparent;transition:background .18s var(--ease),border-color .18s var(--ease),color .18s var(--ease)}
-.btn-primary{background:var(--gold);border-color:var(--gold);color:#171310}
-.btn-primary:hover{background:var(--gold-soft);border-color:var(--gold-soft)}
-.btn-outline-light{border-color:rgba(255,255,255,.4);color:#fff}
-.btn-outline-light:hover{border-color:#fff;background:rgba(255,255,255,.07)}
+  .grid-texture {
+    background-image:
+      linear-gradient(to right, rgba(17,24,39,0.06) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(17,24,39,0.06) 1px, transparent 1px);
+    background-size: 28px 28px;
+  }
 
-.hero{position:relative;overflow:hidden;background:var(--navy);color:#fff}
-.hero-grid{display:grid;grid-template-columns:52% 48%;align-items:center;min-height:640px}
-.hero-copy{padding:96px 0 80px}
-.hero-copy p.lede{max-width:46ch}
-.hero .h1{color:#fff;max-width:600px}
-.hero-copy .copy{color:#b9c1c8;margin:22px 0 32px}
-.hero-actions{display:flex;flex-wrap:wrap;gap:12px}
-.hero-meta{display:flex;gap:28px;margin-top:44px;padding-top:28px;border-top:1px solid var(--line-dark)}
-.hero-meta div strong{display:block;font-family:var(--serif);font-size:22px;color:#fff;font-weight:500}
-.hero-meta div span{font-size:13px;color:#8b96a0}
-.hero-visual{height:100%;display:flex;align-items:center;justify-content:center;padding:40px 0}
-.gauge-caption{font-size:13px;color:#8b96a0;text-align:center;margin-top:14px}
+  .schematic-line {
+    stroke-dasharray: 4 4;
+  }
 
-.capabilities{background:var(--white);border-bottom:1px solid var(--line)}
-.cap-grid{display:grid;grid-template-columns:repeat(4,1fr)}
-.cap{padding:32px 26px;border-left:1px solid var(--line)}
-.cap:first-child{border-left:0}
-.cap svg{width:26px;height:26px;color:var(--gold-deep);margin-bottom:16px}
-.cap h3{font-size:17px;font-weight:600;margin-bottom:6px}
-.cap p{font-size:14px;color:var(--muted);line-height:1.6;margin:0}
+  .btn-primary {
+    background: var(--accent-amber);
+    color: #FFFFFF;
+    transition: background-color 200ms ease-in-out, transform 200ms ease-in-out;
+  }
+  .btn-primary:hover { background: #B45F04; }
+  .btn-primary:focus-visible { outline: 3px solid #92400E; outline-offset: 2px; }
 
-.manifesto{padding:var(--pad-section) 0;background:var(--paper)}
-.manifesto-grid{display:grid;grid-template-columns:44% 56%;gap:64px;align-items:center}
-.manifesto-copy .copy{max-width:48ch;margin:18px 0 30px}
-.principle-list{display:grid;gap:0;border-top:1px solid var(--line)}
-.principle{display:flex;gap:16px;padding:18px 0;border-bottom:1px solid var(--line)}
-.principle svg{width:20px;height:20px;flex:none;margin-top:3px;color:var(--gold-deep)}
-.principle strong{display:block;font-size:15.5px;color:var(--ink);font-weight:600}
-.principle span{display:block;font-size:14px;color:var(--muted);margin-top:3px;line-height:1.6}
-.manifesto-visual{background:var(--navy);border-radius:4px;padding:28px}
+  .btn-secondary {
+    border: 1.5px solid var(--text-ink);
+    color: var(--text-ink);
+    transition: background-color 200ms ease-in-out, color 200ms ease-in-out;
+  }
+  .btn-secondary:hover { background: var(--text-ink); color: #fff; }
+  .btn-secondary:focus-visible { outline: 3px solid var(--text-ink); outline-offset: 2px; }
 
-.editorial{background:var(--white);padding:var(--pad-section) 0;border-top:1px solid var(--line)}
-.editorial-head{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:end;margin-bottom:40px}
-.editorial-head .copy{max-width:44ch}
-.editorial-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
-.edit-tile{background:var(--navy2);border-radius:4px;padding:30px 26px 26px;color:#fff;display:flex;flex-direction:column;min-height:300px}
-.edit-tile .tile-art{flex:1;display:flex;align-items:center;justify-content:center;margin-bottom:18px}
-.edit-tile svg{width:100%;height:auto;max-height:120px}
-.edit-tile h3{color:#fff;font-size:19px;margin-bottom:8px}
-.edit-tile p{font-size:14px;color:#aab4bc;line-height:1.65;margin:0}
+  .btn-ghost {
+    color: var(--text-steel);
+    transition: color 200ms ease-in-out;
+  }
+  .btn-ghost:hover { color: var(--text-ink); }
+  .btn-ghost:focus-visible { outline: 2px solid var(--text-steel); outline-offset: 3px; }
 
-.practice{padding:var(--pad-section) 0;background:var(--paper2)}
-.practice-top{display:flex;justify-content:space-between;align-items:end;gap:50px;margin-bottom:36px;flex-wrap:wrap}
-.practice-top .copy{max-width:44ch}
-.practice-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line)}
-.practice-item{background:var(--paper2);min-height:250px;padding:28px 24px;display:flex;flex-direction:column;transition:background .18s var(--ease)}
-.practice-item:hover{background:var(--white)}
-.practice-item svg{width:24px;height:24px;color:var(--gold-deep);margin-bottom:20px}
-.practice-item h3{font-size:19px;margin-bottom:10px}
-.practice-item p{font-size:14px;line-height:1.7;color:var(--muted);margin:0;flex:1}
-.practice-item a{font-size:14px;color:var(--gold-deep);font-weight:600;margin-top:16px;display:inline-block}
-.practice-item a:hover{text-decoration:underline}
+  a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible {
+    outline: 2px solid var(--accent-amber);
+    outline-offset: 2px;
+  }
 
-.projects{background:var(--white);padding:var(--pad-section) 0}
-.projects-head{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:end;margin-bottom:40px}
-.projects-head .copy{max-width:44ch}
-.project-list{display:grid;gap:1px;background:var(--line);border:1px solid var(--line)}
-.project{background:var(--white);display:grid;grid-template-columns:200px 1fr auto;gap:28px;align-items:center;padding:26px 28px}
-.project-mark{width:56px;height:56px;border:1px solid var(--line);border-radius:4px;display:flex;align-items:center;justify-content:center;background:var(--paper2)}
-.project-mark svg{width:26px;height:26px;color:var(--gold-deep)}
-.project-tag{font-size:13px;color:var(--muted);margin-top:10px}
-.project h3{font-size:19px;margin-bottom:6px}
-.project p{font-size:14.5px;color:var(--body);line-height:1.65;margin:0 0 8px;max-width:56ch}
-.project-outcome{font-size:14px;color:var(--gold-deep);font-weight:600}
-.project-link{font-size:14px;font-weight:600;color:var(--ink);white-space:nowrap;border:1px solid var(--line);border-radius:var(--radius);padding:10px 16px;transition:border-color .18s var(--ease)}
-.project-link:hover{border-color:var(--gold-deep)}
+  .nav-link {
+    position: relative;
+    color: var(--text-steel);
+    transition: color 200ms ease-in-out;
+  }
+  .nav-link:hover { color: var(--text-ink); }
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -4px;
+    height: 2px;
+    width: 0;
+    background: var(--accent-amber);
+    transition: width 200ms ease-in-out;
+  }
+  .nav-link:hover::after { width: 100%; }
 
-.journal{background:var(--navy);color:#fff;padding:var(--pad-section) 0}
-.journal-head{display:flex;justify-content:space-between;align-items:end;gap:40px;margin-bottom:36px;flex-wrap:wrap}
-.journal-head .h2{color:#fff}
-.journal-head .copy{color:#9da8b1;max-width:42ch}
-.journal-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
-.journal-item{background:var(--navy2);border-radius:4px;padding:26px;display:flex;flex-direction:column;min-height:200px;transition:background .18s var(--ease)}
-.journal-item:hover{background:var(--navy3)}
-.journal-item h3{color:#fff;font-size:18px;line-height:1.32;margin-bottom:10px}
-.journal-item p{font-size:14px;color:#aab4bc;line-height:1.65;margin:0 0 18px;flex:1}
-.journal-item .reading-time{color:#7c8791}
+  .status-dot {
+    box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.15);
+  }
 
-.perspective{padding:var(--pad-section) 0;background:var(--paper)}
-.perspective-grid{display:grid;grid-template-columns:40% 60%;gap:64px}
-.perspective .copy{max-width:44ch;margin-top:18px}
-.perspective-list{display:grid;grid-template-columns:repeat(3,1fr);gap:32px}
-.perspective-item h3{font-size:18px;margin-bottom:8px}
-.perspective-item p{font-size:14px;color:var(--muted);line-height:1.7;margin:0}
-.perspective-item svg{width:22px;height:22px;color:var(--gold-deep);margin-bottom:14px}
+  #mobileDrawer {
+    transform: translateX(100%);
+    transition: transform 260ms ease-in-out;
+  }
+  #mobileDrawer.open { transform: translateX(0); }
+  #mobileOverlay {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 260ms ease-in-out;
+  }
+  #mobileOverlay.open {
+    opacity: 1;
+    pointer-events: auto;
+  }
 
-.contact{background:var(--white);border-top:1px solid var(--line);padding:var(--pad-section) 0}
-.contact-grid{display:grid;grid-template-columns:.85fr 1.15fr;gap:64px}
-.contact-info h2{margin-bottom:14px}
-.contact-info .copy{max-width:40ch;margin-bottom:32px}
-.contact-detail{display:flex;flex-direction:column;gap:16px;margin-bottom:32px}
-.contact-detail div{display:flex;gap:12px;align-items:flex-start;font-size:14.5px;color:var(--body)}
-.contact-detail svg{width:18px;height:18px;color:var(--gold-deep);flex:none;margin-top:2px}
-.contact-detail a{color:var(--ink);font-weight:600}
-.contact-detail a:hover{color:var(--gold-deep)}
-.social-inline{display:flex;gap:8px}
-.social-inline a{width:38px;height:38px;border:1px solid var(--line);border-radius:var(--radius);display:grid;place-items:center;color:var(--body);transition:.18s var(--ease)}
-.social-inline a:hover{border-color:var(--gold-deep);color:var(--gold-deep)}
-.social-inline svg{width:16px;height:16px}
+  #scrollTopBtn {
+    opacity: 0;
+    transform: translateY(10px);
+    pointer-events: none;
+    transition: opacity 200ms ease-in-out, transform 200ms ease-in-out;
+  }
+  #scrollTopBtn.show {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
 
-.contact-form{background:var(--paper2);border:1px solid var(--line);border-radius:6px;padding:32px}
-.form-row{display:grid;grid-template-columns:1fr 1fr;gap:18px}
-.form-group{display:flex;flex-direction:column;gap:7px;margin-bottom:18px}
-.form-group label{font-size:13.5px;font-weight:600;color:var(--ink)}
-.form-group .hint{font-size:12.5px;color:var(--muted);font-weight:400}
-.form-group input,.form-group select,.form-group textarea{font-family:var(--sans);font-size:15px;padding:12px 14px;border:1px solid var(--line);border-radius:4px;background:var(--white);color:var(--ink);transition:border-color .18s var(--ease),box-shadow .18s var(--ease);width:100%}
-.form-group input:hover,.form-group select:hover,.form-group textarea:hover{border-color:#b9c0c5}
-.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--gold-deep);box-shadow:0 0 0 3px rgba(197,155,50,.15);outline:none}
-.form-group textarea{resize:vertical;min-height:120px}
-.form-foot{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:6px;flex-wrap:wrap}
-.form-foot p{font-size:12.5px;color:var(--muted);margin:0;max-width:32ch}
-.form-status{font-size:13.5px;margin-top:14px;padding:10px 12px;border-radius:4px;display:none}
-.form-status.show{display:block}
-.form-status.ok{background:#eef6ec;color:#2f6b34;border:1px solid #cfe5cc}
+  #newsletterOverlay {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 250ms ease-in-out, visibility 250ms ease-in-out;
+  }
+  #newsletterOverlay.show {
+    opacity: 1;
+    visibility: visible;
+  }
+  #newsletterModal {
+    transform: scale(0.96);
+    transition: transform 250ms ease-in-out;
+  }
+  #newsletterOverlay.show #newsletterModal {
+    transform: scale(1);
+  }
 
-footer{background:var(--navy);color:#9aa4ad;padding:64px 0 26px}
-.footer-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:40px;padding-bottom:40px;border-bottom:1px solid var(--line-dark)}
-.footer-brand .brand-name{color:#fff}
-.footer-brand p{font-size:14.5px;max-width:36ch;line-height:1.7;color:#8b95a0;margin:16px 0 0}
-.footer-social{display:flex;gap:8px;margin-top:18px}
-.footer-social a{width:34px;height:34px;border:1px solid var(--line-dark);border-radius:var(--radius);display:grid;place-items:center;color:#aeb7be;transition:.18s var(--ease)}
-.footer-social a:hover{border-color:var(--gold);color:var(--gold-soft)}
-.footer-social svg{width:16px;height:16px}
-.footer-title{font-size:14px;font-weight:600;color:#f0f2f3;margin-bottom:16px}
-.footer-links{display:grid;gap:11px}
-.footer-links a,.footer-links span{font-size:14.5px;color:#9aa4ad}
-.footer-links a:hover{color:#fff}
-.footer-bottom{display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap;padding-top:22px;font-size:13px;color:#69747e}
-.footer-bottom a{color:#8b95a0}
-.footer-bottom a:hover{color:#fff}
+  .capability-card {
+    transition: border-color 200ms ease-in-out;
+  }
+  .capability-card:hover {
+    border-color: var(--accent-amber);
+  }
 
-.mobile-nav{position:fixed;inset:0;z-index:300;background:var(--navy);color:#fff;transform:translateX(100%);transition:transform .28s var(--ease);display:flex;flex-direction:column;padding:18px 24px max(22px,env(safe-area-inset-bottom))}
-.mobile-nav.open{transform:translateX(0)}
-.mobile-top{display:flex;align-items:center;justify-content:space-between}
-.mobile-close{width:42px;height:42px;border:1px solid rgba(255,255,255,.2);background:transparent;color:#fff;border-radius:var(--radius);display:grid;place-items:center}
-.mobile-close svg{width:20px;height:20px}
-.mobile-links{display:grid;margin-top:40px;border-top:1px solid var(--line-dark)}
-.mobile-links a{font-family:var(--serif);font-size:20px;font-weight:500;color:#fff;padding:18px 2px;border-bottom:1px solid var(--line-dark)}
-.mobile-links a:hover{color:var(--gold-soft)}
-.mobile-contact{margin-top:auto;padding-top:30px}
-.mobile-contact p{font-size:14px;color:#929da6;margin:0 0 16px}
-.mobile-nav .btn{width:100%}
+  .project-card {
+    transition: box-shadow 200ms ease-in-out, border-color 200ms ease-in-out;
+  }
+  .project-card:hover {
+    border-color: var(--text-ink);
+  }
 
-@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}.needle,.pulse-dot{animation:none !important}}
-
-@media(max-width:980px){
-  .wrap{width:min(var(--max),calc(100% - 40px))}
-  .nav,.header-actions .btn{display:none}
-  .menu{display:block}
-  .hero-grid{grid-template-columns:1fr;min-height:0}
-  .hero-copy{padding:56px 0 40px;text-align:left}
-  .hero-visual{padding:0 0 40px}
-  .hero-meta{flex-wrap:wrap;row-gap:18px}
-  .cap-grid{grid-template-columns:1fr 1fr}
-  .cap:nth-child(3){border-left:0}
-  .cap:nth-child(3),.cap:nth-child(4){border-top:1px solid var(--line)}
-  .manifesto-grid,.perspective-grid,.editorial-head,.projects-head,.contact-grid{grid-template-columns:1fr;gap:32px}
-  .editorial-grid{grid-template-columns:1fr 1fr}
-  .practice-grid{grid-template-columns:1fr 1fr}
-  .project{grid-template-columns:1fr;text-align:left;gap:16px}
-  .project-link{justify-self:start}
-  .journal-grid{grid-template-columns:1fr 1fr}
-  .perspective-list{grid-template-columns:1fr}
-  .footer-grid{grid-template-columns:1fr 1fr}
-  .footer-brand{grid-column:1/-1}
-  .form-row{grid-template-columns:1fr}
-}
-@media(max-width:640px){
-  body{font-size:15px}
-  .wrap{width:calc(100% - 32px)}
-  .header-inner{height:64px}
-  .brand-mark{width:27px;height:27px}
-  .manifesto,.editorial,.practice,.projects,.journal,.perspective,.contact{padding:56px 0}
-  .cap-grid,.editorial-grid,.journal-grid{grid-template-columns:1fr}
-  .cap:nth-child(n){border-left:0 !important;border-top:1px solid var(--line)}
-  .cap:first-child{border-top:0}
-  .practice-grid{grid-template-columns:1fr}
-  .contact-form{padding:22px}
-  .footer-grid{grid-template-columns:1fr 1fr;gap:28px}
-  .footer-bottom{display:grid;gap:8px;text-align:left}
-}
+  .article-card {
+    transition: border-color 200ms ease-in-out;
+  }
+  .article-card:hover {
+    border-color: var(--text-ink);
+  }
+  .article-card:hover .article-card-title {
+    color: var(--accent-amber);
+  }
 </style>
 </head>
-<body>
-<a class="skip-link" href="#main">Skip to content</a>
-<header class="site-header"><div class="wrap header-inner">
-<a class="brand" href="/" aria-label="GN Labs home"><svg class="brand-mark" viewBox="0 0 30 30" fill="none" aria-hidden="true"><rect x="1" y="1" width="28" height="28" rx="6" stroke="#d5aa3a" stroke-width="1.3"/><text x="15" y="19.5" text-anchor="middle" font-family="Georgia,serif" font-size="12" font-weight="700" fill="#d5aa3a">GN</text></svg><span class="brand-name">GN Labs</span></a>
-<nav class="nav" aria-label="Primary"><a href="/" class="active">Home</a><a href="/about">About</a><a href="/projects">Projects</a><a href="/practice">Practice</a><a href="/blog">Journal</a></nav>
-<div class="header-actions"><a class="btn btn-outline-light" href="#contact">Start a conversation</a><button class="menu" id="menu" aria-label="Open menu" aria-controls="mobileNav" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><line x1="3" y1="7" x2="21" y2="7"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="17" x2="21" y2="17"/></svg></button></div>
-</div></header>
+<body class="bg-base text-ink antialiased">
 
-<div class="mobile-nav" id="mobileNav" aria-hidden="true">
-<div class="mobile-top"><a class="brand" href="/"><svg class="brand-mark" viewBox="0 0 30 30" fill="none" aria-hidden="true"><rect x="1" y="1" width="28" height="28" rx="6" stroke="#d5aa3a" stroke-width="1.3"/><text x="15" y="19.5" text-anchor="middle" font-family="Georgia,serif" font-size="12" font-weight="700" fill="#d5aa3a">GN</text></svg><span class="brand-name">GN Labs</span></a><button class="mobile-close" id="close" aria-label="Close menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><line x1="5" y1="5" x2="19" y2="19"/><line x1="19" y1="5" x2="5" y2="19"/></svg></button></div>
-<nav class="mobile-links" aria-label="Mobile navigation"><a href="/">Home</a><a href="/about">About</a><a href="/projects">Projects</a><a href="/practice">Practice</a><a href="/blog">Journal</a></nav>
-<div class="mobile-contact"><p>Control systems, industrial data and software</p><a href="#contact" class="btn btn-primary">Start a conversation</a></div>
-</div>
+<!-- ============ HEADER ============ -->
+<header class="sticky top-0 z-40 bg-base/95 backdrop-blur border-b border-gray-200">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10">
+    <div class="flex items-center justify-between h-20">
 
-<main id="main">
+      <!-- Logo -->
+      <a href="#home" class="flex items-center gap-3 group">
+        <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect x="1" y="1" width="28" height="28" stroke="#111827" stroke-width="1.6"/>
+          <rect x="7" y="7" width="8" height="8" fill="#D97706"/>
+          <rect x="16" y="16" width="7" height="7" stroke="#111827" stroke-width="1.6"/>
+          <line x1="15" y1="11" x2="19.5" y2="16" stroke="#111827" stroke-width="1.6"/>
+        </svg>
+        <span class="tracking-tighter font-extrabold text-xl text-ink">GN<span class="text-amber">Labs</span></span>
+      </a>
 
-<section class="hero"><div class="wrap hero-grid">
-  <div class="hero-copy">
-    <h1 class="h1">Control systems built to be understood, not just operated.</h1>
-    <p class="copy lede">GN Labs designs, models and instruments industrial systems so the people running them can see what's actually happening and act on it — control engineering, telemetry and software under one roof.</p>
-    <div class="hero-actions">
-      <a class="btn btn-primary" href="/projects">See recent work</a>
-      <a class="btn btn-outline-light" href="#contact">Start a conversation</a>
-    </div>
-    <div class="hero-meta">
-      <div><strong>12+</strong><span>Control &amp; automation projects delivered</span></div>
-      <div><strong>3</strong><span>Disciplines under one practice</span></div>
-      <div><strong>Nairobi</strong><span>Based here, working worldwide</span></div>
-    </div>
-  </div>
-  <div class="hero-visual">
-    <div>
-      <svg viewBox="0 0 360 360" width="360" height="360" role="img" aria-label="Illustrated control system dial with tick marks and a swept needle">
-        <defs>
-          <radialGradient id="dialglow" cx="50%" cy="45%" r="65%">
-            <stop offset="0%" stop-color="#2a3542"/>
-            <stop offset="100%" stop-color="#151b25"/>
-          </radialGradient>
-        </defs>
-        <circle cx="180" cy="180" r="168" fill="url(#dialglow)" stroke="rgba(255,255,255,.08)"/>
-        <circle cx="180" cy="180" r="132" fill="none" stroke="rgba(255,255,255,.14)"/>
-        <g stroke="#3a4652" stroke-width="1.5" fill="none">
-          <path d="M60 180 A120 120 0 0 1 300 180" />
-        </g>
-        <g stroke="#c59b32" stroke-width="3" fill="none" stroke-linecap="round">
-          <path d="M60 180 A120 120 0 0 1 232 82" />
-        </g>
-        <g stroke="rgba(255,255,255,.4)" stroke-width="2" stroke-linecap="round">
-          <line x1="180" y1="48" x2="180" y2="64"/>
-          <line x1="253" y1="68" x2="245" y2="82"/>
-          <line x1="308" y1="122" x2="294" y2="132"/>
-          <line x1="328" y1="180" x2="312" y2="180"/>
-          <line x1="308" y1="238" x2="294" y2="228"/>
-          <line x1="253" y1="292" x2="245" y2="278"/>
-          <line x1="107" y1="292" x2="115" y2="278"/>
-          <line x1="52" y1="238" x2="66" y2="228"/>
-          <line x1="32" y1="180" x2="48" y2="180"/>
-          <line x1="52" y1="122" x2="66" y2="132"/>
-          <line x1="107" y1="68" x2="115" y2="82"/>
-        </g>
-        <g class="needle" style="transform-origin:180px 180px;animation:sweep 3.2s var(--ease) 1 both">
-          <line x1="180" y1="180" x2="112" y2="108" stroke="#e7cd8a" stroke-width="3" stroke-linecap="round"/>
-          <circle cx="180" cy="180" r="9" fill="#e7cd8a"/>
-          <circle cx="180" cy="180" r="3.5" fill="#151b25"/>
-        </g>
-        <circle class="pulse-dot" cx="245" cy="82" r="4" fill="#c59b32" style="animation:pulse 2.4s ease-in-out infinite"/>
-        <text x="180" y="230" text-anchor="middle" font-family="IBM Plex Sans" font-size="11" letter-spacing=".04em" fill="#8b96a0">LOOP STABLE</text>
-      </svg>
-      <p class="gauge-caption">A closed control loop, instrumented and legible</p>
-    </div>
-  </div>
-</div></section>
+      <!-- Desktop nav -->
+      <nav class="hidden lg:flex items-center gap-9" aria-label="Primary">
+        <a href="#home" class="nav-link text-sm font-semibold">Home</a>
+        <a href="#about" class="nav-link text-sm font-semibold">About</a>
+        <a href="#projects" class="nav-link text-sm font-semibold">Projects</a>
+        <a href="#practice" class="nav-link text-sm font-semibold">Practice</a>
+        <a href="#blog" class="nav-link text-sm font-semibold">Blog</a>
+      </nav>
 
-<section class="capabilities"><div class="wrap cap-grid">
-  <div class="cap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 12 L16 7"/><circle cx="12" cy="12" r="1.4" fill="currentColor" stroke="none"/></svg><h3>Control &amp; automation</h3><p>Control logic, instrumentation and sequencing that behaves the same way on a hard day as it does on an easy one.</p></div>
-  <div class="cap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 17 L8 10 L13 14 L21 5"/><path d="M3 21 L21 21"/></svg><h3>Industrial data</h3><p>Telemetry and diagnostics that turn what a machine is doing into something a person can read at a glance.</p></div>
-  <div class="cap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M8 4 L3 12 L8 20"/><path d="M16 4 L21 12 L16 20"/></svg><h3>Software &amp; models</h3><p>Digital twins and engineering tools that let an idea be tested on screen before it costs anything on the floor.</p></div>
-  <div class="cap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 20 L4 12 L9 12 L9 20 M9 20 L9 6 L15 6 L15 20 M15 20 L15 9 L20 9 L20 20"/></svg><h3>Technology strategy</h3><p>Architecture and sequencing decisions that connect what you're building this quarter to what you'll need next year.</p></div>
-</div></section>
+      <div class="flex items-center gap-4">
+        <a href="#contact" class="hidden lg:inline-flex btn-primary text-sm font-bold px-5 py-2.5">
+          Start Conversation
+        </a>
 
-<section class="manifesto"><div class="wrap manifesto-grid">
-  <div class="manifesto-copy">
-    <h2 class="h2">Most valuable problems don't stay inside one discipline.</h2>
-    <p class="copy">A control problem turns into a data problem. A software decision becomes an architecture problem. A technology investment turns into a strategy conversation. GN Labs works across those seams without losing the engineering underneath.</p>
-    <div class="principle-list">
-      <div class="principle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.2" y2="16.2"/></svg><div><strong>Understand the system before adding to it.</strong><span>Start with the constraints and the outcome that matters, not the newest tool available.</span></div></div>
-      <div class="principle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 12 L9 12 L11 6 L14 18 L16 12 L21 12"/></svg><div><strong>Make what's invisible legible.</strong><span>Models, data and clear diagrams should expose what's really happening, not just decorate a report.</span></div></div>
-      <div class="principle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="4" y="4" width="7" height="7" rx="1"/><rect x="13" y="4" width="7" height="7" rx="1"/><rect x="4" y="13" width="7" height="7" rx="1"/><rect x="13" y="13" width="7" height="7" rx="1"/></svg><div><strong>Build what creates leverage.</strong><span>The most sophisticated answer isn't always the useful one — durable capability wins over complexity.</span></div></div>
-    </div>
-  </div>
-  <div class="manifesto-visual">
-    <svg viewBox="0 0 480 420" width="100%" height="auto" role="img" aria-label="Blueprint-style diagram showing a physical machine connected to sensors, a controller and a dashboard">
-      <g fill="none" stroke="rgba(255,255,255,.22)" stroke-width="1">
-        <line x1="40" y1="40" x2="440" y2="40"/><line x1="40" y1="380" x2="440" y2="380"/>
-        <line x1="40" y1="40" x2="40" y2="380"/><line x1="440" y1="40" x2="440" y2="380"/>
-      </g>
-      <rect x="66" y="150" width="110" height="90" rx="3" fill="none" stroke="#8b96a0" stroke-width="1.4"/>
-      <line x1="66" y1="176" x2="176" y2="176" stroke="#8b96a0" stroke-width="1"/>
-      <circle cx="121" cy="210" r="14" fill="none" stroke="#8b96a0" stroke-width="1.4"/>
-      <text x="121" y="264" text-anchor="middle" fill="#8b96a0" font-family="IBM Plex Sans" font-size="11">Machine</text>
-      <circle cx="238" cy="90" r="16" fill="none" stroke="#c59b32" stroke-width="1.6"/>
-      <path d="M232 90 a6 6 0 0 1 12 0" stroke="#c59b32" stroke-width="1.4" fill="none"/>
-      <text x="238" y="126" text-anchor="middle" fill="#c59b32" font-family="IBM Plex Sans" font-size="11">Sensor</text>
-      <rect x="272" y="170" width="90" height="60" rx="3" fill="none" stroke="#c59b32" stroke-width="1.6"/>
-      <path d="M286 200 h14 l6 -14 l8 28 l6 -14 h16" stroke="#c59b32" stroke-width="1.4" fill="none"/>
-      <text x="317" y="252" text-anchor="middle" fill="#c59b32" font-family="IBM Plex Sans" font-size="11">Controller</text>
-      <rect x="352" y="270" width="64" height="46" rx="3" fill="none" stroke="#8b96a0" stroke-width="1.4"/>
-      <path d="M362 306 l8 -14 l7 8 l10 -18" stroke="#8b96a0" stroke-width="1.4" fill="none"/>
-      <text x="384" y="336" text-anchor="middle" fill="#8b96a0" font-family="IBM Plex Sans" font-size="11">Dashboard</text>
-      <path d="M176 190 L272 195" stroke="rgba(255,255,255,.3)" stroke-width="1.2" stroke-dasharray="3 4"/>
-      <path d="M238 106 L238 170 L272 190" stroke="rgba(255,255,255,.3)" stroke-width="1.2" stroke-dasharray="3 4" fill="none"/>
-      <path d="M362 200 L384 200 L384 270" stroke="rgba(255,255,255,.3)" stroke-width="1.2" stroke-dasharray="3 4" fill="none"/>
-    </svg>
-  </div>
-</div></section>
-
-<section class="editorial"><div class="wrap">
-  <div class="editorial-head">
-    <div><h2 class="h2">The work lives between the machine and the decision.</h2></div>
-    <p class="copy">Three views of the same practice — the physical process, the data it produces, and the software that makes both easier to reason about.</p>
-  </div>
-  <div class="editorial-grid">
-    <div class="edit-tile">
-      <div class="tile-art"><svg viewBox="0 0 220 120" width="100%" role="img" aria-label="Diagram of a sensor to controller to actuator feedback loop"><g fill="none" stroke="#d7b45a" stroke-width="1.6"><rect x="10" y="46" width="42" height="28" rx="2"/><rect x="90" y="46" width="42" height="28" rx="2"/><rect x="170" y="46" width="42" height="28" rx="2"/><path d="M52 60 L90 60"/><path d="M132 60 L170 60"/><path d="M191 74 L191 96 L31 96 L31 74" stroke-dasharray="3 4"/></g><text x="31" y="65" text-anchor="middle" fill="#f4f0e4" font-family="IBM Plex Sans" font-size="9">Sensor</text><text x="111" y="65" text-anchor="middle" fill="#f4f0e4" font-family="IBM Plex Sans" font-size="9">Logic</text><text x="191" y="65" text-anchor="middle" fill="#f4f0e4" font-family="IBM Plex Sans" font-size="9">Actuator</text></svg></div>
-      <h3>Automation</h3>
-      <p>Designing machines and their control logic for the conditions they'll actually meet, not the ones on the datasheet.</p>
-    </div>
-    <div class="edit-tile">
-      <div class="tile-art"><svg viewBox="0 0 220 120" width="100%" role="img" aria-label="Diagram of telemetry data flowing from multiple field points into a network"><g fill="none" stroke="#d7b45a" stroke-width="1.6"><circle cx="30" cy="30" r="7"/><circle cx="30" cy="90" r="7"/><circle cx="70" cy="60" r="7"/><circle cx="150" cy="60" r="9"/><circle cx="190" cy="30" r="6"/><circle cx="190" cy="90" r="6"/><path d="M36 33 L64 57 M36 87 L64 63 M77 60 L141 60 M159 56 L184 33 M159 64 L184 87"/></g></svg></div>
-      <h3>Infrastructure</h3>
-      <p>Field telemetry, historians and dashboards built so the data people already have becomes something they trust.</p>
-    </div>
-    <div class="edit-tile">
-      <div class="tile-art"><svg viewBox="0 0 220 120" width="100%" role="img" aria-label="Waveform diagram representing a simulated process model"><g fill="none" stroke="#d7b45a" stroke-width="1.6"><path d="M6 70 C 26 20, 46 20, 66 70 S 106 120, 126 70 S 166 20, 186 70 S 206 95, 214 70"/></g><g stroke="rgba(255,255,255,.3)" stroke-width="1" stroke-dasharray="2 4"><line x1="6" y1="70" x2="214" y2="70"/></g></svg></div>
-      <h3>Software &amp; digital twins</h3>
-      <p>Process models that let a control strategy get tuned and broken safely on screen, long before it meets the plant.</p>
-    </div>
-  </div>
-</div></section>
-
-<section class="practice"><div class="wrap">
-  <div class="practice-top">
-    <div><h2 class="h2">Deep engineering. Wider perspective.</h2></div>
-    <p class="copy">Four capabilities, connected by one way of thinking about systems.</p>
-  </div>
-  <div class="practice-grid">
-    <article class="practice-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 12 L16 7"/></svg><h3>Control systems</h3><p>Control logic, instrumentation, sequencing and commissioning support for equipment that needs to behave predictably.</p><a href="/practice#control">View this capability</a></article>
-    <article class="practice-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 17 L8 10 L13 14 L21 5"/></svg><h3>Industrial data</h3><p>Telemetry, diagnostics, historians and dashboards that improve visibility without disturbing what already works.</p><a href="/practice#data">View this capability</a></article>
-    <article class="practice-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M8 4 L3 12 L8 20 M16 4 L21 12 L16 20"/></svg><h3>Software &amp; models</h3><p>Digital twins, engineering tools and internal software that let ideas be tested cheaply before they're built.</p><a href="/practice#software">View this capability</a></article>
-    <article class="practice-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 20 L4 12 L9 12 L9 20 M9 20 L9 6 L15 6 L15 20 M15 20 L15 9 L20 9 L20 20"/></svg><h3>Technology strategy</h3><p>Architecture and prioritisation work that connects today's fix to a system that still makes sense in three years.</p><a href="/practice#strategy">View this capability</a></article>
-  </div>
-</div></section>
-
-<section class="projects"><div class="wrap">
-  <div class="projects-head">
-    <div><h2 class="h2">Recent work, with what changed.</h2></div>
-    <p class="copy">A few problems where modelling, control and software came together to move a real number.</p>
-  </div>
-  <div class="project-list">
-    <article class="project">
-      <div><div class="project-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 17 L8 10 L13 14 L21 5"/></svg></div><div class="project-tag">Diagnostics retrofit</div></div>
-      <div><h3>Telemetry for a legacy bottling line</h3><p>Sensor telemetry and a diagnostics layer added to a line that had no spare capacity for downtime, without touching the existing control system underneath.</p><span class="project-outcome">Fault diagnosis time dropped from roughly four hours to under twenty minutes.</span></div>
-      <a class="project-link" href="/projects/telemetry-bottling-line">Read the case study</a>
-    </article>
-    <article class="project">
-      <div><div class="project-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M8 4 L3 12 L8 20 M16 4 L21 12 L16 20"/></svg></div><div class="project-tag">Digital twin</div></div>
-      <div><h3>Process model for a batch mixing line</h3><p>A dynamic model of the mixing process, used to test control assumptions and pre-tune the loops before anything was deployed on site.</p><span class="project-outcome">On-site commissioning time fell from about three weeks to eight days.</span></div>
-      <a class="project-link" href="/projects/batch-mixing-twin">Read the case study</a>
-    </article>
-    <article class="project">
-      <div><div class="project-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 12 L16 7"/></svg></div><div class="project-tag">Hardware-in-the-loop</div></div>
-      <div><h3>HIL rig for a conveyor safety interlock</h3><p>A hardware-in-the-loop rig used to run fault conditions against the interlock logic before it ever touched the live conveyor.</p><span class="project-outcome">Surfaced two sequencing faults that would otherwise have caused an unplanned stop.</span></div>
-      <a class="project-link" href="/projects/conveyor-hil-rig">Read the case study</a>
-    </article>
-  </div>
-</div></section>
-
-<section class="journal"><div class="wrap">
-  <div class="journal-head">
-    <div><h2 class="h2">Notes from the practice.</h2></div>
-    <p class="copy">Shorter pieces on engineering decisions, written as they came up on real projects.</p>
-  </div>
-  <div class="journal-grid">
-    <a class="journal-item" href="/blog"><h3>What gets missed when a system is read one layer at a time.</h3><p>A practical case for treating control, data, software and the people running them as one operating system, not four separate reviews.</p><span class="reading-time">8 min read</span></a>
-    <a class="journal-item" href="/blog"><h3>When does an industrial problem become a software problem?</h3><p>Some fixes belong in the PLC. Some belong in a model. Here's a rough test for telling the two apart before you commit.</p><span class="reading-time">5 min read</span></a>
-    <a class="journal-item" href="/blog"><h3>The real cost of hiding complexity instead of managing it.</h3><p>A simplified diagram can be worse than an honest, complicated one — if it hides the part that's actually load-bearing.</p><span class="reading-time">4 min read</span></a>
-  </div>
-</div></section>
-
-<section class="perspective"><div class="wrap perspective-grid">
-  <div>
-    <h2 class="h2">Technology earns its place when it improves a decision.</h2>
-    <p class="copy">The strongest technical work is rarely about adding another tool. It's about understanding a system well enough to know what actually deserves to change.</p>
-  </div>
-  <div class="perspective-list">
-    <div class="perspective-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 20 L4 12 L9 12 L9 20 M9 20 L9 6 L15 6 L15 20 M15 20 L15 9 L20 9 L20 20"/></svg><h3>Make complexity legible</h3><p>An architecture diagram should help someone predict how the pieces behave together, not just where they sit.</p></div>
-    <div class="perspective-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M8 4 L3 12 L8 20 M16 4 L21 12 L16 20"/></svg><h3>Prototype before committing</h3><p>Small models and early experiments surface bad assumptions while they're still cheap to fix.</p></div>
-    <div class="perspective-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="4" y="4" width="7" height="7" rx="1"/><rect x="13" y="13" width="7" height="7" rx="1"/></svg><h3>Build for leverage</h3><p>The clever solution isn't always the useful one — the goal is whatever improves the next decision that gets made.</p></div>
-  </div>
-</div></section>
-
-<section class="contact" id="contact"><div class="wrap contact-grid">
-  <div class="contact-info">
-    <h2 class="h2">Have a system worth thinking through?</h2>
-    <p class="copy">Send a note about what you're working on. Engineering enquiries, collaborations and early-stage technology conversations are all welcome.</p>
-    <div class="contact-detail">
-      <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7 L12 13 L21 7"/></svg><span><a href="mailto:contact@gnlabs.site">contact@gnlabs.site</a></span></div>
-      <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0 1 18 0Z"/><circle cx="12" cy="10" r="3"/></svg><span>Nairobi, Kenya — working with teams worldwide</span></div>
-    </div>
-    <div class="social-inline" aria-label="Social links">
-      <a href="https://www.linkedin.com/company/gnlabs" target="_blank" rel="noopener" aria-label="GN Labs on LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5.001 2.5 2.5 0 0 1 0-5.001ZM3 9h4v12H3zM9 9h3.8v1.7h.05c.53-.95 1.83-1.95 3.77-1.95 4.03 0 4.78 2.5 4.78 5.75V21h-4v-5.2c0-1.24-.02-2.84-1.73-2.84-1.74 0-2 1.36-2 2.75V21H9z"/></svg></a>
-      <a href="https://github.com/gnlabs" target="_blank" rel="noopener" aria-label="GN Labs on GitHub"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.19-3.37-1.19-.46-1.15-1.11-1.46-1.11-1.46-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.89 1.53 2.34 1.09 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.56-1.11-4.56-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02a9.4 9.4 0 0 1 5 0c1.91-1.3 2.75-1.02 2.75-1.02.55 1.38.2 2.4.1 2.65.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.85v2.75c0 .27.18.58.69.48A10 10 0 0 0 12 2Z"/></svg></a>
-    </div>
-  </div>
-
-  <form class="contact-form" id="contactForm" novalidate>
-    <div class="form-row">
-      <div class="form-group"><label for="name">Name</label><input id="name" name="name" type="text" autocomplete="name" required></div>
-      <div class="form-group"><label for="email">Email</label><input id="email" name="email" type="email" autocomplete="email" required></div>
-    </div>
-    <div class="form-group">
-      <label for="project-type">Project type <span class="hint">(optional)</span></label>
-      <select id="project-type" name="project-type">
-        <option value="">Select one</option>
-        <option value="control">Control &amp; automation</option>
-        <option value="data">Industrial data &amp; telemetry</option>
-        <option value="software">Software &amp; digital twins</option>
-        <option value="strategy">Technology strategy</option>
-        <option value="other">Something else</option>
-      </select>
-    </div>
-    <div class="form-group"><label for="message">What are you working on?</label><textarea id="message" name="message" required></textarea></div>
-    <div class="form-foot">
-      <p>Sent straight to contact@gnlabs.site — expect a reply within two business days.</p>
-      <button class="btn btn-primary" type="submit">Send message</button>
-    </div>
-    <div class="form-status" id="formStatus" role="status"></div>
-  </form>
-</div></section>
-
-</main>
-
-<footer><div class="wrap">
-  <div class="footer-grid">
-    <div class="footer-brand">
-      <a class="brand" href="/"><svg class="brand-mark" viewBox="0 0 30 30" fill="none" aria-hidden="true"><rect x="1" y="1" width="28" height="28" rx="6" stroke="#d5aa3a" stroke-width="1.3"/><text x="15" y="19.5" text-anchor="middle" font-family="Georgia,serif" font-size="12" font-weight="700" fill="#d5aa3a">GN</text></svg><span class="brand-name">GN Labs</span></a>
-      <p>Control systems, industrial data, software and the technology strategy that connects them.</p>
-      <div class="footer-social">
-        <a href="https://www.linkedin.com/company/gnlabs" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5.001 2.5 2.5 0 0 1 0-5.001ZM3 9h4v12H3zM9 9h3.8v1.7h.05c.53-.95 1.83-1.95 3.77-1.95 4.03 0 4.78 2.5 4.78 5.75V21h-4v-5.2c0-1.24-.02-2.84-1.73-2.84-1.74 0-2 1.36-2 2.75V21H9z"/></svg></a>
-        <a href="https://github.com/gnlabs" target="_blank" rel="noopener" aria-label="GitHub"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.19-3.37-1.19-.46-1.15-1.11-1.46-1.11-1.46-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.89 1.53 2.34 1.09 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.56-1.11-4.56-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02a9.4 9.4 0 0 1 5 0c1.91-1.3 2.75-1.02 2.75-1.02.55 1.38.2 2.4.1 2.65.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.85v2.75c0 .27.18.58.69.48A10 10 0 0 0 12 2Z"/></svg></a>
-        <a href="mailto:contact@gnlabs.site" aria-label="Email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7 L12 13 L21 7"/></svg></a>
+        <!-- Mobile hamburger -->
+        <button id="menuToggle" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobileDrawer" class="lg:hidden flex flex-col justify-center gap-1.5 w-9 h-9">
+          <span class="block h-0.5 w-6 bg-ink"></span>
+          <span class="block h-0.5 w-6 bg-ink"></span>
+          <span class="block h-0.5 w-4 bg-ink self-start ml-3"></span>
+        </button>
       </div>
     </div>
-    <div><div class="footer-title">Explore</div><div class="footer-links"><a href="/">Home</a><a href="/about">About</a><a href="/projects">Projects</a><a href="/practice">Practice</a><a href="/blog">Journal</a></div></div>
-    <div><div class="footer-title">Focus</div><div class="footer-links"><a href="/practice#control">Control &amp; automation</a><a href="/practice#data">Industrial data</a><a href="/practice#software">Software &amp; models</a><a href="/practice#strategy">Technology strategy</a></div></div>
-    <div><div class="footer-title">Connect</div><div class="footer-links"><a href="mailto:contact@gnlabs.site">contact@gnlabs.site</a><a href="https://www.linkedin.com/company/gnlabs" target="_blank" rel="noopener">LinkedIn</a><a href="https://github.com/gnlabs" target="_blank" rel="noopener">GitHub</a><span>Nairobi, Kenya</span></div></div>
   </div>
-  <div class="footer-bottom">
-    <span>© 2026 GN Labs. All rights reserved.</span>
-    <span><a href="/privacy">Privacy</a> · <a href="/terms">Terms</a></span>
+</header>
+
+<!-- Mobile drawer overlay -->
+<div id="mobileOverlay" class="fixed inset-0 bg-ink/50 z-40 lg:hidden"></div>
+
+<!-- Mobile drawer -->
+<aside id="mobileDrawer" class="fixed top-0 right-0 h-full w-72 bg-base z-50 border-l border-gray-200 lg:hidden" aria-label="Mobile navigation">
+  <div class="flex items-center justify-between h-20 px-6 border-b border-gray-200">
+    <span class="font-extrabold tracking-tighter text-lg">Menu</span>
+    <button id="menuClose" aria-label="Close navigation menu" class="w-9 h-9 flex items-center justify-center text-2xl leading-none text-steel">&times;</button>
   </div>
-</div></footer>
+  <nav class="flex flex-col px-6 py-8 gap-6" aria-label="Mobile primary">
+    <a href="#home" class="mobile-link text-lg font-semibold text-ink">Home</a>
+    <a href="#about" class="mobile-link text-lg font-semibold text-ink">About</a>
+    <a href="#projects" class="mobile-link text-lg font-semibold text-ink">Projects</a>
+    <a href="#practice" class="mobile-link text-lg font-semibold text-ink">Practice</a>
+    <a href="#blog" class="mobile-link text-lg font-semibold text-ink">Blog</a>
+    <a href="#contact" class="btn-primary text-center font-bold px-5 py-3 mt-4">Start Conversation</a>
+  </nav>
+</aside>
+
+<!-- ============ HERO ============ -->
+<section id="home" class="relative overflow-hidden border-b border-gray-200">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10 py-16 lg:py-24 grid lg:grid-cols-5 gap-12 items-center">
+
+    <div class="lg:col-span-3 fade-in">
+      <p class="text-sm font-semibold text-techblue mb-5 flex items-center gap-2">
+        <span class="w-2 h-2 bg-techblue status-dot rounded-full"></span>
+        Available for new engagements
+      </p>
+      <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.05] text-ink">
+        Engineering deterministic systems and scalable software architecture.
+      </h1>
+      <p class="mt-6 text-lg text-steel leading-relaxed max-w-xl">
+        I design and build the layer that connects PLC control logic and edge hardware to production software pipelines — from IEC 61131-3 structured text on the plant floor to the APIs and automation running in the cloud above it.
+      </p>
+      <div class="mt-9 flex flex-wrap gap-4">
+        <a href="#contact" class="btn-primary font-bold px-6 py-3.5 text-sm">Start Conversation</a>
+        <a href="#projects" class="btn-secondary font-bold px-6 py-3.5 text-sm">See Projects</a>
+        <a href="#blog" class="btn-ghost font-bold px-6 py-3.5 text-sm">Read Blog</a>
+      </div>
+    </div>
+
+    <div class="lg:col-span-2 fade-in">
+      <div class="border-2 border-ink relative overflow-hidden">
+        <img
+          src="https://images.pexels.com/photos/18471525/pexels-photo-18471525.jpeg?auto=compress&cs=tinysrgb&w=1280"
+          alt="Modern electronics and controls engineering lab with workstations and test equipment"
+          class="w-full h-full object-cover aspect-[4/3]"
+          loading="eager">
+        <div class="absolute top-0 left-0 bg-ink text-white text-xs font-mono px-3 py-1.5">SYS-ARCH.001</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CAPABILITY MATRIX ============ -->
+<section id="about" class="bg-alt border-b border-gray-200 py-20 lg:py-28">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10">
+    <div class="max-w-2xl fade-in">
+      <h2 class="text-3xl lg:text-4xl font-extrabold tracking-tight text-ink">Four domains, one execution path</h2>
+      <p class="mt-4 text-steel leading-relaxed">
+        Every engagement moves through some combination of these disciplines. Systems rarely fail at one layer — they fail at the seams between them.
+      </p>
+    </div>
+
+    <div class="mt-14 grid sm:grid-cols-2 lg:grid-cols-4 gap-0.5 bg-gray-200 border border-gray-200">
+      <div class="capability-card bg-alt border border-transparent fade-in">
+        <div class="aspect-[4/3] overflow-hidden">
+          <img src="https://images.pexels.com/photos/7174676/pexels-photo-7174676.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Close-up of a microcontroller circuit board" class="w-full h-full object-cover" loading="lazy">
+        </div>
+        <div class="p-7">
+          <h3 class="font-bold text-ink text-lg mb-2">Embedded &amp; Hardware</h3>
+          <p class="text-sm text-steel leading-relaxed">Microcontrollers, ESP32 platforms, and firmware built for deterministic real-time execution under hard timing constraints.</p>
+        </div>
+      </div>
+
+      <div class="capability-card bg-alt border border-transparent fade-in">
+        <div class="aspect-[4/3] overflow-hidden">
+          <img src="https://images.pexels.com/photos/35072831/pexels-photo-35072831.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Technician operating an industrial control panel" class="w-full h-full object-cover" loading="lazy">
+        </div>
+        <div class="p-7">
+          <h3 class="font-bold text-ink text-lg mb-2">Industrial Automation</h3>
+          <p class="text-sm text-steel leading-relaxed">PLC logic authored in IEC 61131-3 structured text, CODESYS environments, and fieldbus network integration.</p>
+        </div>
+      </div>
+
+      <div class="capability-card bg-alt border border-transparent fade-in">
+        <div class="aspect-[4/3] overflow-hidden">
+          <img src="https://images.pexels.com/photos/18471567/pexels-photo-18471567.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Digital oscilloscope on a laboratory workbench" class="w-full h-full object-cover" loading="lazy">
+        </div>
+        <div class="p-7">
+          <h3 class="font-bold text-ink text-lg mb-2">Systems &amp; Control</h3>
+          <p class="text-sm text-steel leading-relaxed">Mathematical modeling, closed-loop control design, and hardware-in-the-loop simulation before anything ships.</p>
+        </div>
+      </div>
+
+      <div class="capability-card bg-alt border border-transparent fade-in">
+        <div class="aspect-[4/3] overflow-hidden">
+          <img src="https://images.pexels.com/photos/18471532/pexels-photo-18471532.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Server rack and computer workspace" class="w-full h-full object-cover" loading="lazy">
+        </div>
+        <div class="p-7">
+          <h3 class="font-bold text-ink text-lg mb-2">Software &amp; Cloud</h3>
+          <p class="text-sm text-steel leading-relaxed">Automation pipelines, API integration, and Python stack work tuned for throughput rather than novelty.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FEATURED PROJECTS ============ -->
+<section id="projects" class="py-20 lg:py-28 border-b border-gray-200">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10">
+    <div class="flex items-end justify-between flex-wrap gap-4 fade-in">
+      <h2 class="text-3xl lg:text-4xl font-extrabold tracking-tight text-ink">Featured projects</h2>
+      <a href="#" class="btn-ghost font-semibold text-sm">Full archive</a>
+    </div>
+
+    <div class="mt-12 grid lg:grid-cols-3 gap-6">
+      <article class="project-card border border-gray-300 p-7 fade-in">
+        <p class="text-xs font-mono text-steel mb-4">2025 · CONTROL SYSTEMS</p>
+        <h3 class="font-bold text-xl text-ink mb-3">Batch Mixing Line Retrofit</h3>
+        <p class="text-sm text-steel leading-relaxed mb-5">Replaced a relay-based mixing controller with a CODESYS PLC running closed-loop PID control across four tanks.</p>
+        <ul class="text-xs text-steel space-y-1.5 mb-6 font-mono">
+          <li>CODESYS · IEC 61131-3 · Modbus TCP</li>
+        </ul>
+        <p class="text-sm font-semibold text-ink border-t border-gray-200 pt-4">Result: batch variance reduced from 6% to under 1%</p>
+      </article>
+
+      <article class="project-card border border-gray-300 p-7 fade-in">
+        <p class="text-xs font-mono text-steel mb-4">2024 · EDGE + CLOUD</p>
+        <h3 class="font-bold text-xl text-ink mb-3">Remote Sensor Telemetry Network</h3>
+        <p class="text-sm text-steel leading-relaxed mb-5">Built an ESP32-based sensor mesh reporting into a cloud pipeline with automated anomaly flagging.</p>
+        <ul class="text-xs text-steel space-y-1.5 mb-6 font-mono">
+          <li>ESP32 · MQTT · Python · REST API</li>
+        </ul>
+        <p class="text-sm font-semibold text-ink border-t border-gray-200 pt-4">Result: 40 sites monitored with under 2-minute alert latency</p>
+      </article>
+
+      <article class="project-card border border-gray-300 p-7 fade-in">
+        <p class="text-xs font-mono text-steel mb-4">2024 · SOFTWARE AUTOMATION</p>
+        <h3 class="font-bold text-xl text-ink mb-3">Fieldbus Diagnostics Toolkit</h3>
+        <p class="text-sm text-steel leading-relaxed mb-5">A Python diagnostics layer that reads live fieldbus traffic and surfaces faults before they trip a line.</p>
+        <ul class="text-xs text-steel space-y-1.5 mb-6 font-mono">
+          <li>Python · PROFIBUS · Grafana</li>
+        </ul>
+        <p class="text-sm font-semibold text-ink border-t border-gray-200 pt-4">Result: unplanned downtime cut by 30% in first quarter</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FEATURED ARTICLES ============ -->
+<section id="blog" class="bg-alt py-20 lg:py-28 border-b border-gray-200">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10">
+    <h2 class="text-3xl lg:text-4xl font-extrabold tracking-tight text-ink fade-in">Recent articles</h2>
+
+    <div id="articleGrid" class="mt-12 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <!-- Populated by renderArticles() below. Cards render from the `articles` data array,
+           so swapping in a Contentful fetch only means replacing that array's source. -->
+    </div>
+  </div>
+</section>
+
+<!-- ============ PRACTICE / CONTACT ============ -->
+<section id="practice" class="py-20 lg:py-28 border-b border-gray-200">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10 grid lg:grid-cols-5 gap-14">
+    <div class="lg:col-span-2 fade-in">
+      <h2 class="text-3xl lg:text-4xl font-extrabold tracking-tight text-ink">Working principles</h2>
+      <p class="mt-5 text-steel leading-relaxed">
+        Every engagement holds to the same discipline: define the failure modes before writing control logic, model before deploying to hardware, and document each system to a standard a second engineer could pick up without a handover call.
+      </p>
+      <dl class="mt-8 space-y-5 text-sm">
+        <div class="flex gap-4">
+          <dt class="font-mono text-steel w-24 shrink-0">Response</dt>
+          <dd class="text-ink">Within 1 business day</dd>
+        </div>
+        <div class="flex gap-4">
+          <dt class="font-mono text-steel w-24 shrink-0">Format</dt>
+          <dd class="text-ink">Fixed-scope or ongoing retainer</dd>
+        </div>
+        <div class="flex gap-4">
+          <dt class="font-mono text-steel w-24 shrink-0">Location</dt>
+          <dd class="text-ink">Remote, on-site by arrangement</dd>
+        </div>
+      </dl>
+    </div>
+
+    <div id="contact" class="lg:col-span-3 fade-in">
+      <form class="border border-gray-300 p-8" id="contactForm">
+        <div class="grid sm:grid-cols-2 gap-6">
+          <div>
+            <label for="name" class="block text-xs font-semibold uppercase tracking-wide text-steel mb-2">Name</label>
+            <input type="text" id="name" name="name" required class="w-full border border-gray-300 px-4 py-3 text-sm focus:border-ink outline-none">
+          </div>
+          <div>
+            <label for="email" class="block text-xs font-semibold uppercase tracking-wide text-steel mb-2">Email</label>
+            <input type="email" id="email" name="email" required class="w-full border border-gray-300 px-4 py-3 text-sm focus:border-ink outline-none">
+          </div>
+        </div>
+        <div class="mt-6">
+          <label for="scope" class="block text-xs font-semibold uppercase tracking-wide text-steel mb-2">System Scope</label>
+          <input type="text" id="scope" name="scope" placeholder="e.g. PLC retrofit, edge telemetry, control loop review" class="w-full border border-gray-300 px-4 py-3 text-sm focus:border-ink outline-none">
+        </div>
+        <div class="mt-6">
+          <label for="message" class="block text-xs font-semibold uppercase tracking-wide text-steel mb-2">Message</label>
+          <textarea id="message" name="message" rows="4" required class="w-full border border-gray-300 px-4 py-3 text-sm focus:border-ink outline-none"></textarea>
+        </div>
+        <button type="submit" id="submitBtn" class="btn-primary font-bold px-7 py-3.5 text-sm mt-7">Send Message</button>
+        <p id="formStatus" class="text-sm text-techblue font-semibold mt-4 hidden">Message received. I'll reply within one business day.</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="bg-slate text-gray-300">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10 py-16 grid sm:grid-cols-2 lg:grid-cols-4 gap-10">
+    <div>
+      <span class="tracking-tighter font-extrabold text-xl text-white">GN<span class="text-amber">Labs</span></span>
+      <p class="mt-4 text-sm text-gray-400 leading-relaxed max-w-xs">
+        Independent engineering practice covering embedded systems, industrial automation, and the software that connects them.
+      </p>
+    </div>
+
+    <div>
+      <h4 class="text-white font-semibold text-sm mb-4">Quick Links</h4>
+      <ul class="space-y-3 text-sm text-gray-400">
+        <li><a href="#home" class="hover:text-white transition-colors">Home</a></li>
+        <li><a href="#about" class="hover:text-white transition-colors">About</a></li>
+        <li><a href="#projects" class="hover:text-white transition-colors">Projects</a></li>
+        <li><a href="#practice" class="hover:text-white transition-colors">Practice</a></li>
+        <li><a href="#blog" class="hover:text-white transition-colors">Blog</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <h4 class="text-white font-semibold text-sm mb-4">Core Technical Domains</h4>
+      <ul class="space-y-3 text-sm text-gray-400">
+        <li>Embedded &amp; Hardware</li>
+        <li>Industrial Automation</li>
+        <li>Systems &amp; Control</li>
+        <li>Software &amp; Cloud</li>
+      </ul>
+    </div>
+
+    <div>
+      <h4 class="text-white font-semibold text-sm mb-4">Legal / Compliance</h4>
+      <ul class="space-y-3 text-sm text-gray-400 mb-6">
+        <li><a href="#" class="hover:text-white transition-colors">Privacy Policy</a></li>
+        <li><a href="#" class="hover:text-white transition-colors">Terms of Service</a></li>
+      </ul>
+      <div class="flex gap-4">
+        <a href="#" aria-label="GitHub" class="text-gray-400 hover:text-white transition-colors">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.38 7.86 10.9.58.1.79-.25.79-.56 0-.28-.01-1.02-.02-2-3.2.7-3.88-1.54-3.88-1.54-.52-1.34-1.28-1.7-1.28-1.7-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.68 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.04 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.79 0c2.21-1.49 3.18-1.18 3.18-1.18.63 1.58.23 2.75.11 3.04.74.81 1.19 1.83 1.19 3.09 0 4.41-2.69 5.39-5.25 5.67.41.36.78 1.07.78 2.16 0 1.56-.01 2.82-.01 3.2 0 .32.21.67.8.56A10.52 10.52 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5Z"/></svg>
+        </a>
+        <a href="#" aria-label="LinkedIn" class="text-gray-400 hover:text-white transition-colors">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.36V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29ZM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12ZM7.12 20.45H3.56V9h3.56v11.45ZM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0Z"/></svg>
+        </a>
+        <a href="#" aria-label="RSS Feed" class="text-gray-400 hover:text-white transition-colors">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M4 4a16 16 0 0 1 16 16h-3a13 13 0 0 0-13-13V4Zm0 6a10 10 0 0 1 10 10h-3a7 7 0 0 0-7-7v-3Zm2.5 6.5A2.5 2.5 0 1 1 4 19a2.5 2.5 0 0 1 2.5-2.5Z"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="border-t border-white/10">
+    <div class="max-w-7xl mx-auto px-6 lg:px-10 py-6 text-xs text-gray-500">
+      © 2026 GN Labs. All specifications subject to revision without notice.
+    </div>
+  </div>
+</footer>
+
+<!-- ============ NEWSLETTER POPUP (triggers once, near the footer) ============ -->
+<div id="newsletterOverlay" class="fixed inset-0 z-50 bg-ink/60 flex items-center justify-center p-4" aria-hidden="true">
+  <div id="newsletterModal" class="relative bg-graphite text-white w-full max-w-2xl border border-white/10 p-10 sm:p-14">
+    <button id="dismissBanner" aria-label="Close newsletter signup" class="absolute top-5 right-5 text-gray-400 hover:text-white text-2xl leading-none w-9 h-9 flex items-center justify-center">&times;</button>
+    <p class="text-xs font-mono text-amber uppercase tracking-wide mb-4">Before you go</p>
+    <h3 class="text-2xl sm:text-3xl font-extrabold tracking-tight">Get new writing on control systems and edge software</h3>
+    <p class="text-gray-400 mt-3 text-sm">One email, roughly monthly. No spam.</p>
+    <form id="newsletterForm" class="flex flex-col sm:flex-row gap-3 mt-8">
+      <input type="email" required placeholder="you@company.com" class="flex-1 bg-white/5 border border-white/20 px-4 py-3 text-sm text-white placeholder-gray-500 outline-none focus:border-amber">
+      <button type="submit" class="btn-primary font-bold px-6 py-3 text-sm whitespace-nowrap">Subscribe</button>
+    </form>
+  </div>
+</div>
+
+<!-- ============ SCROLL TO TOP ============ -->
+<button id="scrollTopBtn" aria-label="Scroll to top" class="fixed bottom-6 right-6 z-40 w-11 h-11 bg-ink text-white flex items-center justify-center">
+  <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 13V3M8 3L3 8M8 3l5 5" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</button>
 
 <script>
-const menu=document.getElementById('menu'),mobile=document.getElementById('mobileNav'),close=document.getElementById('close');
-function openNav(){mobile.classList.add('open');mobile.setAttribute('aria-hidden','false');menu.setAttribute('aria-expanded','true');document.body.classList.add('nav-open');setTimeout(()=>mobile.querySelector('.mobile-links a')?.focus(),280)}
-function closeNav(){mobile.classList.remove('open');mobile.setAttribute('aria-hidden','true');menu.setAttribute('aria-expanded','false');document.body.classList.remove('nav-open');menu.focus()}
-menu.addEventListener('click',openNav);
-close.addEventListener('click',closeNav);
-mobile.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{if(a.getAttribute('href')?.startsWith('#'))closeNav()}));
-document.addEventListener('keydown',e=>{if(e.key==='Escape'&&mobile.classList.contains('open'))closeNav()});
+  // ---- Recent Articles ----
+  // This array is the render source for the article cards below. To wire up
+  // Contentful: replace this static array with an async fetch to the
+  // Content Delivery API, map each entry's fields to the same shape
+  // ({ title, excerpt, date, image, url }), then call renderArticles(entries).
+  const articles = [
+    {
+      title: 'Why Structured Text Still Beats Ladder Logic for Complex Sequencing',
+      excerpt: 'A comparison grounded in three years of retrofits, not vendor marketing.',
+      date: 'Sep 2026',
+      image: 'https://picsum.photos/seed/gnlabs-article-1/640/420',
+      url: '#'
+    },
+    {
+      title: 'Hardware-in-the-Loop Testing on a Budget',
+      excerpt: 'Building an HIL rig from an ESP32 and open tooling instead of a six-figure bench.',
+      date: 'Jul 2026',
+      image: 'https://picsum.photos/seed/gnlabs-article-2/640/420',
+      url: '#'
+    },
+    {
+      title: 'What Breaks When PLCs Talk to the Cloud',
+      excerpt: 'Failure modes at the OT/IT boundary, and how to design around them.',
+      date: 'May 2026',
+      image: 'https://picsum.photos/seed/gnlabs-article-3/640/420',
+      url: '#'
+    }
+  ];
 
-const form=document.getElementById('contactForm'),status=document.getElementById('formStatus');
-form.addEventListener('submit',function(e){
-  e.preventDefault();
-  const name=form.name.value.trim(),email=form.email.value.trim(),typeSel=form['project-type'],message=form.message.value.trim();
-  const typeText=typeSel.value?typeSel.options[typeSel.selectedIndex].text:'';
-  const subject=encodeURIComponent('New enquiry from '+name+(typeText?' — '+typeText:''));
-  const body=encodeURIComponent(message+'\n\n—\n'+name+'\n'+email);
-  window.location.href='mailto:contact@gnlabs.site?subject='+subject+'&body='+body;
-  status.textContent='Your email client should open with this message ready to send.';
-  status.className='form-status show ok';
-});
+  function renderArticles(items) {
+    const grid = document.getElementById('articleGrid');
+    grid.innerHTML = items.map(article => `
+      <a href="${article.url}" class="article-card group block border border-gray-300 bg-base fade-in">
+        <div class="aspect-[16/10] overflow-hidden bg-gray-200">
+          <img src="${article.image}" alt="" class="w-full h-full object-cover" loading="lazy">
+        </div>
+        <div class="p-6">
+          <p class="text-xs font-mono text-steel mb-3">${article.date}</p>
+          <h3 class="article-card-title font-bold text-lg text-ink leading-snug transition-colors">${article.title}</h3>
+          <p class="text-sm text-steel mt-2 leading-relaxed">${article.excerpt}</p>
+        </div>
+      </a>
+    `).join('');
+
+    // Newly injected cards need their own fade-in observers.
+    grid.querySelectorAll('.fade-in').forEach(el => fadeObserver.observe(el));
+  }
+
+  // Mobile drawer toggle
+  const menuToggle = document.getElementById('menuToggle');
+  const menuClose = document.getElementById('menuClose');
+  const mobileDrawer = document.getElementById('mobileDrawer');
+  const mobileOverlay = document.getElementById('mobileOverlay');
+
+  function openDrawer() {
+    mobileDrawer.classList.add('open');
+    mobileOverlay.classList.add('open');
+    menuToggle.setAttribute('aria-expanded', 'true');
+  }
+  function closeDrawer() {
+    mobileDrawer.classList.remove('open');
+    mobileOverlay.classList.remove('open');
+    menuToggle.setAttribute('aria-expanded', 'false');
+  }
+  menuToggle.addEventListener('click', openDrawer);
+  menuClose.addEventListener('click', closeDrawer);
+  mobileOverlay.addEventListener('click', closeDrawer);
+  document.querySelectorAll('.mobile-link').forEach(link => {
+    link.addEventListener('click', closeDrawer);
+  });
+
+  // Scroll-to-top button visibility
+  const scrollTopBtn = document.getElementById('scrollTopBtn');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 500) {
+      scrollTopBtn.classList.add('show');
+    } else {
+      scrollTopBtn.classList.remove('show');
+    }
+  });
+  scrollTopBtn.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  // Newsletter popup — fires once when the footer comes into view (a proxy for
+  // "the visitor has scrolled the whole page and is about to leave"), then stays
+  // dismissed for the rest of the session either way.
+  const newsletterOverlay = document.getElementById('newsletterOverlay');
+  const footer = document.querySelector('footer');
+  const dismissBanner = document.getElementById('dismissBanner');
+  let newsletterShown = false;
+
+  function closeNewsletter() {
+    newsletterOverlay.classList.remove('show');
+    newsletterOverlay.setAttribute('aria-hidden', 'true');
+  }
+
+  const footerObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting && !newsletterShown) {
+        newsletterShown = true;
+        newsletterOverlay.classList.add('show');
+        newsletterOverlay.setAttribute('aria-hidden', 'false');
+        footerObserver.disconnect();
+      }
+    });
+  }, { threshold: 0.1 });
+  footerObserver.observe(footer);
+
+  dismissBanner.addEventListener('click', closeNewsletter);
+  newsletterOverlay.addEventListener('click', (e) => {
+    if (e.target === newsletterOverlay) closeNewsletter();
+  });
+
+  const newsletterForm = document.getElementById('newsletterForm');
+  newsletterForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    newsletterForm.innerHTML = '<p class="text-sm font-semibold text-white py-2">Subscribed. First issue lands next cycle.</p>';
+  });
+
+  // Contact form submission state
+  const contactForm = document.getElementById('contactForm');
+  const submitBtn = document.getElementById('submitBtn');
+  const formStatus = document.getElementById('formStatus');
+  contactForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    submitBtn.textContent = 'Sending…';
+    submitBtn.disabled = true;
+    setTimeout(() => {
+      submitBtn.textContent = 'Send Message';
+      submitBtn.disabled = false;
+      formStatus.classList.remove('hidden');
+      contactForm.reset();
+    }, 700);
+  });
+
+  // Scroll-triggered fade-ins
+  const fadeEls = document.querySelectorAll('.fade-in');
+  const fadeObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        fadeObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  fadeEls.forEach(el => fadeObserver.observe(el));
+
+  renderArticles(articles);
 </script>
-<style>
-@keyframes sweep{from{transform:rotate(-46deg)}to{transform:rotate(0deg)}}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.25}}
-</style>
-</body></html>
+
+</body>
+</html>
