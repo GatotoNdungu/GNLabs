@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Projects — GN Labs | Control Systems, Embedded &amp; Edge Case Studies</title>
+<meta name="description" content="Selected engineering work from GN Labs: PLC retrofits, closed-loop control design, edge telemetry networks, and the software pipelines connecting plant floor to cloud. Each with scope, stack, and measured result.">
+<link rel="canonical" href="https://gnlabs.site/projects/">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          base: '#FFFFFF',
+          alt: '#F8F9FA',
+          slate: '#181C20',
+          graphite: '#0F1215',
+          ink: '#111827',
+          steel: '#4B5563',
+          amber: '#D97706',
+          techblue: '#1E40AF',
+        },
+        fontFamily: {
+          sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'system-ui', 'sans-serif'],
+          mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace'],
+        },
+      }
+    }
+  }
+</script>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Crect width='30' height='30' fill='%23FFFFFF'/%3E%3Crect x='1' y='1' width='28' height='28' fill='none' stroke='%23111827' stroke-width='2'/%3E%3Crect x='7' y='7' width='8' height='8' fill='%23D97706'/%3E%3Crect x='16' y='16' width='7' height='7' fill='none' stroke='%23111827' stroke-width='2'/%3E%3Cline x1='15' y1='11' x2='19.5' y2='16' stroke='%23111827' stroke-width='2'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-base: #FFFFFF;
+    --bg-alt: #F8F9FA;
+    --dark-slate: #181C20;
+    --dark-graphite: #0F1215;
+    --text-ink: #111827;
+    --text-steel: #4B5563;
+    --accent-amber: #D97706;
+    --accent-blue: #1E40AF;
+  }
+
+  * { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    color: var(--text-ink);
+    background: var(--bg-base);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { scroll-behavior: auto !important; animation: none !important; transition: none !important; }
+  }
+
+  .fade-in {
+    opacity: 0;
+    transform: translateY(14px);
+    transition: opacity 500ms ease-out, transform 500ms ease-out;
+  }
+  .fade-in.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .grid-texture {
+    background-image:
+      linear-gradient(to right, rgba(17,24,39,0.06) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(17,24,39,0.06) 1px, transparent 1px);
+    background-size: 28px 28px;
+  }
+
+  .btn-primary {
+    background: var(--accent-amber);
+    color: #FFFFFF;
+    transition: background-color 200ms ease-in-out, transform 200ms ease-in-out;
+  }
+  .btn-primary:hover { background: #B45F04; }
+  .btn-primary:focus-visible { outline: 3px solid #92400E; outline-offset: 2px; }
+
+  .btn-secondary {
+    border: 1.5px solid var(--text-ink);
+    color: var(--text-ink);
+    transition: background-color 200ms ease-in-out, color 200ms ease-in-out;
+  }
+  .btn-secondary:hover { background: var(--text-ink); color: #fff; }
+  .btn-secondary:focus-visible { outline: 3px solid var(--text-ink); outline-offset: 2px; }
+
+  .btn-ghost {
+    color: var(--text-steel);
+    transition: color 200ms ease-in-out;
+  }
+  .btn-ghost:hover { color: var(--text-ink); }
+  .btn-ghost:focus-visible { outline: 2px solid var(--text-steel); outline-offset: 3px; }
+
+  a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible {
+    outline: 2px solid var(--accent-amber);
+    outline-offset: 2px;
+  }
+
+  .nav-link {
+    position: relative;
+    color: var(--text-steel);
+    transition: color 200ms ease-in-out;
+  }
+  .nav-link:hover { color: var(--text-ink); }
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -4px;
+    height: 2px;
+    width: 0;
+    background: var(--accent-amber);
+    transition: width 200ms ease-in-out;
+  }
+  .nav-link:hover::after { width: 100%; }
+  .nav-link[aria-current="page"] { color: var(--text-ink); }
+  .nav-link[aria-current="page"]::after { width: 100%; }
+  .mobile-link[aria-current="page"] { color: var(--accent-amber); }
+
+  .status-dot {
+    box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.15);
+  }
+
+  #mobileDrawer {
+    transform: translateX(100%);
+    transition: transform 260ms ease-in-out;
+  }
+  #mobileDrawer.open { transform: translateX(0); }
+  #mobileOverlay {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 260ms ease-in-out;
+  }
+  #mobileOverlay.open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  #scrollTopBtn {
+    opacity: 0;
+    transform: translateY(10px);
+    pointer-events: none;
+    transition: opacity 200ms ease-in-out, transform 200ms ease-in-out;
+  }
+  #scrollTopBtn.show {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+
+  #newsletterOverlay {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 250ms ease-in-out, visibility 250ms ease-in-out;
+  }
+  #newsletterOverlay.show {
+    opacity: 1;
+    visibility: visible;
+  }
+  #newsletterModal {
+    transform: scale(0.96);
+    transition: transform 250ms ease-in-out;
+  }
+  #newsletterOverlay.show #newsletterModal {
+    transform: scale(1);
+  }
+
+  /* Header: compacts and gains depth once the page scrolls */
+  #siteHeader {
+    transition: height 260ms ease-in-out, box-shadow 260ms ease-in-out, background-color 260ms ease-in-out;
+  }
+  #siteHeader .header-inner {
+    transition: height 260ms ease-in-out;
+  }
+  #siteHeader.is-scrolled {
+    box-shadow: 0 1px 0 rgba(17,24,39,0.06), 0 12px 24px -18px rgba(17,24,39,0.25);
+  }
+  #siteHeader.is-scrolled .header-inner {
+    height: 4.25rem;
+  }
+  #siteHeader:not(.is-scrolled) .header-inner {
+    height: 5rem;
+  }
+
+  /* Project cards */
+  .project-card {
+    transition: border-color 200ms ease-in-out, transform 200ms ease-in-out, box-shadow 200ms ease-in-out;
+  }
+  .project-card:hover {
+    border-color: var(--text-ink);
+    transform: translateY(-3px);
+    box-shadow: 0 14px 28px -18px rgba(17,24,39,0.3);
+  }
+  .project-card:hover .project-card-title { color: var(--accent-amber); }
+  .project-card-title { transition: color 200ms ease-in-out; }
+  .project-card img { transition: transform 400ms ease-out; }
+  .project-card:hover img { transform: scale(1.04); }
+
+  /* Filter buttons */
+  .filter-btn {
+    border: 1px solid #E5E7EB;
+    color: var(--text-steel);
+    transition: border-color 200ms ease-in-out, color 200ms ease-in-out, background-color 200ms ease-in-out;
+  }
+  .filter-btn:hover {
+    border-color: var(--text-ink);
+    color: var(--text-ink);
+  }
+  .filter-btn.is-active {
+    background: var(--text-ink);
+    border-color: var(--text-ink);
+    color: #FFFFFF;
+  }
+
+  /* Process steps */
+  .process-step {
+    position: relative;
+    padding-top: 1.75rem;
+    border-top: 2px solid #E5E7EB;
+    transition: border-color 200ms ease-in-out;
+  }
+  .process-step:hover { border-top-color: var(--accent-amber); }
+
+  .pill {
+    border: 1px solid #E5E7EB;
+    color: var(--text-steel);
+  }
+</style>
+</head>
+<body class="bg-base text-ink antialiased">
+
+<!-- ============ HEADER ============ -->
+<header id="siteHeader" class="sticky top-0 z-40 bg-base/95 backdrop-blur border-b border-gray-200">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10">
+    <div class="header-inner flex items-center justify-between h-20">
+
+      <a href="/" class="flex items-center gap-3 group">
+        <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect x="1" y="1" width="28" height="28" stroke="#111827" stroke-width="1.6"/>
+          <rect x="7" y="7" width="8" height="8" fill="#D97706"/>
+          <rect x="16" y="16" width="7" height="7" stroke="#111827" stroke-width="1.6"/>
+          <line x1="15" y1="11" x2="19.5" y2="16" stroke="#111827" stroke-width="1.6"/>
+        </svg>
+        <span class="tracking-tighter font-extrabold text-xl text-ink">GN<span class="text-amber">Labs</span></span>
+      </a>
+
+      <nav class="hidden lg:flex items-center gap-9" aria-label="Primary">
+        <a href="/" class="nav-link text-sm font-semibold">Home</a>
+        <a href="/about/" class="nav-link text-sm font-semibold">About</a>
+        <a href="/projects/" class="nav-link text-sm font-semibold" aria-current="page">Projects</a>
+        <a href="/practice/" class="nav-link text-sm font-semibold">Practice</a>
+        <a href="/blog/" class="nav-link text-sm font-semibold">Blog</a>
+      </nav>
+
+      <div class="flex items-center gap-4">
+        <a href="/contact/" class="hidden lg:inline-flex btn-primary text-sm font-bold px-5 py-2.5">
+          Start Conversation
+        </a>
+
+        <button id="menuToggle" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobileDrawer" class="lg:hidden flex flex-col justify-center gap-1.5 w-9 h-9">
+          <span class="block h-0.5 w-6 bg-ink"></span>
+          <span class="block h-0.5 w-6 bg-ink"></span>
+          <span class="block h-0.5 w-4 bg-ink self-start ml-3"></span>
+        </button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- Mobile drawer overlay -->
+<div id="mobileOverlay" class="fixed inset-0 bg-ink/50 z-40 lg:hidden"></div>
+
+<!-- Mobile drawer -->
+<aside id="mobileDrawer" class="fixed top-0 right-0 h-full w-72 bg-base z-50 border-l border-gray-200 lg:hidden" aria-label="Mobile navigation">
+  <div class="flex items-center justify-between h-20 px-6 border-b border-gray-200">
+    <span class="font-extrabold tracking-tighter text-lg">Menu</span>
+    <button id="menuClose" aria-label="Close navigation menu" class="w-9 h-9 flex items-center justify-center text-2xl leading-none text-steel">&times;</button>
+  </div>
+  <nav class="flex flex-col px-6 py-8 gap-6" aria-label="Mobile primary">
+    <a href="/" class="mobile-link text-lg font-semibold text-ink">Home</a>
+    <a href="/about/" class="mobile-link text-lg font-semibold text-ink">About</a>
+    <a href="/projects/" class="mobile-link text-lg font-semibold text-ink" aria-current="page">Projects</a>
+    <a href="/practice/" class="mobile-link text-lg font-semibold text-ink">Practice</a>
+    <a href="/blog/" class="mobile-link text-lg font-semibold text-ink">Blog</a>
+    <a href="/contact/" class="btn-primary text-center font-bold px-5 py-3 mt-4">Start Conversation</a>
+  </nav>
+</aside>
+
+<!-- ============ PAGE HERO ============ -->
+<section class="bg-alt border-b border-gray-200 py-16 sm:py-20 lg:py-24">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10">
+    <nav aria-label="Breadcrumb" class="mb-6 fade-in">
+      <ol class="flex items-center gap-2 text-xs font-mono text-steel">
+        <li><a href="/" class="hover:text-ink transition-colors">Home</a></li>
+        <li aria-hidden="true" class="text-gray-400">/</li>
+        <li class="text-ink">Projects</li>
+      </ol>
+    </nav>
+
+    <div class="grid lg:grid-cols-5 gap-10 lg:gap-16 items-end">
+      <div class="lg:col-span-3 fade-in">
+        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-[1.15] sm:leading-[1.05] text-ink">
+          Systems that had to work on the first shift back.
+        </h1>
+        <p class="mt-5 sm:mt-6 text-base sm:text-lg text-steel leading-relaxed max-w-2xl">
+          A selection of commissioned work across control systems, embedded hardware, and the software connecting them. Each entry lists the actual scope, the stack, and the measured outcome — not a mood board.
+        </p>
+      </div>
+      <div class="lg:col-span-2 fade-in">
+        <dl class="grid grid-cols-2 gap-6 border-t border-gray-300 pt-8">
+          <div>
+            <dt class="text-2xl sm:text-3xl font-extrabold text-ink">40<span class="text-amber">+</span></dt>
+            <dd class="mt-1 text-xs sm:text-sm text-steel">Systems in production</dd>
+          </div>
+          <div>
+            <dt class="text-2xl sm:text-3xl font-extrabold text-ink">0</dt>
+            <dd class="mt-1 text-xs sm:text-sm text-steel">Unplanned rollbacks</dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FEATURED CASE STUDY ============ -->
+<section class="py-20 lg:py-28 border-b border-gray-200">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10">
+    <div class="flex items-center gap-3 mb-10 fade-in">
+      <span class="w-2 h-2 bg-amber"></span>
+      <p class="text-xs font-mono uppercase tracking-wide text-steel">Featured case study</p>
+    </div>
+
+    <div class="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+      <div class="fade-in order-2 lg:order-1">
+        <p class="text-xs font-mono text-steel mb-4">2025 · CONTROL SYSTEMS · FOOD &amp; BEVERAGE</p>
+        <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-ink leading-tight">
+          Batch Mixing Line Retrofit
+        </h2>
+        <p class="mt-5 text-steel leading-relaxed">
+          A four-tank mixing line was still running on relay logic commissioned in the nineties. Batch consistency drifted with ambient temperature, and the only diagnostic was an operator's ear. The brief was to modernise control without taking the line down for more than a single weekend.
+        </p>
+
+        <div class="mt-8 space-y-4">
+          <div class="border-l-2 border-gray-200 pl-5">
+            <p class="text-xs font-mono uppercase tracking-wide text-steel mb-1">Approach</p>
+            <p class="text-sm text-steel leading-relaxed">Modelled each tank's thermal response in simulation, tuned PID loops against that model, then validated on a hardware-in-the-loop bench before touching the plant. Cutover was staged tank by tank.</p>
+          </div>
+          <div class="border-l-2 border-gray-200 pl-5">
+            <p class="text-xs font-mono uppercase tracking-wide text-steel mb-1">Constraint</p>
+            <p class="text-sm text-steel leading-relaxed">52-hour commissioning window, with full rollback to relay control available at every stage.</p>
+          </div>
+        </div>
+
+        <div class="mt-8 flex flex-wrap gap-2">
+          <span class="pill bg-alt px-3 py-1.5 text-xs font-mono">CODESYS</span>
+          <span class="pill bg-alt px-3 py-1.5 text-xs font-mono">IEC 61131-3</span>
+          <span class="pill bg-alt px-3 py-1.5 text-xs font-mono">Modbus TCP</span>
+          <span class="pill bg-alt px-3 py-1.5 text-xs font-mono">Simulink</span>
+        </div>
+
+        <dl class="mt-10 grid grid-cols-3 gap-6 border-t border-gray-300 pt-8">
+          <div>
+            <dt class="text-2xl font-extrabold text-ink">&lt;1<span class="text-amber">%</span></dt>
+            <dd class="mt-1 text-xs text-steel leading-snug">Batch variance, from 6%</dd>
+          </div>
+          <div>
+            <dt class="text-2xl font-extrabold text-ink">52<span class="text-amber">h</span></dt>
+            <dd class="mt-1 text-xs text-steel leading-snug">Total commissioning downtime</dd>
+          </div>
+          <div>
+            <dt class="text-2xl font-extrabold text-ink">4</dt>
+            <dd class="mt-1 text-xs text-steel leading-snug">Tanks under closed-loop PID</dd>
+          </div>
+        </dl>
+      </div>
+
+      <div class="order-1 lg:order-2 fade-in">
+        <div class="relative aspect-[4/3] overflow-hidden border border-gray-200">
+          <img src="https://images.pexels.com/photos/35072831/pexels-photo-35072831.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Industrial control panel during a plant retrofit" class="w-full h-full object-cover" loading="lazy">
+          <div class="absolute inset-0 bg-gradient-to-t from-ink/20 via-transparent to-transparent"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PROJECT ARCHIVE ============ -->
+<section class="bg-alt py-20 lg:py-28 border-b border-gray-200">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10">
+    <div class="flex items-end justify-between flex-wrap gap-6 fade-in">
+      <div class="max-w-2xl">
+        <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-ink">Full archive</h2>
+        <p class="mt-4 text-steel leading-relaxed">Filter by domain. Every project listed here reached production and was handed over with documentation.</p>
+      </div>
+      <p id="resultCount" class="text-xs font-mono text-steel" role="status" aria-live="polite"></p>
+    </div>
+
+    <!-- Filters -->
+    <div id="filterBar" class="mt-10 flex flex-wrap gap-2.5 fade-in" role="group" aria-label="Filter projects by domain">
+      <button type="button" class="filter-btn is-active bg-base px-4 py-2 text-sm font-semibold" data-filter="all">All work</button>
+      <button type="button" class="filter-btn bg-base px-4 py-2 text-sm font-semibold" data-filter="automation">Industrial Automation</button>
+      <button type="button" class="filter-btn bg-base px-4 py-2 text-sm font-semibold" data-filter="control">Systems &amp; Control</button>
+      <button type="button" class="filter-btn bg-base px-4 py-2 text-sm font-semibold" data-filter="embedded">Embedded &amp; Hardware</button>
+      <button type="button" class="filter-btn bg-base px-4 py-2 text-sm font-semibold" data-filter="software">Software &amp; Cloud</button>
+    </div>
+
+    <!-- Grid -->
+    <div id="projectGrid" class="mt-12 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <!-- Populated by renderProjects(). Cards render from the `projects` array below,
+           so swapping in a Contentful fetch only means replacing that array's source. -->
+    </div>
+
+    <p id="emptyState" class="hidden mt-12 text-sm text-steel">No projects in this domain yet. Try another filter.</p>
+  </div>
+</section>
+
+<!-- ============ ENGAGEMENT PROCESS ============ -->
+<section class="py-20 lg:py-28 border-b border-gray-200">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10">
+    <div class="max-w-2xl fade-in">
+      <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-ink">How an engagement runs</h2>
+      <p class="mt-4 text-steel leading-relaxed">
+        The same four stages on every project, whether it's a two-week diagnostic or a six-month retrofit.
+      </p>
+    </div>
+
+    <div class="mt-14 grid sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-10">
+      <div class="process-step fade-in">
+        <p class="font-mono text-xs text-amber mb-3">01 / SCOPE</p>
+        <h3 class="font-bold text-ink text-lg mb-2">Walk the system</h3>
+        <p class="text-sm text-steel leading-relaxed">On-site or over a call, we map what exists now — including the undocumented workarounds every plant accumulates.</p>
+      </div>
+      <div class="process-step fade-in">
+        <p class="font-mono text-xs text-amber mb-3">02 / MODEL</p>
+        <h3 class="font-bold text-ink text-lg mb-2">Prove it off-line</h3>
+        <p class="text-sm text-steel leading-relaxed">Control logic is simulated and bench-tested against a model before it's allowed near live equipment.</p>
+      </div>
+      <div class="process-step fade-in">
+        <p class="font-mono text-xs text-amber mb-3">03 / COMMISSION</p>
+        <h3 class="font-bold text-ink text-lg mb-2">Stage the cutover</h3>
+        <p class="text-sm text-steel leading-relaxed">Deployment happens in reversible stages, with a tested rollback path available at every step.</p>
+      </div>
+      <div class="process-step fade-in">
+        <p class="font-mono text-xs text-amber mb-3">04 / HAND OVER</p>
+        <h3 class="font-bold text-ink text-lg mb-2">Document for a stranger</h3>
+        <p class="text-sm text-steel leading-relaxed">You get drawings, commented source, and a runbook written for an engineer who's never met me.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TESTIMONIAL ============ -->
+<section class="bg-graphite text-white py-20 lg:py-28 border-b border-white/10">
+  <div class="max-w-4xl mx-auto px-6 lg:px-10 text-center fade-in">
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" class="mx-auto mb-8" aria-hidden="true">
+      <path d="M9 7H5a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h2v2a2 2 0 0 1-2 2H4M19 7h-4a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h2v2a2 2 0 0 1-2 2h-1" stroke="#D97706" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    <blockquote class="text-lg sm:text-2xl font-semibold leading-snug tracking-tight">
+      He turned up, read our twenty-year-old panel drawings without complaining, and handed back a system our own maintenance team could actually maintain. The documentation alone was worth the engagement.
+    </blockquote>
+    <figcaption class="mt-8 text-sm text-gray-400">
+      <span class="text-white font-semibold">Operations Manager</span> · Food processing plant, Nakuru
+    </figcaption>
+  </div>
+</section>
+
+<!-- ============ CTA ============ -->
+<section class="py-20 lg:py-28 border-b border-gray-200">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10">
+    <div class="border border-gray-300 p-8 sm:p-12 lg:p-16 grid lg:grid-cols-5 gap-10 items-center fade-in">
+      <div class="lg:col-span-3">
+        <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-ink leading-tight">
+          Have a system that needs this kind of attention?
+        </h2>
+        <p class="mt-5 text-steel leading-relaxed max-w-xl">
+          Tell me what you're running and where it's falling short. I'll reply within one business day — and if it isn't a fit, I'll say so and point you toward someone better placed.
+        </p>
+      </div>
+      <div class="lg:col-span-2 flex flex-wrap lg:justify-end gap-3 sm:gap-4">
+        <a href="/contact/" class="btn-primary font-bold px-5 sm:px-6 py-3 sm:py-3.5 text-sm">Start Conversation</a>
+        <a href="/about/" class="btn-secondary font-bold px-5 sm:px-6 py-3 sm:py-3.5 text-sm">About the Practice</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="bg-slate text-gray-300">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10 py-16 grid sm:grid-cols-2 lg:grid-cols-4 gap-10">
+    <div>
+      <span class="tracking-tighter font-extrabold text-xl text-white">GN<span class="text-amber">Labs</span></span>
+      <p class="mt-4 text-sm text-gray-400 leading-relaxed max-w-xs">
+        Independent engineering practice covering embedded systems, industrial automation, and the software that connects them.
+      </p>
+    </div>
+
+    <div>
+      <h4 class="text-white font-semibold text-sm mb-4">Quick Links</h4>
+      <ul class="space-y-3 text-sm text-gray-400">
+        <li><a href="/" class="hover:text-white transition-colors">Home</a></li>
+        <li><a href="/about/" class="hover:text-white transition-colors">About</a></li>
+        <li><a href="/projects/" class="hover:text-white transition-colors">Projects</a></li>
+        <li><a href="/practice/" class="hover:text-white transition-colors">Practice</a></li>
+        <li><a href="/blog/" class="hover:text-white transition-colors">Blog</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <h4 class="text-white font-semibold text-sm mb-4">Core Technical Domains</h4>
+      <ul class="space-y-3 text-sm text-gray-400">
+        <li>Embedded &amp; Hardware</li>
+        <li>Industrial Automation</li>
+        <li>Systems &amp; Control</li>
+        <li>Software &amp; Cloud</li>
+      </ul>
+    </div>
+
+    <div>
+      <h4 class="text-white font-semibold text-sm mb-4">Legal / Compliance</h4>
+      <ul class="space-y-3 text-sm text-gray-400 mb-6">
+        <li><a href="/privacy-policy/" class="hover:text-white transition-colors">Privacy Policy</a></li>
+        <li><a href="/terms-of-service/" class="hover:text-white transition-colors">Terms of Service</a></li>
+      </ul>
+      <div class="flex gap-4">
+        <a href="#" aria-label="GitHub" class="text-gray-400 hover:text-white transition-colors">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.38 7.86 10.9.58.1.79-.25.79-.56 0-.28-.01-1.02-.02-2-3.2.7-3.88-1.54-3.88-1.54-.52-1.34-1.28-1.7-1.28-1.7-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.68 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.04 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.79 0c2.21-1.49 3.18-1.18 3.18-1.18.63 1.58.23 2.75.11 3.04.74.81 1.19 1.83 1.19 3.09 0 4.41-2.69 5.39-5.25 5.67.41.36.78 1.07.78 2.16 0 1.56-.01 2.82-.01 3.2 0 .32.21.67.8.56A10.52 10.52 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5Z"/></svg>
+        </a>
+        <a href="#" aria-label="LinkedIn" class="text-gray-400 hover:text-white transition-colors">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.36V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29ZM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12ZM7.12 20.45H3.56V9h3.56v11.45ZM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0Z"/></svg>
+        </a>
+        <a href="#" aria-label="RSS Feed" class="text-gray-400 hover:text-white transition-colors">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M4 4a16 16 0 0 1 16 16h-3a13 13 0 0 0-13-13V4Zm0 6a10 10 0 0 1 10 10h-3a7 7 0 0 0-7-7v-3Zm2.5 6.5A2.5 2.5 0 1 1 4 19a2.5 2.5 0 0 1 2.5-2.5Z"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="border-t border-white/10">
+    <div class="max-w-7xl mx-auto px-6 lg:px-10 py-6 text-xs text-gray-500">
+      © 2026 GN Labs. All specifications subject to revision without notice.
+    </div>
+  </div>
+</footer>
+
+<!-- ============ NEWSLETTER POPUP ============ -->
+<div id="newsletterOverlay" class="fixed inset-0 z-50 bg-ink/60 flex items-center justify-center p-4" aria-hidden="true">
+  <div id="newsletterModal" class="relative bg-graphite text-white w-full max-w-2xl border border-white/10 p-10 sm:p-14">
+    <button id="dismissBanner" aria-label="Close newsletter signup" class="absolute top-5 right-5 text-gray-400 hover:text-white text-2xl leading-none w-9 h-9 flex items-center justify-center">&times;</button>
+    <p class="text-xs font-mono text-amber uppercase tracking-wide mb-4">Before you go</p>
+    <h3 class="text-2xl sm:text-3xl font-extrabold tracking-tight">Get new writing on control systems and edge software</h3>
+    <p class="text-gray-400 mt-3 text-sm">One email, roughly monthly. No spam.</p>
+    <form id="newsletterForm" class="flex flex-col sm:flex-row gap-3 mt-8">
+      <input type="email" required placeholder="you@company.com" class="flex-1 bg-white/5 border border-white/20 px-4 py-3 text-sm text-white placeholder-gray-500 outline-none focus:border-amber">
+      <button type="submit" class="btn-primary font-bold px-6 py-3 text-sm whitespace-nowrap">Subscribe</button>
+    </form>
+  </div>
+</div>
+
+<!-- ============ SCROLL TO TOP ============ -->
+<button id="scrollTopBtn" aria-label="Scroll to top" class="fixed bottom-6 right-6 z-40 w-11 h-11 bg-ink text-white flex items-center justify-center">
+  <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 13V3M8 3L3 8M8 3l5 5" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</button>
+
+<script>
+  // ---- Project archive ----
+  // Render source for the cards above. To wire up Contentful: replace this
+  // array with an async fetch to the Content Delivery API, map each entry to
+  // the same shape, then call renderProjects(entries). `domain` must match one
+  // of the data-filter values on the filter buttons.
+  const projects = [
+    {
+      title: 'Batch Mixing Line Retrofit',
+      summary: 'Replaced a relay-based mixing controller with a CODESYS PLC running closed-loop PID control across four tanks.',
+      year: '2025',
+      domain: 'control',
+      domainLabel: 'Systems & Control',
+      stack: 'CODESYS · IEC 61131-3 · Modbus TCP',
+      result: 'Batch variance reduced from 6% to under 1%',
+      image: 'https://picsum.photos/seed/gnlabs-proj-mixing/720/480',
+      url: '#'
+    },
+    {
+      title: 'Remote Sensor Telemetry Network',
+      summary: 'An ESP32-based sensor mesh reporting into a cloud pipeline with automated anomaly flagging across distributed sites.',
+      year: '2024',
+      domain: 'embedded',
+      domainLabel: 'Embedded & Hardware',
+      stack: 'ESP32 · MQTT · Python · REST API',
+      result: '40 sites monitored at under 2-minute alert latency',
+      image: 'https://picsum.photos/seed/gnlabs-proj-telemetry/720/480',
+      url: '#'
+    },
+    {
+      title: 'Fieldbus Diagnostics Toolkit',
+      summary: 'A Python diagnostics layer that reads live fieldbus traffic and surfaces developing faults before they trip a line.',
+      year: '2024',
+      domain: 'software',
+      domainLabel: 'Software & Cloud',
+      stack: 'Python · PROFIBUS · Grafana',
+      result: 'Unplanned downtime cut 30% in the first quarter',
+      image: 'https://picsum.photos/seed/gnlabs-proj-fieldbus/720/480',
+      url: '#'
+    },
+    {
+      title: 'Conveyor Sequencing Rewrite',
+      summary: 'Rewrote a sprawling ladder-logic sequencer in structured text, collapsing 14 interlocked rungs into a documented state machine.',
+      year: '2023',
+      domain: 'automation',
+      domainLabel: 'Industrial Automation',
+      stack: 'IEC 61131-3 · CODESYS · Profinet',
+      result: 'Fault diagnosis time down from hours to minutes',
+      image: 'https://picsum.photos/seed/gnlabs-proj-conveyor/720/480',
+      url: '#'
+    },
+    {
+      title: 'Hardware-in-the-Loop Test Bench',
+      summary: 'A low-cost HIL rig that emulates plant dynamics so control logic can be validated before it reaches live equipment.',
+      year: '2023',
+      domain: 'control',
+      domainLabel: 'Systems & Control',
+      stack: 'Simulink · ESP32 · Modbus RTU',
+      result: 'Commissioning defects caught pre-deployment, not on site',
+      image: 'https://picsum.photos/seed/gnlabs-proj-hil/720/480',
+      url: '#'
+    },
+    {
+      title: 'Cold Chain Monitoring Rollout',
+      summary: 'Battery-powered temperature loggers with store-and-forward buffering for sites where connectivity drops for hours at a time.',
+      year: '2023',
+      domain: 'embedded',
+      domainLabel: 'Embedded & Hardware',
+      stack: 'ESP32 · LoRaWAN · InfluxDB',
+      result: 'Zero data loss across a 6-hour network outage',
+      image: 'https://picsum.photos/seed/gnlabs-proj-coldchain/720/480',
+      url: '#'
+    },
+    {
+      title: 'OT/IT Gateway Hardening',
+      summary: 'Rebuilt the boundary between a plant network and its cloud reporting stack after an integration kept silently dropping writes.',
+      year: '2022',
+      domain: 'software',
+      domainLabel: 'Software & Cloud',
+      stack: 'Python · MQTT · Docker · TLS',
+      result: 'Write reliability from 94% to 99.98%',
+      image: 'https://picsum.photos/seed/gnlabs-proj-gateway/720/480',
+      url: '#'
+    },
+    {
+      title: 'Water Treatment Dosing Control',
+      summary: 'Closed-loop chemical dosing with feed-forward compensation for inlet flow variation across a municipal treatment stage.',
+      year: '2022',
+      domain: 'automation',
+      domainLabel: 'Industrial Automation',
+      stack: 'CODESYS · PID · Modbus TCP',
+      result: 'Reagent consumption down 18% at equal output quality',
+      image: 'https://picsum.photos/seed/gnlabs-proj-dosing/720/480',
+      url: '#'
+    },
+    {
+      title: 'Legacy Panel Documentation Recovery',
+      summary: 'Reverse-engineered an undocumented control panel into current drawings and a maintainable, commented program.',
+      year: '2021',
+      domain: 'automation',
+      domainLabel: 'Industrial Automation',
+      stack: 'Ladder · Structured Text · AutoCAD Electrical',
+      result: 'In-house team able to service the panel unaided',
+      image: 'https://picsum.photos/seed/gnlabs-proj-legacy/720/480',
+      url: '#'
+    }
+  ];
+
+  const projectGrid = document.getElementById('projectGrid');
+  const resultCount = document.getElementById('resultCount');
+  const emptyState = document.getElementById('emptyState');
+
+  function escapeHtml(str) {
+    return String(str).replace(/[&<>"']/g, c => ({
+      '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+    })[c]);
+  }
+
+  function renderProjects(items) {
+    projectGrid.innerHTML = items.map(p => `
+      <article class="project-card group flex flex-col border border-gray-300 bg-base fade-in">
+        <a href="${escapeHtml(p.url)}" class="block aspect-[16/10] overflow-hidden bg-gray-200">
+          <img src="${escapeHtml(p.image)}" alt="" class="w-full h-full object-cover" loading="lazy">
+        </a>
+        <div class="p-7 flex flex-col flex-1">
+          <p class="text-xs font-mono text-steel mb-4">${escapeHtml(p.year)} · ${escapeHtml(p.domainLabel.toUpperCase())}</p>
+          <h3 class="project-card-title font-bold text-xl text-ink mb-3 leading-snug">
+            <a href="${escapeHtml(p.url)}">${escapeHtml(p.title)}</a>
+          </h3>
+          <p class="text-sm text-steel leading-relaxed mb-5">${escapeHtml(p.summary)}</p>
+          <p class="text-xs text-steel font-mono mb-6">${escapeHtml(p.stack)}</p>
+          <p class="text-sm font-semibold text-ink border-t border-gray-200 pt-4 mt-auto">Result: ${escapeHtml(p.result)}</p>
+        </div>
+      </article>
+    `).join('');
+
+    // Newly injected cards need their own fade-in observers.
+    projectGrid.querySelectorAll('.fade-in').forEach(el => fadeObserver.observe(el));
+
+    const n = items.length;
+    resultCount.textContent = n === 1 ? '1 project' : n + ' projects';
+    emptyState.classList.toggle('hidden', n > 0);
+  }
+
+  // Filtering
+  const filterBar = document.getElementById('filterBar');
+  filterBar.addEventListener('click', (e) => {
+    const btn = e.target.closest('.filter-btn');
+    if (!btn) return;
+    filterBar.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('is-active'));
+    btn.classList.add('is-active');
+    const filter = btn.dataset.filter;
+    renderProjects(filter === 'all' ? projects : projects.filter(p => p.domain === filter));
+  });
+
+  // Header: compacts and picks up a shadow once the page scrolls.
+  const siteHeader = document.getElementById('siteHeader');
+  function updateHeaderOnScroll() {
+    if (window.scrollY > 24) {
+      siteHeader.classList.add('is-scrolled');
+    } else {
+      siteHeader.classList.remove('is-scrolled');
+    }
+  }
+  updateHeaderOnScroll();
+  window.addEventListener('scroll', updateHeaderOnScroll, { passive: true });
+
+  // Mobile drawer toggle
+  const menuToggle = document.getElementById('menuToggle');
+  const menuClose = document.getElementById('menuClose');
+  const mobileDrawer = document.getElementById('mobileDrawer');
+  const mobileOverlay = document.getElementById('mobileOverlay');
+
+  function openDrawer() {
+    mobileDrawer.classList.add('open');
+    mobileOverlay.classList.add('open');
+    menuToggle.setAttribute('aria-expanded', 'true');
+  }
+  function closeDrawer() {
+    mobileDrawer.classList.remove('open');
+    mobileOverlay.classList.remove('open');
+    menuToggle.setAttribute('aria-expanded', 'false');
+  }
+  menuToggle.addEventListener('click', openDrawer);
+  menuClose.addEventListener('click', closeDrawer);
+  mobileOverlay.addEventListener('click', closeDrawer);
+  document.querySelectorAll('.mobile-link').forEach(link => {
+    link.addEventListener('click', closeDrawer);
+  });
+
+  // Scroll-to-top button visibility
+  const scrollTopBtn = document.getElementById('scrollTopBtn');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 500) {
+      scrollTopBtn.classList.add('show');
+    } else {
+      scrollTopBtn.classList.remove('show');
+    }
+  });
+  scrollTopBtn.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  // Newsletter popup — fires once when the footer comes into view.
+  const newsletterOverlay = document.getElementById('newsletterOverlay');
+  const footer = document.querySelector('footer');
+  const dismissBanner = document.getElementById('dismissBanner');
+  let newsletterShown = false;
+
+  function closeNewsletter() {
+    newsletterOverlay.classList.remove('show');
+    newsletterOverlay.setAttribute('aria-hidden', 'true');
+  }
+
+  const footerObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting && !newsletterShown) {
+        newsletterShown = true;
+        newsletterOverlay.classList.add('show');
+        newsletterOverlay.setAttribute('aria-hidden', 'false');
+        footerObserver.disconnect();
+      }
+    });
+  }, { threshold: 0.1 });
+  footerObserver.observe(footer);
+
+  dismissBanner.addEventListener('click', closeNewsletter);
+  newsletterOverlay.addEventListener('click', (e) => {
+    if (e.target === newsletterOverlay) closeNewsletter();
+  });
+
+  const newsletterForm = document.getElementById('newsletterForm');
+  newsletterForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    newsletterForm.innerHTML = '<p class="text-sm font-semibold text-white py-2">Subscribed. First issue lands next cycle.</p>';
+  });
+
+  // Scroll-triggered fade-ins
+  const fadeObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        fadeObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.fade-in').forEach(el => fadeObserver.observe(el));
+
+  renderProjects(projects);
+</script>
+
+</body>
+</html>
