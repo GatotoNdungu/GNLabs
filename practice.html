@@ -1,0 +1,1122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Practice — GN Labs | Capability, Engagement Models &amp; Delivery Standards</title>
+<meta name="description" content="How GN Labs works: capability across backend software, data infrastructure, cloud, embedded systems and industrial control — with engagement models, delivery standards, and clear fit criteria.">
+<link rel="canonical" href="https://gnlabs.site/practice/">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          base: '#FFFFFF',
+          alt: '#F8F9FA',
+          slate: '#181C20',
+          graphite: '#0F1215',
+          ink: '#111827',
+          steel: '#4B5563',
+          amber: '#D97706',
+          techblue: '#1E40AF',
+        },
+        fontFamily: {
+          sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'system-ui', 'sans-serif'],
+          mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace'],
+        },
+      }
+    }
+  }
+</script>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Crect width='30' height='30' fill='%23FFFFFF'/%3E%3Crect x='1' y='1' width='28' height='28' fill='none' stroke='%23111827' stroke-width='2'/%3E%3Crect x='7' y='7' width='8' height='8' fill='%23D97706'/%3E%3Crect x='16' y='16' width='7' height='7' fill='none' stroke='%23111827' stroke-width='2'/%3E%3Cline x1='15' y1='11' x2='19.5' y2='16' stroke='%23111827' stroke-width='2'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-base: #FFFFFF;
+    --bg-alt: #F8F9FA;
+    --dark-slate: #181C20;
+    --dark-graphite: #0F1215;
+    --text-ink: #111827;
+    --text-steel: #4B5563;
+    --accent-amber: #D97706;
+    --accent-blue: #1E40AF;
+    --hairline: #E5E7EB;
+  }
+
+  * { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    color: var(--text-ink);
+    background: var(--bg-base);
+  }
+
+  /* Anchored sections need to clear both the sticky header and the section rail */
+  section[id] { scroll-margin-top: 8.5rem; }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { scroll-behavior: auto !important; animation: none !important; transition: none !important; }
+  }
+
+  .fade-in {
+    opacity: 0;
+    transform: translateY(14px);
+    transition: opacity 500ms ease-out, transform 500ms ease-out;
+  }
+  .fade-in.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .btn-primary {
+    background: var(--accent-amber);
+    color: #FFFFFF;
+    transition: background-color 200ms ease-in-out, transform 200ms ease-in-out;
+  }
+  .btn-primary:hover { background: #B45F04; }
+  .btn-primary:focus-visible { outline: 3px solid #92400E; outline-offset: 2px; }
+
+  .btn-secondary {
+    border: 1.5px solid var(--text-ink);
+    color: var(--text-ink);
+    transition: background-color 200ms ease-in-out, color 200ms ease-in-out;
+  }
+  .btn-secondary:hover { background: var(--text-ink); color: #fff; }
+
+  a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible {
+    outline: 2px solid var(--accent-amber);
+    outline-offset: 2px;
+  }
+
+  .nav-link {
+    position: relative;
+    color: var(--text-steel);
+    transition: color 200ms ease-in-out;
+  }
+  .nav-link:hover { color: var(--text-ink); }
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -4px;
+    height: 2px;
+    width: 0;
+    background: var(--accent-amber);
+    transition: width 200ms ease-in-out;
+  }
+  .nav-link:hover::after { width: 100%; }
+  .nav-link[aria-current="page"] { color: var(--text-ink); }
+  .nav-link[aria-current="page"]::after { width: 100%; }
+  .mobile-link[aria-current="page"] { color: var(--accent-amber); }
+
+  #mobileDrawer { transform: translateX(100%); transition: transform 260ms ease-in-out; }
+  #mobileDrawer.open { transform: translateX(0); }
+  #mobileOverlay { opacity: 0; pointer-events: none; transition: opacity 260ms ease-in-out; }
+  #mobileOverlay.open { opacity: 1; pointer-events: auto; }
+
+  #scrollTopBtn {
+    opacity: 0; transform: translateY(10px); pointer-events: none;
+    transition: opacity 200ms ease-in-out, transform 200ms ease-in-out;
+  }
+  #scrollTopBtn.show { opacity: 1; transform: translateY(0); pointer-events: auto; }
+
+  #newsletterOverlay {
+    opacity: 0; visibility: hidden;
+    transition: opacity 250ms ease-in-out, visibility 250ms ease-in-out;
+  }
+  #newsletterOverlay.show { opacity: 1; visibility: visible; }
+  #newsletterModal { transform: scale(0.96); transition: transform 250ms ease-in-out; }
+  #newsletterOverlay.show #newsletterModal { transform: scale(1); }
+
+  /* Header */
+  #siteHeader {
+    transition: height 260ms ease-in-out, box-shadow 260ms ease-in-out, background-color 260ms ease-in-out;
+  }
+  #siteHeader .header-inner { transition: height 260ms ease-in-out; }
+  #siteHeader.is-scrolled {
+    box-shadow: 0 1px 0 rgba(17,24,39,0.06), 0 12px 24px -18px rgba(17,24,39,0.25);
+  }
+  #siteHeader.is-scrolled .header-inner { height: 4.25rem; }
+  #siteHeader:not(.is-scrolled) .header-inner { height: 5rem; }
+
+  /* ---- Section rail: in-page nav with scrollspy ---- */
+  #sectionRail {
+    top: 4.25rem;
+    opacity: 0;
+    transform: translateY(-6px);
+    pointer-events: none;
+    transition: opacity 240ms ease-in-out, transform 240ms ease-in-out;
+  }
+  #sectionRail.show { opacity: 1; transform: translateY(0); pointer-events: auto; }
+  .rail-link {
+    position: relative;
+    color: var(--text-steel);
+    white-space: nowrap;
+    transition: color 200ms ease-in-out;
+  }
+  .rail-link:hover { color: var(--text-ink); }
+  .rail-link::after {
+    content: '';
+    position: absolute;
+    left: 0; right: 0; bottom: -1px;
+    height: 2px;
+    background: var(--accent-amber);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 240ms ease-in-out;
+  }
+  .rail-link.is-current { color: var(--text-ink); }
+  .rail-link.is-current::after { transform: scaleX(1); }
+
+  /* Reading progress */
+  #readingBar {
+    transform-origin: left;
+    transform: scaleX(0);
+    transition: transform 90ms linear;
+  }
+
+  /* ---- Eyebrow rule ---- */
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 0.6875rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-steel);
+  }
+  .eyebrow::before {
+    content: '';
+    width: 1.75rem;
+    height: 2px;
+    background: var(--accent-amber);
+  }
+
+  /* ---- Capability cards ---- */
+  .cap-card {
+    position: relative;
+    background: var(--bg-base);
+    border: 1px solid var(--hairline);
+    transition: border-color 220ms ease-in-out, transform 220ms ease-in-out, box-shadow 220ms ease-in-out;
+  }
+  .cap-card::before {
+    content: '';
+    position: absolute;
+    top: -1px; left: -1px; right: -1px;
+    height: 2px;
+    background: var(--accent-amber);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 280ms ease-in-out;
+  }
+  .cap-card:hover {
+    border-color: #D1D5DB;
+    transform: translateY(-4px);
+    box-shadow: 0 18px 34px -24px rgba(17,24,39,0.35);
+  }
+  .cap-card:hover::before { transform: scaleX(1); }
+  .cap-card .cap-icon {
+    color: var(--text-steel);
+    transition: color 220ms ease-in-out;
+  }
+  .cap-card:hover .cap-icon { color: var(--accent-amber); }
+
+  /* ---- Engagement tiers ---- */
+  .tier {
+    display: flex;
+    flex-direction: column;
+    transition: transform 220ms ease-in-out, box-shadow 220ms ease-in-out, border-color 220ms ease-in-out;
+  }
+  .tier:hover { transform: translateY(-4px); box-shadow: 0 18px 34px -24px rgba(17,24,39,0.35); }
+  .tier-feature {
+    background: var(--dark-graphite);
+    color: #fff;
+    border-color: var(--dark-graphite);
+  }
+
+  /* ---- Spectrum ---- */
+  .spectrum-bar {
+    background: linear-gradient(90deg, var(--accent-blue) 0%, #1E3A8A 34%, #92400E 66%, var(--accent-amber) 100%);
+  }
+
+  /* ---- FAQ ---- */
+  .faq-item summary { list-style: none; cursor: pointer; }
+  .faq-item summary::-webkit-details-marker { display: none; }
+  .faq-item summary .chevron { transition: transform 220ms ease-in-out; }
+  .faq-item[open] summary .chevron { transform: rotate(180deg); }
+  .faq-item summary:hover .faq-q { color: var(--accent-amber); }
+  .faq-q { transition: color 200ms ease-in-out; }
+
+  /* ---- Form ---- */
+  .field {
+    width: 100%;
+    background: var(--bg-base);
+    border: 1px solid #D1D5DB;
+    padding: 0.85rem 1rem;
+    font-size: 0.875rem;
+    outline: none;
+    transition: border-color 200ms ease-in-out, box-shadow 200ms ease-in-out;
+  }
+  .field::placeholder { color: #9CA3AF; }
+  .field:focus {
+    border-color: var(--text-ink);
+    box-shadow: 0 0 0 3px rgba(17,24,39,0.06);
+  }
+  .field-label {
+    display: block;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-steel);
+    margin-bottom: 0.5rem;
+  }
+  select.field {
+    appearance: none;
+    background-image: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16' fill='none'%3E%3Cpath d='M4 6l4 4 4-4' stroke='%234B5563' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    padding-right: 2.5rem;
+  }
+</style>
+</head>
+<body class="bg-base text-ink antialiased">
+
+<!-- ============ HEADER ============ -->
+<header id="siteHeader" class="sticky top-0 z-40 bg-base/95 backdrop-blur border-b border-gray-200">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10">
+    <div class="header-inner flex items-center justify-between h-20">
+
+      <a href="/" class="flex items-center gap-3 group">
+        <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect x="1" y="1" width="28" height="28" stroke="#111827" stroke-width="1.6"/>
+          <rect x="7" y="7" width="8" height="8" fill="#D97706"/>
+          <rect x="16" y="16" width="7" height="7" stroke="#111827" stroke-width="1.6"/>
+          <line x1="15" y1="11" x2="19.5" y2="16" stroke="#111827" stroke-width="1.6"/>
+        </svg>
+        <span class="tracking-tighter font-extrabold text-xl text-ink">GN<span class="text-amber">Labs</span></span>
+      </a>
+
+      <nav class="hidden lg:flex items-center gap-9" aria-label="Primary">
+        <a href="/" class="nav-link text-sm font-semibold">Home</a>
+        <a href="/about/" class="nav-link text-sm font-semibold">About</a>
+        <a href="/projects/" class="nav-link text-sm font-semibold">Projects</a>
+        <a href="/practice/" class="nav-link text-sm font-semibold" aria-current="page">Practice</a>
+        <a href="/blog/" class="nav-link text-sm font-semibold">Blog</a>
+      </nav>
+
+      <div class="flex items-center gap-4">
+        <a href="#engage" class="hidden lg:inline-flex btn-primary text-sm font-bold px-5 py-2.5">
+          Start Conversation
+        </a>
+
+        <button id="menuToggle" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobileDrawer" class="lg:hidden flex flex-col justify-center gap-1.5 w-9 h-9">
+          <span class="block h-0.5 w-6 bg-ink"></span>
+          <span class="block h-0.5 w-6 bg-ink"></span>
+          <span class="block h-0.5 w-4 bg-ink self-start ml-3"></span>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="h-0.5 bg-transparent">
+    <div id="readingBar" class="h-full bg-amber w-full"></div>
+  </div>
+</header>
+
+<!-- ============ SECTION RAIL (in-page nav) ============ -->
+<div id="sectionRail" class="hidden lg:block sticky z-30 bg-base/95 backdrop-blur border-b border-gray-200">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10">
+    <nav class="flex items-center gap-8 h-12 overflow-x-auto" aria-label="On this page">
+      <span class="text-[0.6875rem] font-mono uppercase tracking-[0.12em] text-gray-400 shrink-0">On this page</span>
+      <a href="#range" class="rail-link text-sm font-semibold h-full flex items-center" data-rail="range">Range</a>
+      <a href="#capability" class="rail-link text-sm font-semibold h-full flex items-center" data-rail="capability">Capability</a>
+      <a href="#models" class="rail-link text-sm font-semibold h-full flex items-center" data-rail="models">Engagement</a>
+      <a href="#standard" class="rail-link text-sm font-semibold h-full flex items-center" data-rail="standard">Standards</a>
+      <a href="#fit" class="rail-link text-sm font-semibold h-full flex items-center" data-rail="fit">Fit</a>
+      <a href="#questions" class="rail-link text-sm font-semibold h-full flex items-center" data-rail="questions">Questions</a>
+      <a href="#engage" class="rail-link text-sm font-semibold h-full flex items-center" data-rail="engage">Enquire</a>
+    </nav>
+  </div>
+</div>
+
+<div id="mobileOverlay" class="fixed inset-0 bg-ink/50 z-40 lg:hidden"></div>
+
+<aside id="mobileDrawer" class="fixed top-0 right-0 h-full w-72 bg-base z-50 border-l border-gray-200 lg:hidden" aria-label="Mobile navigation">
+  <div class="flex items-center justify-between h-20 px-6 border-b border-gray-200">
+    <span class="font-extrabold tracking-tighter text-lg">Menu</span>
+    <button id="menuClose" aria-label="Close navigation menu" class="w-9 h-9 flex items-center justify-center text-2xl leading-none text-steel">&times;</button>
+  </div>
+  <nav class="flex flex-col px-6 py-8 gap-6" aria-label="Mobile primary">
+    <a href="/" class="mobile-link text-lg font-semibold text-ink">Home</a>
+    <a href="/about/" class="mobile-link text-lg font-semibold text-ink">About</a>
+    <a href="/projects/" class="mobile-link text-lg font-semibold text-ink">Projects</a>
+    <a href="/practice/" class="mobile-link text-lg font-semibold text-ink" aria-current="page">Practice</a>
+    <a href="/blog/" class="mobile-link text-lg font-semibold text-ink">Blog</a>
+    <a href="#engage" class="mobile-link btn-primary text-center font-bold px-5 py-3 mt-4">Start Conversation</a>
+  </nav>
+</aside>
+
+<!-- ============ HERO ============ -->
+<section class="bg-alt border-b border-gray-200 py-16 sm:py-20 lg:py-24">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10">
+    <nav aria-label="Breadcrumb" class="mb-8 fade-in">
+      <ol class="flex items-center gap-2 text-xs font-mono text-steel">
+        <li><a href="/" class="hover:text-ink transition-colors">Home</a></li>
+        <li aria-hidden="true" class="text-gray-400">/</li>
+        <li class="text-ink">Practice</li>
+      </ol>
+    </nav>
+
+    <div class="grid lg:grid-cols-12 gap-10 lg:gap-16">
+      <div class="lg:col-span-7 fade-in">
+        <p class="eyebrow mb-7">The Practice</p>
+        <h1 class="text-3xl sm:text-4xl lg:text-[3.25rem] font-extrabold tracking-tight leading-[1.12] lg:leading-[1.03] text-ink">
+          Built for the boundaries<br class="hidden sm:block"> where specialists hand off.
+        </h1>
+        <p class="mt-6 text-base sm:text-lg text-steel leading-relaxed max-w-xl">
+          Most technical problems worth paying for sit at an interface — between hardware and software, between a legacy system and its replacement, between the team that built something and the team that has to run it. GN Labs is structured to work those interfaces rather than either side of them.
+        </p>
+      </div>
+
+      <!-- Index panel: doubles as an at-a-glance summary and in-page nav -->
+      <div class="lg:col-span-5 fade-in">
+        <div class="border-t-2 border-ink pt-6">
+          <p class="text-[0.6875rem] font-mono uppercase tracking-[0.12em] text-steel mb-5">Contents</p>
+          <ol class="divide-y divide-gray-200 border-b border-gray-200">
+            <li><a href="#range" class="group flex items-baseline gap-5 py-3.5 hover:bg-white/60 transition-colors">
+              <span class="font-mono text-xs text-amber w-6 shrink-0">01</span>
+              <span class="text-sm font-semibold text-ink group-hover:text-amber transition-colors">The working range</span>
+            </a></li>
+            <li><a href="#capability" class="group flex items-baseline gap-5 py-3.5 hover:bg-white/60 transition-colors">
+              <span class="font-mono text-xs text-amber w-6 shrink-0">02</span>
+              <span class="text-sm font-semibold text-ink group-hover:text-amber transition-colors">Capability in detail</span>
+            </a></li>
+            <li><a href="#models" class="group flex items-baseline gap-5 py-3.5 hover:bg-white/60 transition-colors">
+              <span class="font-mono text-xs text-amber w-6 shrink-0">03</span>
+              <span class="text-sm font-semibold text-ink group-hover:text-amber transition-colors">Ways to engage</span>
+            </a></li>
+            <li><a href="#standard" class="group flex items-baseline gap-5 py-3.5 hover:bg-white/60 transition-colors">
+              <span class="font-mono text-xs text-amber w-6 shrink-0">04</span>
+              <span class="text-sm font-semibold text-ink group-hover:text-amber transition-colors">Delivery standards</span>
+            </a></li>
+            <li><a href="#fit" class="group flex items-baseline gap-5 py-3.5 hover:bg-white/60 transition-colors">
+              <span class="font-mono text-xs text-amber w-6 shrink-0">05</span>
+              <span class="text-sm font-semibold text-ink group-hover:text-amber transition-colors">Fit criteria</span>
+            </a></li>
+            <li><a href="#engage" class="group flex items-baseline gap-5 py-3.5 hover:bg-white/60 transition-colors">
+              <span class="font-mono text-xs text-amber w-6 shrink-0">06</span>
+              <span class="text-sm font-semibold text-ink group-hover:text-amber transition-colors">Enquire</span>
+            </a></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 01 — THE RANGE ============ -->
+<section id="range" class="py-20 lg:py-28 border-b border-gray-200">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10">
+    <div class="grid lg:grid-cols-12 gap-10 lg:gap-16">
+      <div class="lg:col-span-4 fade-in">
+        <p class="eyebrow mb-6">01 — Range</p>
+        <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-ink leading-tight">The working range</h2>
+        <p class="mt-5 text-steel leading-relaxed">
+          Two halves of a single skill set. Plenty of engineers are strong on one side; the value here is in holding both at once, so the interface between them gets designed rather than negotiated after the fact.
+        </p>
+      </div>
+
+      <div class="lg:col-span-8 fade-in">
+        <div class="grid sm:grid-cols-2 gap-px bg-gray-200 border border-gray-200">
+          <div class="bg-base p-8">
+            <div class="flex items-center gap-3 mb-5">
+              <span class="w-2.5 h-2.5 bg-techblue"></span>
+              <p class="text-[0.6875rem] font-mono uppercase tracking-[0.12em] text-techblue">Software side</p>
+            </div>
+            <h3 class="font-bold text-ink text-lg mb-3">Backends, data, and cloud</h3>
+            <p class="text-sm text-steel leading-relaxed">
+              Services, APIs, pipelines, and the operational tooling around them — version control, testing, CI, observability, and the deployment discipline the operational side often never received.
+            </p>
+          </div>
+          <div class="bg-base p-8">
+            <div class="flex items-center gap-3 mb-5">
+              <span class="w-2.5 h-2.5 bg-amber"></span>
+              <p class="text-[0.6875rem] font-mono uppercase tracking-[0.12em] text-amber">Operational side</p>
+            </div>
+            <h3 class="font-bold text-ink text-lg mb-3">Hardware, control, plant floor</h3>
+            <p class="text-sm text-steel leading-relaxed">
+              Firmware and control logic that must be deterministic, survive power cycles, and behave predictably when a sensor starts lying — with no meaningful ability to hotfix in production.
+            </p>
+          </div>
+        </div>
+        <div class="spectrum-bar h-1.5 w-full"></div>
+        <div class="flex justify-between mt-3 text-[0.6875rem] font-mono uppercase tracking-[0.12em] text-gray-400">
+          <span>Cloud</span>
+          <span class="hidden sm:inline">Integration layer</span>
+          <span>Silicon</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 02 — CAPABILITY ============ -->
+<section id="capability" class="bg-alt py-20 lg:py-28 border-b border-gray-200">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10">
+    <div class="flex items-end justify-between flex-wrap gap-6 fade-in">
+      <div class="max-w-2xl">
+        <p class="eyebrow mb-6">02 — Capability</p>
+        <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-ink leading-tight">Capability in detail</h2>
+        <p class="mt-5 text-steel leading-relaxed">
+          Six areas of practice. Engagements typically draw on three or four at once, which is rather the point.
+        </p>
+      </div>
+      <p class="text-[0.6875rem] font-mono uppercase tracking-[0.12em] text-gray-400">Six areas</p>
+    </div>
+
+    <div class="mt-14 grid sm:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-6">
+
+      <article class="cap-card p-8 fade-in">
+        <div class="flex items-start justify-between mb-6">
+          <span class="font-mono text-xs text-amber">01</span>
+          <svg class="cap-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <rect x="3" y="4" width="18" height="5" stroke="currentColor" stroke-width="1.5"/>
+            <rect x="3" y="15" width="18" height="5" stroke="currentColor" stroke-width="1.5"/>
+            <path d="M7 9v6M17 9v6" stroke="currentColor" stroke-width="1.5"/>
+          </svg>
+        </div>
+        <h3 class="font-bold text-ink text-lg mb-3">Backend &amp; API Engineering</h3>
+        <p class="text-sm text-steel leading-relaxed mb-6">
+          Services designed around the failure modes of the systems they talk to: idempotent writes, sane retry semantics, and contracts that survive the other side changing without notice.
+        </p>
+        <ul class="text-xs text-steel space-y-1.5 font-mono border-t border-gray-200 pt-5">
+          <li>Python · FastAPI · Flask</li>
+          <li>REST · MQTT · WebSockets</li>
+          <li>PostgreSQL · time-series stores</li>
+        </ul>
+      </article>
+
+      <article class="cap-card p-8 fade-in">
+        <div class="flex items-start justify-between mb-6">
+          <span class="font-mono text-xs text-amber">02</span>
+          <svg class="cap-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M3 17l5-6 4 3.5L21 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M3 21h18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            <circle cx="8" cy="11" r="1.6" fill="currentColor"/>
+            <circle cx="12" cy="14.5" r="1.6" fill="currentColor"/>
+          </svg>
+        </div>
+        <h3 class="font-bold text-ink text-lg mb-3">Data Pipelines &amp; Observability</h3>
+        <p class="text-sm text-steel leading-relaxed mb-6">
+          Moving operational data from where it is generated to where decisions get made — with buffering for the outages, and instrumentation that surfaces a gap before a customer finds it.
+        </p>
+        <ul class="text-xs text-steel space-y-1.5 font-mono border-t border-gray-200 pt-5">
+          <li>ETL &amp; stream processing</li>
+          <li>InfluxDB · Grafana</li>
+          <li>Alerting &amp; anomaly detection</li>
+        </ul>
+      </article>
+
+      <article class="cap-card p-8 fade-in">
+        <div class="flex items-start justify-between mb-6">
+          <span class="font-mono text-xs text-amber">03</span>
+          <svg class="cap-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M7 18a4 4 0 0 1-.6-7.96 5.5 5.5 0 0 1 10.7-1.3A3.75 3.75 0 0 1 17.5 18H7Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <h3 class="font-bold text-ink text-lg mb-3">Cloud &amp; Deployment</h3>
+        <p class="text-sm text-steel leading-relaxed mb-6">
+          Containerised deployments, reproducible environments, and CI that genuinely gates releases. Infrastructure sized to what is actually run, not to a reference architecture from a vendor conference.
+        </p>
+        <ul class="text-xs text-steel space-y-1.5 font-mono border-t border-gray-200 pt-5">
+          <li>Docker · CI/CD pipelines</li>
+          <li>Linux · nginx · TLS</li>
+          <li>Secrets &amp; access boundaries</li>
+        </ul>
+      </article>
+
+      <article class="cap-card p-8 fade-in">
+        <div class="flex items-start justify-between mb-6">
+          <span class="font-mono text-xs text-amber">04</span>
+          <svg class="cap-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <rect x="7" y="7" width="10" height="10" stroke="currentColor" stroke-width="1.5"/>
+            <path d="M10 3v4M14 3v4M10 17v4M14 17v4M3 10h4M3 14h4M17 10h4M17 14h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <h3 class="font-bold text-ink text-lg mb-3">Embedded &amp; Edge Systems</h3>
+        <p class="text-sm text-steel leading-relaxed mb-6">
+          Firmware for devices that run unattended for months: power budgets, store-and-forward buffering, over-the-air update paths, and recovery behaviour that assumes the network is absent.
+        </p>
+        <ul class="text-xs text-steel space-y-1.5 font-mono border-t border-gray-200 pt-5">
+          <li>ESP32 · ARM Cortex-M</li>
+          <li>C/C++ · MicroPython</li>
+          <li>LoRaWAN · BLE · serial</li>
+        </ul>
+      </article>
+
+      <article class="cap-card p-8 fade-in">
+        <div class="flex items-start justify-between mb-6">
+          <span class="font-mono text-xs text-amber">05</span>
+          <svg class="cap-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <rect x="3" y="4" width="18" height="16" stroke="currentColor" stroke-width="1.5"/>
+            <path d="M3 9h18" stroke="currentColor" stroke-width="1.5"/>
+            <circle cx="7.5" cy="6.5" r="1" fill="currentColor"/>
+            <path d="M7 13h4M7 16.5h10M14 13h3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <h3 class="font-bold text-ink text-lg mb-3">Industrial Automation</h3>
+        <p class="text-sm text-steel leading-relaxed mb-6">
+          PLC programs written to be read by the next engineer, not merely executed by the controller — structured text over sprawling ladder, documented state machines, staged commissioning with real rollback paths.
+        </p>
+        <ul class="text-xs text-steel space-y-1.5 font-mono border-t border-gray-200 pt-5">
+          <li>IEC 61131-3 · CODESYS</li>
+          <li>Modbus · PROFIBUS · Profinet</li>
+          <li>HMI &amp; SCADA integration</li>
+        </ul>
+      </article>
+
+      <article class="cap-card p-8 fade-in">
+        <div class="flex items-start justify-between mb-6">
+          <span class="font-mono text-xs text-amber">06</span>
+          <svg class="cap-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M3 16c3 0 3-8 6-8s3 8 6 8 3-8 6-8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M3 20h18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <h3 class="font-bold text-ink text-lg mb-3">Systems &amp; Control Design</h3>
+        <p class="text-sm text-steel leading-relaxed mb-6">
+          The mathematics underneath the implementation: plant modelling, loop tuning against that model, and hardware-in-the-loop validation before anything is trusted with live equipment.
+        </p>
+        <ul class="text-xs text-steel space-y-1.5 font-mono border-t border-gray-200 pt-5">
+          <li>PID &amp; feed-forward design</li>
+          <li>MATLAB · Simulink</li>
+          <li>Hardware-in-the-loop benches</li>
+        </ul>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============ 03 — ENGAGEMENT MODELS ============ -->
+<section id="models" class="py-20 lg:py-28 border-b border-gray-200">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10">
+    <div class="max-w-2xl fade-in">
+      <p class="eyebrow mb-6">03 — Engagement</p>
+      <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-ink leading-tight">Ways to engage</h2>
+      <p class="mt-5 text-steel leading-relaxed">
+        Three formats. Most relationships begin with the first and progress only where it makes sense on both sides.
+      </p>
+    </div>
+
+    <div class="mt-14 grid lg:grid-cols-3 gap-6 items-stretch">
+
+      <article class="tier border border-gray-300 bg-base p-8 fade-in">
+        <p class="text-[0.6875rem] font-mono uppercase tracking-[0.12em] text-steel mb-5">Format 01</p>
+        <h3 class="font-bold text-ink text-xl mb-2">Technical Diagnostic</h3>
+        <p class="text-xs font-mono text-steel mb-6">Typically 1–2 weeks</p>
+        <p class="text-sm text-steel leading-relaxed mb-7">
+          A bounded review of an existing system — architecture, control logic, integration layer, or all three. The output is a written assessment of what is actually wrong, ranked by consequence, regardless of who performs the remediation.
+        </p>
+        <ul class="text-sm text-steel space-y-3 mb-8">
+          <li class="flex gap-3"><span class="text-amber mt-1.5 w-1.5 h-1.5 bg-amber shrink-0"></span>Written findings and risk ranking</li>
+          <li class="flex gap-3"><span class="text-amber mt-1.5 w-1.5 h-1.5 bg-amber shrink-0"></span>Remediation options with effort estimates</li>
+          <li class="flex gap-3"><span class="text-amber mt-1.5 w-1.5 h-1.5 bg-amber shrink-0"></span>No obligation to proceed</li>
+        </ul>
+        <p class="text-sm font-semibold text-ink border-t border-gray-200 pt-5 mt-auto">For when something is failing and nobody agrees why.</p>
+      </article>
+
+      <article class="tier tier-feature border p-8 relative fade-in">
+        <span class="absolute -top-3 left-8 bg-amber text-white text-[0.625rem] font-bold uppercase tracking-[0.12em] px-3 py-1">Most common</span>
+        <p class="text-[0.6875rem] font-mono uppercase tracking-[0.12em] text-gray-400 mb-5">Format 02</p>
+        <h3 class="font-bold text-white text-xl mb-2">Fixed-Scope Build</h3>
+        <p class="text-xs font-mono text-gray-400 mb-6">Typically 6–16 weeks</p>
+        <p class="text-sm text-gray-300 leading-relaxed mb-7">
+          A defined system delivered end to end: specification, implementation, commissioning, and handover documentation. Scope is agreed in writing before work begins, and changes to it are priced openly rather than absorbed quietly.
+        </p>
+        <ul class="text-sm text-gray-300 space-y-3 mb-8">
+          <li class="flex gap-3"><span class="mt-1.5 w-1.5 h-1.5 bg-amber shrink-0"></span>Staged delivery with review gates</li>
+          <li class="flex gap-3"><span class="mt-1.5 w-1.5 h-1.5 bg-amber shrink-0"></span>Full source, drawings, and runbook</li>
+          <li class="flex gap-3"><span class="mt-1.5 w-1.5 h-1.5 bg-amber shrink-0"></span>Defect-correction window post-commissioning</li>
+        </ul>
+        <p class="text-sm font-semibold text-white border-t border-white/15 pt-5 mt-auto">For when the outcome is clear and the path is not.</p>
+      </article>
+
+      <article class="tier border border-gray-300 bg-base p-8 fade-in">
+        <p class="text-[0.6875rem] font-mono uppercase tracking-[0.12em] text-steel mb-5">Format 03</p>
+        <h3 class="font-bold text-ink text-xl mb-2">Ongoing Retainer</h3>
+        <p class="text-xs font-mono text-steel mb-6">Monthly, rolling</p>
+        <p class="text-sm text-steel leading-relaxed mb-7">
+          Reserved capacity each month for teams carrying systems this practice has built or reviewed. Covers iteration, incident support, and the architectural questions that are cheaper to ask early than to correct later.
+        </p>
+        <ul class="text-sm text-steel space-y-3 mb-8">
+          <li class="flex gap-3"><span class="mt-1.5 w-1.5 h-1.5 bg-amber shrink-0"></span>Agreed response window</li>
+          <li class="flex gap-3"><span class="mt-1.5 w-1.5 h-1.5 bg-amber shrink-0"></span>Priority over new enquiries</li>
+          <li class="flex gap-3"><span class="mt-1.5 w-1.5 h-1.5 bg-amber shrink-0"></span>Offered after a first engagement</li>
+        </ul>
+        <p class="text-sm font-semibold text-ink border-t border-gray-200 pt-5 mt-auto">For when a system is live and still evolving.</p>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============ 04 — DELIVERY STANDARDS ============ -->
+<section id="standard" class="bg-graphite text-white py-20 lg:py-28 border-b border-white/10">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10 grid lg:grid-cols-12 gap-12 lg:gap-16">
+    <div class="lg:col-span-4 fade-in">
+      <p class="eyebrow mb-6" style="color:#9CA3AF">04 — Standards</p>
+      <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight leading-tight">What ships with every engagement</h2>
+      <p class="mt-5 text-gray-400 leading-relaxed">
+        These are not upsells. They are the definition of finished.
+      </p>
+    </div>
+    <div class="lg:col-span-8 fade-in">
+      <div class="grid sm:grid-cols-2 gap-px bg-white/10 border border-white/10">
+        <div class="bg-graphite p-8">
+          <span class="font-mono text-xs text-amber">01</span>
+          <h3 class="font-bold text-white mt-4 mb-2">Source you own outright</h3>
+          <p class="text-sm text-gray-400 leading-relaxed">Commented, version-controlled, transferred to you. No vendor lock, no encrypted blocks that cannot be opened.</p>
+        </div>
+        <div class="bg-graphite p-8">
+          <span class="font-mono text-xs text-amber">02</span>
+          <h3 class="font-bold text-white mt-4 mb-2">Documentation for a stranger</h3>
+          <p class="text-sm text-gray-400 leading-relaxed">Written for an engineer who has never met this practice, because eventually someone else maintains the system.</p>
+        </div>
+        <div class="bg-graphite p-8">
+          <span class="font-mono text-xs text-amber">03</span>
+          <h3 class="font-bold text-white mt-4 mb-2">A tested rollback path</h3>
+          <p class="text-sm text-gray-400 leading-relaxed">Every deployment stage has a documented way back that has actually been exercised, not merely assumed.</p>
+        </div>
+        <div class="bg-graphite p-8">
+          <span class="font-mono text-xs text-amber">04</span>
+          <h3 class="font-bold text-white mt-4 mb-2">Handover with your team</h3>
+          <p class="text-sm text-gray-400 leading-relaxed">A working session with the people who will operate it — not a PDF dropped over the wall.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 05 — FIT ============ -->
+<section id="fit" class="py-20 lg:py-28 border-b border-gray-200">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10">
+    <div class="max-w-2xl fade-in">
+      <p class="eyebrow mb-6">05 — Fit</p>
+      <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-ink leading-tight">Where this practice adds value</h2>
+      <p class="mt-5 text-steel leading-relaxed">
+        Capacity is held to a small number of concurrent engagements, so it is worth being direct in both directions.
+      </p>
+    </div>
+
+    <div class="mt-12 grid md:grid-cols-2 gap-6 lg:gap-8">
+      <div class="border border-gray-300 bg-base p-8 fade-in">
+        <div class="flex items-center gap-3 pb-5 mb-6 border-b border-gray-200">
+          <span class="w-7 h-7 bg-amber flex items-center justify-center shrink-0">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3.5 8.5l3 3 6-7" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+          <h3 class="font-bold text-ink">Well suited to</h3>
+        </div>
+        <ul class="space-y-4 text-sm text-steel leading-relaxed">
+          <li>Systems that cross the hardware/software boundary and keep failing at the seam.</li>
+          <li>Teams with strong software practice but no in-house controls depth — or the reverse.</li>
+          <li>Inherited systems with no documentation and nobody left who built them.</li>
+          <li>Integrations that technically work but quietly lose data under load or outage.</li>
+          <li>Organisations that intend to own and maintain what gets built.</li>
+        </ul>
+      </div>
+
+      <div class="border border-gray-300 bg-alt p-8 fade-in">
+        <div class="flex items-center gap-3 pb-5 mb-6 border-b border-gray-200">
+          <span class="w-7 h-7 bg-gray-400 flex items-center justify-center shrink-0">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 8h8" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>
+          </span>
+          <h3 class="font-bold text-ink">Not the right call for</h3>
+        </div>
+        <ul class="space-y-4 text-sm text-steel leading-relaxed">
+          <li>Staff augmentation — a seat to fill on an existing team's backlog.</li>
+          <li>Large multi-team programmes needing a delivery organisation behind them.</li>
+          <li>Work where the technical decision is settled and only execution is wanted.</li>
+          <li>Engagements that cannot accommodate a modelling and validation stage.</li>
+          <li>Pure front-end or marketing site builds with no systems component.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 06 — QUESTIONS ============ -->
+<section id="questions" class="bg-alt py-20 lg:py-28 border-b border-gray-200">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10 grid lg:grid-cols-12 gap-10 lg:gap-16">
+    <div class="lg:col-span-4 fade-in">
+      <p class="eyebrow mb-6">06 — Questions</p>
+      <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-ink leading-tight">Practical questions</h2>
+      <p class="mt-5 text-steel leading-relaxed">The commercial detail, stated up front rather than discovered later.</p>
+    </div>
+
+    <div class="lg:col-span-8 fade-in">
+      <div class="divide-y divide-gray-300 border-y border-gray-300">
+        <details class="faq-item py-6">
+          <summary class="flex items-center justify-between gap-6">
+            <span class="faq-q font-bold text-ink">How does pricing work?</span>
+            <svg class="chevron shrink-0" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 6l4 4 4-4" stroke="#4B5563" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </summary>
+          <p class="mt-4 text-sm text-steel leading-relaxed">Diagnostics and fixed-scope builds are quoted as a fixed fee against a written scope, so clients are not exposed to hourly drift. Retainers are a monthly figure for reserved capacity. Quotes follow a scoping conversation — there is no rate card, because the same nominal task varies enormously depending on what it is attached to.</p>
+        </details>
+
+        <details class="faq-item py-6">
+          <summary class="flex items-center justify-between gap-6">
+            <span class="faq-q font-bold text-ink">Is the work done on site?</span>
+            <svg class="chevron shrink-0" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 6l4 4 4-4" stroke="#4B5563" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </summary>
+          <p class="mt-4 text-sm text-steel leading-relaxed">Remote by default, on site where the work genuinely requires it — commissioning, panel surveys, and initial system walks usually do. Travel is agreed in advance and billed at cost.</p>
+        </details>
+
+        <details class="faq-item py-6">
+          <summary class="flex items-center justify-between gap-6">
+            <span class="faq-q font-bold text-ink">Who owns the intellectual property?</span>
+            <svg class="chevron shrink-0" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 6l4 4 4-4" stroke="#4B5563" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </summary>
+          <p class="mt-4 text-sm text-steel leading-relaxed">The client does, on delivery. Generic tooling and libraries developed across engagements remain with the practice, licensed to the client perpetually — a distinction written into the agreement rather than left to assumption.</p>
+        </details>
+
+        <details class="faq-item py-6">
+          <summary class="flex items-center justify-between gap-6">
+            <span class="faq-q font-bold text-ink">Can this run alongside an existing team or integrator?</span>
+            <svg class="chevron shrink-0" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 6l4 4 4-4" stroke="#4B5563" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </summary>
+          <p class="mt-4 text-sm text-steel leading-relaxed">Frequently, yes. A common arrangement is owning the integration layer while the in-house team or incumbent integrator retains their side. Boundaries of responsibility are agreed up front, because ambiguity there is usually what produced the problem in the first place.</p>
+        </details>
+
+        <details class="faq-item py-6">
+          <summary class="flex items-center justify-between gap-6">
+            <span class="faq-q font-bold text-ink">What happens after handover?</span>
+            <svg class="chevron shrink-0" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 6l4 4 4-4" stroke="#4B5563" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </summary>
+          <p class="mt-4 text-sm text-steel leading-relaxed">Every build includes a defect-correction window after commissioning. Beyond that, some clients move to a retainer and others take the system fully in house — which is the intended outcome, and why the documentation standard is set where it is.</p>
+        </details>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 07 — ENQUIRE / CONTACT FORM ============ -->
+<section id="engage" class="py-20 lg:py-28 border-b border-gray-200">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10 grid lg:grid-cols-12 gap-12 lg:gap-16">
+
+    <div class="lg:col-span-5 fade-in">
+      <p class="eyebrow mb-6">07 — Enquire</p>
+      <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-ink leading-tight">
+        Start with the problem, not the brief.
+      </h2>
+      <p class="mt-5 text-steel leading-relaxed">
+        The most useful opening message describes what is misbehaving and what has already been tried. If the work suits this practice, the next step is scoping. If it does not, you will be told so directly and pointed somewhere better placed.
+      </p>
+
+      <dl class="mt-10 divide-y divide-gray-200 border-y border-gray-200">
+        <div class="flex gap-6 py-4">
+          <dt class="font-mono text-xs uppercase tracking-[0.08em] text-steel w-28 shrink-0 pt-0.5">Response</dt>
+          <dd class="text-sm text-ink font-medium">Within 1 business day</dd>
+        </div>
+        <div class="flex gap-6 py-4">
+          <dt class="font-mono text-xs uppercase tracking-[0.08em] text-steel w-28 shrink-0 pt-0.5">Formats</dt>
+          <dd class="text-sm text-ink font-medium">Diagnostic · Fixed-scope · Retainer</dd>
+        </div>
+        <div class="flex gap-6 py-4">
+          <dt class="font-mono text-xs uppercase tracking-[0.08em] text-steel w-28 shrink-0 pt-0.5">Location</dt>
+          <dd class="text-sm text-ink font-medium">Remote-first, on site by arrangement</dd>
+        </div>
+        <div class="flex gap-6 py-4">
+          <dt class="font-mono text-xs uppercase tracking-[0.08em] text-steel w-28 shrink-0 pt-0.5">Capacity</dt>
+          <dd class="text-sm text-ink font-medium flex items-center gap-2">
+            <span class="w-1.5 h-1.5 bg-techblue rounded-full"></span>
+            Accepting enquiries for next cycle
+          </dd>
+        </div>
+      </dl>
+    </div>
+
+    <div class="lg:col-span-7 fade-in">
+      <form class="border border-gray-300 bg-base p-8 sm:p-10" id="contactForm" novalidate>
+        <h3 class="font-bold text-ink text-lg mb-1">Project enquiry</h3>
+        <p class="text-sm text-steel mb-8">Fields marked with an asterisk are required.</p>
+
+        <div class="grid sm:grid-cols-2 gap-6">
+          <div>
+            <label for="name" class="field-label">Name <span class="text-amber">*</span></label>
+            <input type="text" id="name" name="name" required autocomplete="name" class="field">
+          </div>
+          <div>
+            <label for="email" class="field-label">Email <span class="text-amber">*</span></label>
+            <input type="email" id="email" name="email" required autocomplete="email" class="field">
+          </div>
+        </div>
+
+        <div class="grid sm:grid-cols-2 gap-6 mt-6">
+          <div>
+            <label for="organisation" class="field-label">Organisation</label>
+            <input type="text" id="organisation" name="organisation" autocomplete="organization" class="field">
+          </div>
+          <div>
+            <label for="format" class="field-label">Engagement format</label>
+            <select id="format" name="format" class="field">
+              <option value="">Not sure yet</option>
+              <option value="diagnostic">Technical Diagnostic</option>
+              <option value="build">Fixed-Scope Build</option>
+              <option value="retainer">Ongoing Retainer</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="mt-6">
+          <label for="scope" class="field-label">System scope</label>
+          <input type="text" id="scope" name="scope" placeholder="e.g. PLC retrofit, telemetry pipeline, API integration review" class="field">
+        </div>
+
+        <div class="mt-6">
+          <label for="message" class="field-label">What is misbehaving? <span class="text-amber">*</span></label>
+          <textarea id="message" name="message" rows="5" required placeholder="What the system does, where it falls short, and what has already been tried." class="field"></textarea>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-5 mt-8 pt-7 border-t border-gray-200">
+          <button type="submit" id="submitBtn" class="btn-primary font-bold px-7 py-3.5 text-sm">Send Enquiry</button>
+          <p class="text-xs text-steel">Replies within one business day.</p>
+        </div>
+
+        <p id="formStatus" class="text-sm text-techblue font-semibold mt-5 hidden" role="status" aria-live="polite">
+          Enquiry received. A reply will follow within one business day.
+        </p>
+        <p id="formError" class="text-sm text-amber font-semibold mt-5 hidden" role="alert">
+          Please complete the required fields before sending.
+        </p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="bg-slate text-gray-300">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10 py-16 grid sm:grid-cols-2 lg:grid-cols-4 gap-10">
+    <div>
+      <span class="tracking-tighter font-extrabold text-xl text-white">GN<span class="text-amber">Labs</span></span>
+      <p class="mt-4 text-sm text-gray-400 leading-relaxed max-w-xs">
+        Independent engineering practice covering embedded systems, industrial automation, and the software that connects them.
+      </p>
+    </div>
+
+    <div>
+      <h4 class="text-white font-semibold text-sm mb-4">Quick Links</h4>
+      <ul class="space-y-3 text-sm text-gray-400">
+        <li><a href="/" class="hover:text-white transition-colors">Home</a></li>
+        <li><a href="/about/" class="hover:text-white transition-colors">About</a></li>
+        <li><a href="/projects/" class="hover:text-white transition-colors">Projects</a></li>
+        <li><a href="/practice/" class="hover:text-white transition-colors">Practice</a></li>
+        <li><a href="/blog/" class="hover:text-white transition-colors">Blog</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <h4 class="text-white font-semibold text-sm mb-4">Core Technical Domains</h4>
+      <ul class="space-y-3 text-sm text-gray-400">
+        <li>Embedded &amp; Hardware</li>
+        <li>Industrial Automation</li>
+        <li>Systems &amp; Control</li>
+        <li>Software &amp; Cloud</li>
+      </ul>
+    </div>
+
+    <div>
+      <h4 class="text-white font-semibold text-sm mb-4">Legal / Compliance</h4>
+      <ul class="space-y-3 text-sm text-gray-400 mb-6">
+        <li><a href="/privacy-policy/" class="hover:text-white transition-colors">Privacy Policy</a></li>
+        <li><a href="/terms-of-service/" class="hover:text-white transition-colors">Terms of Service</a></li>
+      </ul>
+      <div class="flex gap-4">
+        <a href="#" aria-label="GitHub" class="text-gray-400 hover:text-white transition-colors">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.38 7.86 10.9.58.1.79-.25.79-.56 0-.28-.01-1.02-.02-2-3.2.7-3.88-1.54-3.88-1.54-.52-1.34-1.28-1.7-1.28-1.7-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.68 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.04 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.79 0c2.21-1.49 3.18-1.18 3.18-1.18.63 1.58.23 2.75.11 3.04.74.81 1.19 1.83 1.19 3.09 0 4.41-2.69 5.39-5.25 5.67.41.36.78 1.07.78 2.16 0 1.56-.01 2.82-.01 3.2 0 .32.21.67.8.56A10.52 10.52 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5Z"/></svg>
+        </a>
+        <a href="#" aria-label="LinkedIn" class="text-gray-400 hover:text-white transition-colors">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.36V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29ZM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12ZM7.12 20.45H3.56V9h3.56v11.45ZM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0Z"/></svg>
+        </a>
+        <a href="#" aria-label="RSS Feed" class="text-gray-400 hover:text-white transition-colors">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M4 4a16 16 0 0 1 16 16h-3a13 13 0 0 0-13-13V4Zm0 6a10 10 0 0 1 10 10h-3a7 7 0 0 0-7-7v-3Zm2.5 6.5A2.5 2.5 0 1 1 4 19a2.5 2.5 0 0 1 2.5-2.5Z"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="border-t border-white/10">
+    <div class="max-w-7xl mx-auto px-6 lg:px-10 py-6 text-xs text-gray-500">
+      © 2026 GN Labs. All specifications subject to revision without notice.
+    </div>
+  </div>
+</footer>
+
+<!-- ============ NEWSLETTER POPUP ============ -->
+<div id="newsletterOverlay" class="fixed inset-0 z-50 bg-ink/60 flex items-center justify-center p-4" aria-hidden="true">
+  <div id="newsletterModal" class="relative bg-graphite text-white w-full max-w-2xl border border-white/10 p-10 sm:p-14">
+    <button id="dismissBanner" aria-label="Close newsletter signup" class="absolute top-5 right-5 text-gray-400 hover:text-white text-2xl leading-none w-9 h-9 flex items-center justify-center">&times;</button>
+    <p class="text-xs font-mono text-amber uppercase tracking-wide mb-4">Before you go</p>
+    <h3 class="text-2xl sm:text-3xl font-extrabold tracking-tight">Get new writing on control systems and edge software</h3>
+    <p class="text-gray-400 mt-3 text-sm">One email, roughly monthly. No spam.</p>
+    <form id="newsletterForm" class="flex flex-col sm:flex-row gap-3 mt-8">
+      <input type="email" required placeholder="you@company.com" class="flex-1 bg-white/5 border border-white/20 px-4 py-3 text-sm text-white placeholder-gray-500 outline-none focus:border-amber">
+      <button type="submit" class="btn-primary font-bold px-6 py-3 text-sm whitespace-nowrap">Subscribe</button>
+    </form>
+  </div>
+</div>
+
+<!-- ============ SCROLL TO TOP ============ -->
+<button id="scrollTopBtn" aria-label="Scroll to top" class="fixed bottom-6 right-6 z-40 w-11 h-11 bg-ink text-white flex items-center justify-center">
+  <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 13V3M8 3L3 8M8 3l5 5" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</button>
+
+<script>
+  // ---- Header compaction + reading progress ----
+  const siteHeader = document.getElementById('siteHeader');
+  const sectionRail = document.getElementById('sectionRail');
+  const readingBar = document.getElementById('readingBar');
+
+  function onScroll() {
+    const y = window.scrollY;
+    siteHeader.classList.toggle('is-scrolled', y > 24);
+    // The in-page rail only appears once the hero is behind you, so it never
+    // competes with the page title for attention on first paint.
+    sectionRail.classList.toggle('show', y > 260);
+
+    const max = document.documentElement.scrollHeight - window.innerHeight;
+    readingBar.style.transform = 'scaleX(' + (max > 0 ? Math.min(y / max, 1) : 0) + ')';
+  }
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll, { passive: true });
+
+  // ---- Scrollspy for the section rail ----
+  // Tracks which section occupies the upper third of the viewport and marks the
+  // matching rail link, so the reader always knows where they are in the page.
+  const railLinks = Array.from(document.querySelectorAll('.rail-link'));
+  const spiedSections = railLinks
+    .map(link => document.getElementById(link.dataset.rail))
+    .filter(Boolean);
+
+  const spy = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      railLinks.forEach(l => l.classList.toggle('is-current', l.dataset.rail === entry.target.id));
+    });
+  }, { rootMargin: '-20% 0px -70% 0px', threshold: 0 });
+  spiedSections.forEach(s => spy.observe(s));
+
+  // ---- Mobile drawer ----
+  const menuToggle = document.getElementById('menuToggle');
+  const menuClose = document.getElementById('menuClose');
+  const mobileDrawer = document.getElementById('mobileDrawer');
+  const mobileOverlay = document.getElementById('mobileOverlay');
+
+  function openDrawer() {
+    mobileDrawer.classList.add('open');
+    mobileOverlay.classList.add('open');
+    menuToggle.setAttribute('aria-expanded', 'true');
+  }
+  function closeDrawer() {
+    mobileDrawer.classList.remove('open');
+    mobileOverlay.classList.remove('open');
+    menuToggle.setAttribute('aria-expanded', 'false');
+  }
+  menuToggle.addEventListener('click', openDrawer);
+  menuClose.addEventListener('click', closeDrawer);
+  mobileOverlay.addEventListener('click', closeDrawer);
+  document.querySelectorAll('.mobile-link').forEach(link => {
+    link.addEventListener('click', closeDrawer);
+  });
+
+  // ---- Scroll-to-top ----
+  const scrollTopBtn = document.getElementById('scrollTopBtn');
+  window.addEventListener('scroll', () => {
+    scrollTopBtn.classList.toggle('show', window.scrollY > 500);
+  }, { passive: true });
+  scrollTopBtn.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  // ---- Newsletter popup ----
+  const newsletterOverlay = document.getElementById('newsletterOverlay');
+  const footer = document.querySelector('footer');
+  const dismissBanner = document.getElementById('dismissBanner');
+  let newsletterShown = false;
+
+  function closeNewsletter() {
+    newsletterOverlay.classList.remove('show');
+    newsletterOverlay.setAttribute('aria-hidden', 'true');
+  }
+
+  const footerObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting && !newsletterShown) {
+        newsletterShown = true;
+        newsletterOverlay.classList.add('show');
+        newsletterOverlay.setAttribute('aria-hidden', 'false');
+        footerObserver.disconnect();
+      }
+    });
+  }, { threshold: 0.1 });
+  footerObserver.observe(footer);
+
+  dismissBanner.addEventListener('click', closeNewsletter);
+  newsletterOverlay.addEventListener('click', (e) => {
+    if (e.target === newsletterOverlay) closeNewsletter();
+  });
+
+  const newsletterForm = document.getElementById('newsletterForm');
+  newsletterForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    newsletterForm.innerHTML = '<p class="text-sm font-semibold text-white py-2">Subscribed. First issue lands next cycle.</p>';
+  });
+
+  // ---- Contact form ----
+  // novalidate is set on the form so validation messaging is handled here
+  // consistently rather than by each browser's native bubble.
+  const contactForm = document.getElementById('contactForm');
+  const submitBtn = document.getElementById('submitBtn');
+  const formStatus = document.getElementById('formStatus');
+  const formError = document.getElementById('formError');
+
+  contactForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    if (!contactForm.checkValidity()) {
+      formError.classList.remove('hidden');
+      formStatus.classList.add('hidden');
+      const firstInvalid = contactForm.querySelector(':invalid');
+      if (firstInvalid) firstInvalid.focus();
+      return;
+    }
+
+    formError.classList.add('hidden');
+    submitBtn.textContent = 'Sending…';
+    submitBtn.disabled = true;
+    setTimeout(() => {
+      submitBtn.textContent = 'Send Enquiry';
+      submitBtn.disabled = false;
+      formStatus.classList.remove('hidden');
+      contactForm.reset();
+    }, 700);
+  });
+
+  // ---- Scroll-triggered fade-ins ----
+  const fadeObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        fadeObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.fade-in').forEach(el => fadeObserver.observe(el));
+</script>
+
+</body>
+</html>
