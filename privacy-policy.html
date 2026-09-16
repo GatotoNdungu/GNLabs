@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Privacy Policy — GN Labs</title>
+<meta name="description" content="What GN Labs collects, why, and what you can do about it — written in plain language, not legal boilerplate.">
+<link rel="canonical" href="https://gnlabs.site/privacy-policy/">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          base: '#FFFFFF',
+          alt: '#F8F9FA',
+          slate: '#181C20',
+          graphite: '#0F1215',
+          ink: '#111827',
+          steel: '#4B5563',
+          amber: '#D97706',
+          techblue: '#1E40AF',
+        },
+        fontFamily: {
+          sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'system-ui', 'sans-serif'],
+          mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace'],
+        },
+      }
+    }
+  }
+</script>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Crect width='30' height='30' fill='%23FFFFFF'/%3E%3Crect x='1' y='1' width='28' height='28' fill='none' stroke='%23111827' stroke-width='2'/%3E%3Crect x='7' y='7' width='8' height='8' fill='%23D97706'/%3E%3Crect x='16' y='16' width='7' height='7' fill='none' stroke='%23111827' stroke-width='2'/%3E%3Cline x1='15' y1='11' x2='19.5' y2='16' stroke='%23111827' stroke-width='2'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-base: #FFFFFF;
+    --bg-alt: #F8F9FA;
+    --dark-slate: #181C20;
+    --dark-graphite: #0F1215;
+    --text-ink: #111827;
+    --text-steel: #4B5563;
+    --accent-amber: #D97706;
+    --accent-blue: #1E40AF;
+    --header-h: 4.25rem;
+  }
+
+  * { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    color: var(--text-ink);
+    background: var(--bg-base);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { scroll-behavior: auto !important; animation: none !important; transition: none !important; }
+  }
+
+  .fade-in {
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity 450ms ease-out, transform 450ms ease-out;
+  }
+  .fade-in.is-visible { opacity: 1; transform: translateY(0); }
+
+  .btn-primary { background: var(--accent-amber); color: #FFFFFF; transition: background-color 200ms ease-in-out; }
+  .btn-primary:hover { background: #B45F04; }
+
+  .btn-secondary {
+    border: 1.5px solid var(--text-ink); color: var(--text-ink);
+    transition: background-color 200ms ease-in-out, color 200ms ease-in-out;
+  }
+  .btn-secondary:hover { background: var(--text-ink); color: #fff; }
+
+  a:focus-visible, button:focus-visible, input:focus-visible {
+    outline: 2px solid var(--accent-amber);
+    outline-offset: 2px;
+  }
+
+  .nav-link { position: relative; color: var(--text-steel); transition: color 200ms ease-in-out; }
+  .nav-link:hover { color: var(--text-ink); }
+  .nav-link::after {
+    content: ''; position: absolute; left: 0; bottom: -4px; height: 2px; width: 0;
+    background: var(--accent-amber); transition: width 200ms ease-in-out;
+  }
+  .nav-link:hover::after { width: 100%; }
+
+  #mobileDrawer { transform: translateX(100%); transition: transform 260ms ease-in-out; }
+  #mobileDrawer.open { transform: translateX(0); }
+  #mobileOverlay { opacity: 0; pointer-events: none; transition: opacity 260ms ease-in-out; }
+  #mobileOverlay.open { opacity: 1; pointer-events: auto; }
+
+  #scrollTopBtn {
+    opacity: 0; transform: translateY(10px); pointer-events: none;
+    transition: opacity 200ms ease-in-out, transform 200ms ease-in-out;
+  }
+  #scrollTopBtn.show { opacity: 1; transform: translateY(0); pointer-events: auto; }
+
+  #siteHeader { transition: height 260ms ease-in-out, box-shadow 260ms ease-in-out; }
+  #siteHeader .header-inner { transition: height 260ms ease-in-out; }
+  #siteHeader.is-scrolled { box-shadow: 0 1px 0 rgba(17,24,39,0.06), 0 12px 24px -18px rgba(17,24,39,0.25); }
+  #siteHeader.is-scrolled .header-inner { height: 4.25rem; }
+  #siteHeader:not(.is-scrolled) .header-inner { height: 5rem; }
+
+  .hero-grid {
+    background-image:
+      linear-gradient(to right, rgba(255,255,255,0.045) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255,255,255,0.045) 1px, transparent 1px);
+    background-size: 34px 34px;
+  }
+
+  /* ---- TOC ---- */
+  .toc-link {
+    display: block;
+    border-left: 2px solid transparent;
+    color: var(--text-steel);
+    transition: color 160ms ease-in-out, border-color 160ms ease-in-out, padding-left 160ms ease-in-out;
+  }
+  .toc-link:hover { color: var(--text-ink); }
+  .toc-link.is-active {
+    color: var(--text-ink);
+    border-left-color: var(--accent-amber);
+    font-weight: 600;
+  }
+
+  /* ---- Policy sections ---- */
+  .policy-section { scroll-margin-top: calc(var(--header-h) + 1.5rem); }
+  .policy-section h2 {
+    font-weight: 800;
+    letter-spacing: -0.01em;
+  }
+  .policy-section p, .policy-section li { color: var(--text-steel); }
+  .policy-section a.inline-link {
+    color: var(--text-ink);
+    border-bottom: 1.5px solid var(--accent-amber);
+    transition: color 160ms ease-in-out;
+  }
+  .policy-section a.inline-link:hover { color: var(--accent-amber); }
+  .policy-num {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    color: var(--accent-amber);
+  }
+
+  .data-row { border-top: 1px solid #E5E7EB; }
+  .data-row:first-child { border-top: none; }
+
+  .plain-badge {
+    background: var(--bg-alt);
+    border: 1px solid #E5E7EB;
+  }
+
+  #tocProgress { background: var(--accent-amber); width: 0%; transition: width 90ms linear; }
+</style>
+</head>
+<body class="bg-base text-ink antialiased">
+
+<!-- ============ HEADER ============ -->
+<header id="siteHeader" class="sticky top-0 z-40 bg-base/95 backdrop-blur border-b border-gray-200">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10">
+    <div class="header-inner flex items-center justify-between h-20">
+      <a href="/" class="flex items-center gap-3 group">
+        <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect x="1" y="1" width="28" height="28" stroke="#111827" stroke-width="1.6"/>
+          <rect x="7" y="7" width="8" height="8" fill="#D97706"/>
+          <rect x="16" y="16" width="7" height="7" stroke="#111827" stroke-width="1.6"/>
+          <line x1="15" y1="11" x2="19.5" y2="16" stroke="#111827" stroke-width="1.6"/>
+        </svg>
+        <span class="tracking-tighter font-extrabold text-xl text-ink">GN<span class="text-amber">Labs</span></span>
+      </a>
+
+      <nav class="hidden lg:flex items-center gap-9" aria-label="Primary">
+        <a href="/" class="nav-link text-sm font-semibold">Home</a>
+        <a href="/about/" class="nav-link text-sm font-semibold">About</a>
+        <a href="/projects/" class="nav-link text-sm font-semibold">Projects</a>
+        <a href="/practice/" class="nav-link text-sm font-semibold">Practice</a>
+        <a href="/blog/" class="nav-link text-sm font-semibold">Blog</a>
+      </nav>
+
+      <div class="flex items-center gap-4">
+        <a href="/contact/" class="hidden lg:inline-flex btn-primary text-sm font-bold px-5 py-2.5">
+          Start Conversation
+        </a>
+        <button id="menuToggle" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobileDrawer" class="lg:hidden flex flex-col justify-center gap-1.5 w-9 h-9">
+          <span class="block h-0.5 w-6 bg-ink"></span>
+          <span class="block h-0.5 w-6 bg-ink"></span>
+          <span class="block h-0.5 w-4 bg-ink self-start ml-3"></span>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="h-0.5 w-full bg-gray-100"><div id="tocProgress" class="h-full"></div></div>
+</header>
+
+<div id="mobileOverlay" class="fixed inset-0 bg-ink/50 z-40 lg:hidden"></div>
+
+<aside id="mobileDrawer" class="fixed top-0 right-0 h-full w-72 bg-base z-50 border-l border-gray-200 lg:hidden" aria-label="Mobile navigation">
+  <div class="flex items-center justify-between h-20 px-6 border-b border-gray-200">
+    <span class="font-extrabold tracking-tighter text-lg">Menu</span>
+    <button id="menuClose" aria-label="Close navigation menu" class="w-9 h-9 flex items-center justify-center text-2xl leading-none text-steel">&times;</button>
+  </div>
+  <nav class="flex flex-col px-6 py-8 gap-6" aria-label="Mobile primary">
+    <a href="/" class="mobile-link text-lg font-semibold text-ink">Home</a>
+    <a href="/about/" class="mobile-link text-lg font-semibold text-ink">About</a>
+    <a href="/projects/" class="mobile-link text-lg font-semibold text-ink">Projects</a>
+    <a href="/practice/" class="mobile-link text-lg font-semibold text-ink">Practice</a>
+    <a href="/blog/" class="mobile-link text-lg font-semibold text-ink">Blog</a>
+    <a href="/contact/" class="btn-primary text-center font-bold px-5 py-3 mt-4">Start Conversation</a>
+  </nav>
+</aside>
+
+<!-- ============ COMPACT HERO ============ -->
+<section class="relative overflow-hidden bg-graphite border-b border-gray-200">
+  <div class="absolute inset-0 z-0">
+    <div class="hero-grid absolute inset-0"></div>
+    <div class="absolute inset-0 bg-gradient-to-br from-graphite via-graphite to-slate"></div>
+  </div>
+  <div class="relative z-10 max-w-7xl mx-auto px-6 lg:px-10 py-14 sm:py-16 lg:py-20">
+    <nav aria-label="Breadcrumb" class="mb-6 fade-in">
+      <ol class="flex items-center gap-2 text-[11px] font-mono text-gray-500">
+        <li><a href="/" class="hover:text-gray-300 transition-colors">Home</a></li>
+        <li aria-hidden="true">/</li>
+        <li class="text-gray-400">Privacy Policy</li>
+      </ol>
+    </nav>
+    <div class="max-w-2xl fade-in">
+      <p class="inline-flex items-center gap-3 text-[11px] font-mono text-gray-400 mb-5">
+        <span class="w-6 h-px bg-amber"></span>Last updated September 16, 2026
+      </p>
+      <h1 class="text-3xl sm:text-4xl lg:text-[2.75rem] font-extrabold tracking-tight leading-[1.1] text-white">
+        What I collect, and what I do with it
+      </h1>
+      <p class="mt-5 text-base sm:text-lg text-gray-300 leading-relaxed max-w-xl">
+        GN Labs is a one-person engineering practice, not a data company. This page says, plainly, what information this site gathers, why, and how to make me delete it if you'd rather I didn't have it.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ MAIN: TOC + CONTENT ============ -->
+<section class="py-14 lg:py-20 border-b border-gray-200">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10 grid lg:grid-cols-12 gap-12 xl:gap-16">
+
+    <!-- ============ TOC SIDEBAR ============ -->
+    <aside class="hidden lg:block lg:col-span-3" aria-label="On this page">
+      <nav class="sticky space-y-0.5" style="top: calc(var(--header-h) + 1.5rem);" aria-label="Table of contents">
+        <p class="text-[11px] font-mono text-steel mb-4">On this page</p>
+        <a href="#overview" class="toc-link text-sm py-1.5 pl-4" data-toc>Overview</a>
+        <a href="#what-we-collect" class="toc-link text-sm py-1.5 pl-4" data-toc>What gets collected</a>
+        <a href="#how-its-used" class="toc-link text-sm py-1.5 pl-4" data-toc>How it's used</a>
+        <a href="#cookies" class="toc-link text-sm py-1.5 pl-4" data-toc>Cookies &amp; local storage</a>
+        <a href="#third-parties" class="toc-link text-sm py-1.5 pl-4" data-toc>Third parties</a>
+        <a href="#retention" class="toc-link text-sm py-1.5 pl-4" data-toc>How long it's kept</a>
+        <a href="#your-rights" class="toc-link text-sm py-1.5 pl-4" data-toc>Your rights</a>
+        <a href="#security" class="toc-link text-sm py-1.5 pl-4" data-toc>Security</a>
+        <a href="#children" class="toc-link text-sm py-1.5 pl-4" data-toc>Children's privacy</a>
+        <a href="#changes" class="toc-link text-sm py-1.5 pl-4" data-toc>Changes to this policy</a>
+        <a href="#contact-us" class="toc-link text-sm py-1.5 pl-4" data-toc>Get in touch</a>
+
+        <div class="mt-8 pt-6 border-t border-gray-200">
+          <p class="text-sm text-steel leading-relaxed mb-4">Questions before you read the fine print?</p>
+          <a href="/contact/" class="btn-secondary inline-flex font-bold px-4 py-2.5 text-sm">Ask directly</a>
+        </div>
+      </nav>
+    </aside>
+
+    <!-- ============ CONTENT ============ -->
+    <div class="lg:col-span-9 max-w-2xl">
+
+      <!-- Mobile TOC (collapsible-free, just a compact jump list) -->
+      <div class="lg:hidden mb-10 -mx-1">
+        <p class="text-[11px] font-mono text-steel mb-3 px-1">Jump to</p>
+        <div class="flex flex-wrap gap-2 px-1">
+          <a href="#overview" class="text-xs font-semibold border border-gray-300 px-3 py-1.5">Overview</a>
+          <a href="#what-we-collect" class="text-xs font-semibold border border-gray-300 px-3 py-1.5">What's collected</a>
+          <a href="#cookies" class="text-xs font-semibold border border-gray-300 px-3 py-1.5">Cookies</a>
+          <a href="#your-rights" class="text-xs font-semibold border border-gray-300 px-3 py-1.5">Your rights</a>
+          <a href="#contact-us" class="text-xs font-semibold border border-gray-300 px-3 py-1.5">Contact</a>
+        </div>
+      </div>
+
+      <div class="fade-in">
+        <p class="plain-badge inline-block px-4 py-2.5 text-sm text-steel leading-relaxed mb-12">
+          The short version: filling out a form on this site sends me your name, email, and message so I can reply. Nothing is sold, nothing is shared with advertisers, and there's no tracking beyond basic, anonymous visit counts. Everything below is the long version of that sentence.
+        </p>
+      </div>
+
+      <!-- 01 Overview -->
+      <div id="overview" class="policy-section fade-in mb-14">
+        <p class="policy-num text-sm font-semibold mb-2">01</p>
+        <h2 class="text-xl sm:text-2xl text-ink mb-4">Overview</h2>
+        <p class="text-[0.9375rem] leading-relaxed mb-4">
+          This site (gnlabs.site) is run by GN Labs, an independent engineering practice. When you browse, subscribe, or send a message here, some information passes through my hands. This policy explains what that is, why I need it, and what say you have over it.
+        </p>
+        <p class="text-[0.9375rem] leading-relaxed">
+          I wrote it the way I'd explain it to a client over a call, not the way a legal template would. If anything here is unclear, that's a flaw in the writing, not a trap — ask and I'll fix it.
+        </p>
+      </div>
+
+      <!-- 02 What we collect -->
+      <div id="what-we-collect" class="policy-section fade-in mb-14">
+        <p class="policy-num text-sm font-semibold mb-2">02</p>
+        <h2 class="text-xl sm:text-2xl text-ink mb-4">What gets collected, and from where</h2>
+        <p class="text-[0.9375rem] leading-relaxed mb-6">
+          Nothing is collected passively that you didn't hand over yourself. Here's the full list, by where it comes from.
+        </p>
+
+        <div class="border border-gray-200">
+          <div class="data-row p-5 sm:p-6">
+            <h3 class="font-bold text-ink text-[0.9375rem] mb-1.5">The contact form</h3>
+            <p class="text-sm leading-relaxed">Your name, email address, the system or scope you describe, and your message. Used to reply to you — nothing more.</p>
+          </div>
+          <div class="data-row p-5 sm:p-6">
+            <h3 class="font-bold text-ink text-[0.9375rem] mb-1.5">The newsletter form</h3>
+            <p class="text-sm leading-relaxed">Just your email address, so I can send new articles roughly once a month. No name required, no profile built around it.</p>
+          </div>
+          <div class="data-row p-5 sm:p-6">
+            <h3 class="font-bold text-ink text-[0.9375rem] mb-1.5">Ordinary site visits</h3>
+            <p class="text-sm leading-relaxed">Basic, aggregated traffic figures — which pages get read, roughly how many visits, and which country they're from. This comes from the hosting provider's server logs, not a tracking script, and it can't be tied back to you as an individual.</p>
+          </div>
+          <div class="data-row p-5 sm:p-6">
+            <h3 class="font-bold text-ink text-[0.9375rem] mb-1.5">What I don't collect</h3>
+            <p class="text-sm leading-relaxed">No advertising cookies, no cross-site tracking, no fingerprinting, no data brokers, no selling anything to anyone. If a future feature would change that, this page gets updated first — see <a href="#changes" class="inline-link">Changes to this policy</a>.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 03 How it's used -->
+      <div id="how-its-used" class="policy-section fade-in mb-14">
+        <p class="policy-num text-sm font-semibold mb-2">03</p>
+        <h2 class="text-xl sm:text-2xl text-ink mb-4">How it's used</h2>
+        <ul class="space-y-3 text-[0.9375rem] leading-relaxed list-none">
+          <li class="flex gap-3"><span class="text-amber font-bold shrink-0">—</span><span>To reply to a message you've sent, and to keep enough context to follow up on it sensibly.</span></li>
+          <li class="flex gap-3"><span class="text-amber font-bold shrink-0">—</span><span>To send the newsletter, if you've asked for it, and to know it reached an inbox that still wants it.</span></li>
+          <li class="flex gap-3"><span class="text-amber font-bold shrink-0">—</span><span>To understand, in aggregate, which articles and pages are actually useful, so the site improves over time.</span></li>
+          <li class="flex gap-3"><span class="text-amber font-bold shrink-0">—</span><span>To meet basic legal or accounting obligations, on the rare occasion an engagement requires it.</span></li>
+        </ul>
+        <p class="text-[0.9375rem] leading-relaxed mt-5">
+          That's the complete list. Nothing here is used to build an advertising profile, and nothing is repurposed for a use you weren't told about at the point you handed it over.
+        </p>
+      </div>
+
+      <!-- 04 Cookies -->
+      <div id="cookies" class="policy-section fade-in mb-14">
+        <p class="policy-num text-sm font-semibold mb-2">04</p>
+        <h2 class="text-xl sm:text-2xl text-ink mb-4">Cookies &amp; local storage</h2>
+        <p class="text-[0.9375rem] leading-relaxed mb-4">
+          This site avoids cookies wherever the browser lets it. A couple of small, unavoidable exceptions:
+        </p>
+        <ul class="space-y-3 text-[0.9375rem] leading-relaxed list-none">
+          <li class="flex gap-3"><span class="text-amber font-bold shrink-0">—</span><span>A short-lived preference, like whether you've already dismissed the newsletter prompt, stored only in your own browser and never sent anywhere.</span></li>
+          <li class="flex gap-3"><span class="text-amber font-bold shrink-0">—</span><span>Standard server logs kept by the hosting provider for security and uptime, which age out automatically after a short window.</span></li>
+        </ul>
+        <p class="text-[0.9375rem] leading-relaxed mt-4">
+          There's no consent banner because there's nothing here that needs one under most regional rules — no advertising or cross-site tracking cookies are set. If that ever changes, a banner will appear before it does.
+        </p>
+      </div>
+
+      <!-- 05 Third parties -->
+      <div id="third-parties" class="policy-section fade-in mb-14">
+        <p class="policy-num text-sm font-semibold mb-2">05</p>
+        <h2 class="text-xl sm:text-2xl text-ink mb-4">Third parties involved</h2>
+        <p class="text-[0.9375rem] leading-relaxed mb-4">
+          A handful of well-known services keep this site running. Each one only ever sees the minimum it needs to do its job:
+        </p>
+        <ul class="space-y-3 text-[0.9375rem] leading-relaxed list-none">
+          <li class="flex gap-3"><span class="text-amber font-bold shrink-0">—</span><span><strong class="text-ink font-semibold">Hosting infrastructure</strong> — serves the pages you're reading and keeps basic access logs.</span></li>
+          <li class="flex gap-3"><span class="text-amber font-bold shrink-0">—</span><span><strong class="text-ink font-semibold">Contentful</strong> — stores and serves the article text and images published on the blog. It doesn't receive anything about you as a visitor.</span></li>
+          <li class="flex gap-3"><span class="text-amber font-bold shrink-0">—</span><span><strong class="text-ink font-semibold">Email delivery</strong> — carries the newsletter and contact-form replies from me to you.</span></li>
+        </ul>
+        <p class="text-[0.9375rem] leading-relaxed mt-4">
+          None of them are permitted to use your information for their own marketing, and none of it is sold or rented to anyone, ever.
+        </p>
+      </div>
+
+      <!-- 06 Retention -->
+      <div id="retention" class="policy-section fade-in mb-14">
+        <p class="policy-num text-sm font-semibold mb-2">06</p>
+        <h2 class="text-xl sm:text-2xl text-ink mb-4">How long it's kept</h2>
+        <p class="text-[0.9375rem] leading-relaxed mb-4">
+          Contact-form messages are kept as long as they're useful for the conversation they came from, and then cleared out — typically within a couple of years for anything that didn't turn into ongoing work. Newsletter addresses stay on the list until you unsubscribe, which takes one click. Server logs age out automatically, usually within 30 days.
+        </p>
+        <p class="text-[0.9375rem] leading-relaxed">
+          If you'd like something removed sooner than that, see <a href="#your-rights" class="inline-link">Your rights</a> below.
+        </p>
+      </div>
+
+      <!-- 07 Your rights -->
+      <div id="your-rights" class="policy-section fade-in mb-14">
+        <p class="policy-num text-sm font-semibold mb-2">07</p>
+        <h2 class="text-xl sm:text-2xl text-ink mb-4">Your rights over your own data</h2>
+        <p class="text-[0.9375rem] leading-relaxed mb-6">
+          Wherever you're writing in from, you can ask for any of the following, and I'll act on it directly rather than routing you through a form:
+        </p>
+        <div class="grid sm:grid-cols-2 gap-4">
+          <div class="border border-gray-200 p-5">
+            <h3 class="font-bold text-ink text-sm mb-1.5">See what's held</h3>
+            <p class="text-sm leading-relaxed">A copy of whatever information is on file under your name or email.</p>
+          </div>
+          <div class="border border-gray-200 p-5">
+            <h3 class="font-bold text-ink text-sm mb-1.5">Correct it</h3>
+            <p class="text-sm leading-relaxed">If something's wrong or out of date, it gets fixed on request.</p>
+          </div>
+          <div class="border border-gray-200 p-5">
+            <h3 class="font-bold text-ink text-sm mb-1.5">Delete it</h3>
+            <p class="text-sm leading-relaxed">Ask, and it's removed — from messages to newsletter subscriptions.</p>
+          </div>
+          <div class="border border-gray-200 p-5">
+            <h3 class="font-bold text-ink text-sm mb-1.5">Unsubscribe</h3>
+            <p class="text-sm leading-relaxed">Every newsletter email has a one-click link at the bottom. No login, no survey.</p>
+          </div>
+        </div>
+        <p class="text-[0.9375rem] leading-relaxed mt-6">
+          Send any of these requests to the email below, and expect a response within a few business days — usually sooner.
+        </p>
+      </div>
+
+      <!-- 08 Security -->
+      <div id="security" class="policy-section fade-in mb-14">
+        <p class="policy-num text-sm font-semibold mb-2">08</p>
+        <h2 class="text-xl sm:text-2xl text-ink mb-4">Security</h2>
+        <p class="text-[0.9375rem] leading-relaxed">
+          The site is served over HTTPS, so anything you submit is encrypted in transit. Access to stored messages and subscriber lists is limited to me. No system is unbreakable, and if something ever did go wrong, you'd hear about it directly and promptly rather than finding out secondhand.
+        </p>
+      </div>
+
+      <!-- 09 Children -->
+      <div id="children" class="policy-section fade-in mb-14">
+        <p class="policy-num text-sm font-semibold mb-2">09</p>
+        <h2 class="text-xl sm:text-2xl text-ink mb-4">Children's privacy</h2>
+        <p class="text-[0.9375rem] leading-relaxed">
+          This site is aimed at engineers, plant operators, and technical decision-makers — it isn't built for or directed at children, and I don't knowingly collect information from anyone under 16. If you believe a child has submitted information here, get in touch and it will be removed.
+        </p>
+      </div>
+
+      <!-- 10 Changes -->
+      <div id="changes" class="policy-section fade-in mb-14">
+        <p class="policy-num text-sm font-semibold mb-2">10</p>
+        <h2 class="text-xl sm:text-2xl text-ink mb-4">Changes to this policy</h2>
+        <p class="text-[0.9375rem] leading-relaxed">
+          If what's collected or how it's used ever changes materially, this page will be updated and the date at the top will move. For anything significant — a new third-party tool, say, or a new use for existing data — I'll flag it in the newsletter as well, so it doesn't just sit quietly in a page nobody rereads.
+        </p>
+      </div>
+
+      <!-- 11 Contact -->
+      <div id="contact-us" class="policy-section fade-in">
+        <p class="policy-num text-sm font-semibold mb-2">11</p>
+        <h2 class="text-xl sm:text-2xl text-ink mb-4">Get in touch</h2>
+        <p class="text-[0.9375rem] leading-relaxed mb-6">
+          Questions, correction requests, or a straightforward "delete everything you have on me" — all of it goes to the same place.
+        </p>
+        <div class="border border-gray-300 bg-alt p-6 sm:p-7 flex flex-wrap items-center justify-between gap-5">
+          <div>
+            <p class="text-xs font-mono text-steel mb-1.5">Privacy requests</p>
+            <a href="mailto:privacy@gnlabs.site" class="font-bold text-ink text-base hover:text-amber transition-colors">privacy@gnlabs.site</a>
+          </div>
+          <a href="/contact/" class="btn-primary font-bold px-6 py-3 text-sm shrink-0">Or use the contact form</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="bg-slate text-gray-300">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10 py-16 grid sm:grid-cols-2 lg:grid-cols-4 gap-10">
+    <div>
+      <span class="tracking-tighter font-extrabold text-xl text-white">GN<span class="text-amber">Labs</span></span>
+      <p class="mt-4 text-sm text-gray-400 leading-relaxed max-w-xs">
+        Independent engineering practice covering embedded systems, industrial automation, and the software that connects them.
+      </p>
+    </div>
+
+    <div>
+      <h2 class="text-white font-semibold text-sm mb-4">Quick Links</h2>
+      <ul class="space-y-3 text-sm text-gray-400">
+        <li><a href="/" class="hover:text-white transition-colors">Home</a></li>
+        <li><a href="/about/" class="hover:text-white transition-colors">About</a></li>
+        <li><a href="/projects/" class="hover:text-white transition-colors">Projects</a></li>
+        <li><a href="/practice/" class="hover:text-white transition-colors">Practice</a></li>
+        <li><a href="/blog/" class="hover:text-white transition-colors">Blog</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <h2 class="text-white font-semibold text-sm mb-4">Core Technical Domains</h2>
+      <ul class="space-y-3 text-sm text-gray-400">
+        <li>Embedded &amp; Hardware</li>
+        <li>Industrial Automation</li>
+        <li>Systems &amp; Control</li>
+        <li>Software &amp; Cloud</li>
+      </ul>
+    </div>
+
+    <div>
+      <h2 class="text-white font-semibold text-sm mb-4">Legal / Compliance</h2>
+      <ul class="space-y-3 text-sm text-gray-400 mb-6">
+        <li><a href="/privacy-policy/" class="hover:text-white transition-colors" aria-current="page">Privacy Policy</a></li>
+        <li><a href="/terms-of-service/" class="hover:text-white transition-colors">Terms of Service</a></li>
+      </ul>
+      <div class="flex gap-4">
+        <a href="#" aria-label="GitHub" class="text-gray-400 hover:text-white transition-colors">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.38 7.86 10.9.58.1.79-.25.79-.56 0-.28-.01-1.02-.02-2-3.2.7-3.88-1.54-3.88-1.54-.52-1.34-1.28-1.7-1.28-1.7-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.68 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.04 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.79 0c2.21-1.49 3.18-1.18 3.18-1.18.63 1.58.23 2.75.11 3.04.74.81 1.19 1.83 1.19 3.09 0 4.41-2.69 5.39-5.25 5.67.41.36.78 1.07.78 2.16 0 1.56-.01 2.82-.01 3.2 0 .32.21.67.8.56A10.52 10.52 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5Z"/></svg>
+        </a>
+        <a href="#" aria-label="LinkedIn" class="text-gray-400 hover:text-white transition-colors">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.36V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29ZM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12ZM7.12 20.45H3.56V9h3.56v11.45ZM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0Z"/></svg>
+        </a>
+        <a href="/blog/" aria-label="RSS Feed" class="text-gray-400 hover:text-white transition-colors">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M4 4a16 16 0 0 1 16 16h-3a13 13 0 0 0-13-13V4Zm0 6a10 10 0 0 1 10 10h-3a7 7 0 0 0-7-7v-3Zm2.5 6.5A2.5 2.5 0 1 1 4 19a2.5 2.5 0 0 1 2.5-2.5Z"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="border-t border-white/10">
+    <div class="max-w-7xl mx-auto px-6 lg:px-10 py-6 text-xs text-gray-500">
+      © 2026 GN Labs. All specifications subject to revision without notice.
+    </div>
+  </div>
+</footer>
+
+<!-- ============ SCROLL TO TOP ============ -->
+<button id="scrollTopBtn" aria-label="Scroll to top" class="fixed bottom-6 right-6 z-40 w-11 h-11 bg-ink text-white flex items-center justify-center">
+  <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 13V3M8 3L3 8M8 3l5 5" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</button>
+
+<script>
+  // ---- Header scroll compaction + top progress rail ----
+  const siteHeader = document.getElementById('siteHeader');
+  const tocProgress = document.getElementById('tocProgress');
+  const scrollTopBtn = document.getElementById('scrollTopBtn');
+  function onScroll() {
+    siteHeader.classList.toggle('is-scrolled', window.scrollY > 24);
+    const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+    tocProgress.style.width = scrollable > 0 ? Math.min(100, (window.scrollY / scrollable) * 100) + '%' : '0%';
+    scrollTopBtn.classList.toggle('show', window.scrollY > 600);
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  // ---- Mobile drawer ----
+  const menuToggle = document.getElementById('menuToggle');
+  const menuClose = document.getElementById('menuClose');
+  const mobileDrawer = document.getElementById('mobileDrawer');
+  const mobileOverlay = document.getElementById('mobileOverlay');
+  function openDrawer() {
+    mobileDrawer.classList.add('open');
+    mobileOverlay.classList.add('open');
+    menuToggle.setAttribute('aria-expanded', 'true');
+  }
+  function closeDrawer() {
+    mobileDrawer.classList.remove('open');
+    mobileOverlay.classList.remove('open');
+    menuToggle.setAttribute('aria-expanded', 'false');
+  }
+  menuToggle.addEventListener('click', openDrawer);
+  menuClose.addEventListener('click', closeDrawer);
+  mobileOverlay.addEventListener('click', closeDrawer);
+  document.querySelectorAll('.mobile-link').forEach(link => link.addEventListener('click', closeDrawer));
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeDrawer(); });
+
+  scrollTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+  // ---- Fade-ins ----
+  const fadeObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        fadeObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.fade-in').forEach(el => fadeObserver.observe(el));
+
+  // ---- Scrollspy for the TOC ----
+  const tocLinks = Array.from(document.querySelectorAll('[data-toc]'));
+  const sections = tocLinks
+    .map(link => document.querySelector(link.getAttribute('href')))
+    .filter(Boolean);
+
+  function setActiveToc(id) {
+    tocLinks.forEach(link => {
+      link.classList.toggle('is-active', link.getAttribute('href') === '#' + id);
+    });
+  }
+
+  const spyObserver = new IntersectionObserver((entries) => {
+    // Pick the entry closest to the top of the viewport among those visible.
+    const visible = entries.filter(e => e.isIntersecting);
+    if (visible.length === 0) return;
+    visible.sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
+    setActiveToc(visible[0].target.id);
+  }, { rootMargin: '-15% 0px -70% 0px', threshold: 0 });
+
+  sections.forEach(section => spyObserver.observe(section));
+  if (sections[0]) setActiveToc(sections[0].id);
+</script>
+
+</body>
+</html>
