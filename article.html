@@ -444,16 +444,17 @@
     </div>
   </div>
 
-  <!-- Featured image: a fixed aspect ratio scales cleanly at every screen
-       size, so it never balloons into a full-viewport block on mobile the
-       way a min-height hero would. Taller on small screens (more of the
-       image is visible without much width to work with), wider and more
-       cinematic once there's room for it. -->
-  <figure class="w-full aspect-[4/3] sm:aspect-[16/9] lg:aspect-[21/9] bg-gray-100 overflow-hidden">
-    <img id="heroImage" src="https://images.pexels.com/photos/18471567/pexels-photo-18471567.jpeg?auto=compress&cs=tinysrgb&w=1920"
-         alt="Oscilloscope trace of a settling thermal response on a lab bench"
-         class="w-full h-full object-cover">
-  </figure>
+  <!-- Featured image: contained within the same margins as the page's other
+       content (never edge-to-edge — a full-bleed image reads as a loose
+       banner, not a deliberate editorial photo), at a fixed aspect ratio so
+       it scales cleanly by width instead of ballooning on short viewports. -->
+  <div class="max-w-4xl mx-auto px-6 lg:px-10 pb-12 sm:pb-16">
+    <figure class="w-full aspect-[4/3] sm:aspect-[16/9] lg:aspect-[2/1] bg-gray-100 overflow-hidden">
+      <img id="heroImage" src="https://images.pexels.com/photos/18471567/pexels-photo-18471567.jpeg?auto=compress&cs=tinysrgb&w=1920"
+           alt="Oscilloscope trace of a settling thermal response on a lab bench"
+           class="w-full h-full object-cover">
+    </figure>
+  </div>
 </section>
 
 <!-- ============ MAIN: ARTICLE + SIDEBAR ============ -->
