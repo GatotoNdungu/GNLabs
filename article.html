@@ -1,0 +1,1029 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tuning a PID Loop Against a Model Before It Ever Sees a Real Tank — GN Labs</title>
+<meta name="description" content="A practical walkthrough of building a thermal model, tuning gains against it, and validating those gains on a hardware-in-the-loop bench before anything touches production.">
+<link rel="canonical" href="https://gnlabs.site/blog/tuning-pid-against-a-model/">
+
+<!-- Open Graph / social preview -->
+<meta property="og:type" content="article">
+<meta property="og:title" content="Tuning a PID Loop Against a Model Before It Ever Sees a Real Tank">
+<meta property="og:description" content="A practical walkthrough of building a thermal model, tuning gains against it, and validating those gains on a hardware-in-the-loop bench before anything touches production.">
+<meta property="og:image" content="https://images.pexels.com/photos/18471567/pexels-photo-18471567.jpeg?auto=compress&cs=tinysrgb&w=1200">
+<meta property="og:url" content="https://gnlabs.site/blog/tuning-pid-against-a-model/">
+<meta property="article:published_time" content="2026-07-19">
+<meta property="article:section" content="Systems & Control">
+<meta name="twitter:card" content="summary_large_image">
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          base: '#FFFFFF',
+          alt: '#F8F9FA',
+          slate: '#181C20',
+          graphite: '#0F1215',
+          ink: '#111827',
+          steel: '#4B5563',
+          amber: '#D97706',
+          techblue: '#1E40AF',
+        },
+        fontFamily: {
+          sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'system-ui', 'sans-serif'],
+          mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace'],
+          serif: ['Source Serif 4', 'Georgia', 'serif'],
+        },
+      }
+    }
+  }
+</script>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Crect width='30' height='30' fill='%23FFFFFF'/%3E%3Crect x='1' y='1' width='28' height='28' fill='none' stroke='%23111827' stroke-width='2'/%3E%3Crect x='7' y='7' width='8' height='8' fill='%23D97706'/%3E%3Crect x='16' y='16' width='7' height='7' fill='none' stroke='%23111827' stroke-width='2'/%3E%3Cline x1='15' y1='11' x2='19.5' y2='16' stroke='%23111827' stroke-width='2'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap" rel="stylesheet">
+
+<!--
+  ============================================================================
+  AD NETWORK WIRING
+  ============================================================================
+  Every ad on this page lives inside a <div class="ad-slot"> with a fixed
+  min-height, so the layout never jumps when a real ad loads in (or fails to).
+  To go live with Google AdSense / Ad Manager once approved:
+
+    1. Add the loader script here in <head>, once, with your publisher ID:
+       <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script>
+
+    2. Inside each .ad-slot placeholder below, replace the dashed placeholder
+       <div> with your <ins class="adsbygoogle"> unit, keeping the wrapper's
+       classes and min-height untouched.
+
+    3. Call (adsbygoogle = window.adsbygoogle || []).push({}) once per unit —
+       the initAds() stub near the bottom of this file is where that goes.
+
+  Until then, set ADS_ENABLED to false in the script below to hide every slot
+  cleanly rather than show empty boxes. NOTE: turning ads on will put you in
+  scope of the "no advertising cookies / not sold to anyone" language on the
+  Privacy Policy page — that page should be updated before ads actually ship.
+  ============================================================================
+-->
+
+<style>
+  :root {
+    --bg-base: #FFFFFF;
+    --bg-alt: #F8F9FA;
+    --dark-slate: #181C20;
+    --dark-graphite: #0F1215;
+    --text-ink: #111827;
+    --text-steel: #4B5563;
+    --accent-amber: #D97706;
+    --accent-blue: #1E40AF;
+    --header-h: 4.25rem;
+  }
+
+  * { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    color: var(--text-ink);
+    background: var(--bg-base);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { scroll-behavior: auto !important; animation: none !important; transition: none !important; }
+  }
+
+  .fade-in { opacity: 0; transform: translateY(12px); transition: opacity 450ms ease-out, transform 450ms ease-out; }
+  .fade-in.is-visible { opacity: 1; transform: translateY(0); }
+
+  .btn-primary { background: var(--accent-amber); color: #FFFFFF; transition: background-color 200ms ease-in-out; }
+  .btn-primary:hover { background: #B45F04; }
+  .btn-secondary { border: 1.5px solid var(--text-ink); color: var(--text-ink); transition: background-color 200ms ease-in-out, color 200ms ease-in-out; }
+  .btn-secondary:hover { background: var(--text-ink); color: #fff; }
+
+  a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid var(--accent-amber); outline-offset: 2px; }
+
+  .nav-link { position: relative; color: var(--text-steel); transition: color 200ms ease-in-out; }
+  .nav-link:hover { color: var(--text-ink); }
+  .nav-link::after { content: ''; position: absolute; left: 0; bottom: -4px; height: 2px; width: 0; background: var(--accent-amber); transition: width 200ms ease-in-out; }
+  .nav-link:hover::after { width: 100%; }
+
+  #mobileDrawer { transform: translateX(100%); transition: transform 260ms ease-in-out; }
+  #mobileDrawer.open { transform: translateX(0); }
+  #mobileOverlay { opacity: 0; pointer-events: none; transition: opacity 260ms ease-in-out; }
+  #mobileOverlay.open { opacity: 1; pointer-events: auto; }
+
+  #scrollTopBtn { opacity: 0; transform: translateY(10px); pointer-events: none; transition: opacity 200ms ease-in-out, transform 200ms ease-in-out; }
+  #scrollTopBtn.show { opacity: 1; transform: translateY(0); pointer-events: auto; }
+
+  #siteHeader { transition: height 260ms ease-in-out, box-shadow 260ms ease-in-out; }
+  #siteHeader .header-inner { transition: height 260ms ease-in-out; }
+  #siteHeader.is-scrolled { box-shadow: 0 1px 0 rgba(17,24,39,0.06), 0 12px 24px -18px rgba(17,24,39,0.25); }
+  #siteHeader.is-scrolled .header-inner { height: 4.25rem; }
+  #siteHeader:not(.is-scrolled) .header-inner { height: 5rem; }
+
+  .progress-rail { background: #E5E7EB; }
+  #readProgress { background: var(--accent-amber); width: 0%; transition: width 90ms linear; }
+
+  /* ---- Hero ---- */
+  .hero-figure { min-height: 66vh; }
+  @media (max-width: 640px) { .hero-figure { min-height: 76vh; } }
+
+  .category-pill {
+    background: var(--accent-amber); color: #fff;
+    font-weight: 700; letter-spacing: 0.03em;
+  }
+
+  .avatar {
+    width: 2.5rem; height: 2.5rem;
+    display: flex; align-items: center; justify-content: center;
+    background: var(--accent-amber); color: #fff; font-weight: 800; font-size: 0.875rem;
+    border: 2px solid rgba(255,255,255,0.25);
+  }
+
+  .share-btn {
+    width: 2.25rem; height: 2.25rem;
+    display: flex; align-items: center; justify-content: center;
+    border: 1px solid #E5E7EB; color: var(--text-steel);
+    transition: border-color 160ms ease-in-out, color 160ms ease-in-out, background-color 160ms ease-in-out;
+  }
+  .share-btn:hover { border-color: var(--text-ink); color: #fff; background: var(--text-ink); }
+  .share-btn.copied { border-color: var(--techblue); color: var(--techblue); }
+
+  /* ==========================================================================
+     ARTICLE TYPOGRAPHY
+     A serif body face at an editorial size, generous line-height, and a
+     restrained but complete set of rich-content elements: headings, pull
+     quotes, callouts, code, tables, images with captions, footnotes.
+  ========================================================================== */
+  .article-body {
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-size: 1.125rem;
+    line-height: 1.8;
+    color: #1F2937;
+  }
+  .article-body > * + * { margin-top: 1.6em; }
+
+  .article-body .dek {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.3125rem;
+    line-height: 1.55;
+    font-weight: 500;
+    color: var(--text-steel);
+  }
+
+  .article-body h2 {
+    font-family: 'Inter', sans-serif;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    color: var(--text-ink);
+    font-size: 1.625rem;
+    line-height: 1.3;
+    margin-top: 2.6em;
+    scroll-margin-top: calc(var(--header-h) + 1.5rem);
+  }
+  .article-body h3 {
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    color: var(--text-ink);
+    font-size: 1.25rem;
+    line-height: 1.4;
+    margin-top: 2em;
+    scroll-margin-top: calc(var(--header-h) + 1.5rem);
+  }
+
+  .article-body a { color: var(--text-ink); border-bottom: 1.5px solid var(--accent-amber); transition: color 160ms ease-in-out; }
+  .article-body a:hover { color: var(--accent-amber); }
+
+  .article-body strong { color: var(--text-ink); font-weight: 700; }
+
+  .article-body code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 0.85em;
+    background: var(--bg-alt);
+    border: 1px solid #E5E7EB;
+    padding: 0.1em 0.4em;
+    color: #B45F04;
+  }
+
+  .article-body ul, .article-body ol {
+    padding-left: 1.4em;
+  }
+  .article-body li + li { margin-top: 0.6em; }
+  .article-body ul { list-style: none; padding-left: 0; }
+  .article-body ul > li { position: relative; padding-left: 1.6em; }
+  .article-body ul > li::before {
+    content: ''; position: absolute; left: 0; top: 0.65em;
+    width: 6px; height: 6px; background: var(--accent-amber);
+  }
+  .article-body ol { list-style: none; counter-reset: steps; padding-left: 0; }
+  .article-body ol > li {
+    counter-increment: steps;
+    position: relative; padding-left: 2.5em;
+  }
+  .article-body ol > li::before {
+    content: counter(steps);
+    position: absolute; left: 0; top: 0.05em;
+    font-family: 'Inter', sans-serif; font-weight: 800; font-size: 0.8em;
+    color: #fff; background: var(--ink);
+    width: 1.7em; height: 1.7em; display: flex; align-items: center; justify-content: center;
+  }
+
+  .article-body blockquote {
+    border-left: 3px solid var(--accent-amber);
+    padding-left: 1.4em;
+    font-style: italic;
+    color: var(--text-steel);
+  }
+  .article-body blockquote cite {
+    display: block; margin-top: 0.6em;
+    font-family: 'Inter', sans-serif; font-style: normal; font-size: 0.8125rem;
+    font-weight: 600; color: var(--text-ink);
+  }
+
+  .pull-quote {
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 1.625rem;
+    line-height: 1.4;
+    color: var(--text-ink);
+    letter-spacing: -0.01em;
+    border-top: 2px solid var(--ink);
+    border-bottom: 2px solid var(--ink);
+    padding: 1.4em 0;
+  }
+
+  figure.article-figure { margin: 0; }
+  figure.article-figure img { width: 100%; display: block; background: #F3F4F6; }
+  figure.article-figure figcaption {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.8125rem;
+    color: var(--text-steel);
+    margin-top: 0.75em;
+    padding-left: 0.9em;
+    border-left: 2px solid #E5E7EB;
+  }
+
+  .callout {
+    border: 1px solid #E5E7EB;
+    border-left: 3px solid var(--techblue);
+    background: var(--bg-alt);
+    padding: 1.4em 1.6em;
+  }
+  .callout-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.75rem; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase;
+    color: var(--techblue);
+  }
+
+  .code-block {
+    background: var(--graphite);
+    color: #E5E7EB;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 0.85rem;
+    line-height: 1.7;
+    padding: 1.4em 1.6em;
+    overflow-x: auto;
+  }
+  .code-block .code-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.6875rem; letter-spacing: 0.08em; text-transform: uppercase;
+    color: #9CA3AF; margin-bottom: 0.9em; display: block;
+  }
+  .code-block .tok-kw { color: #F59E0B; }
+  .code-block .tok-str { color: #93C5FD; }
+  .code-block .tok-com { color: #6B7280; font-style: italic; }
+  .code-block .tok-num { color: #FCA5A5; }
+
+  .data-table { width: 100%; border-collapse: collapse; font-family: 'Inter', sans-serif; font-size: 0.875rem; }
+  .data-table th {
+    text-align: left; font-weight: 700; color: var(--text-ink);
+    border-bottom: 2px solid var(--ink);
+    padding: 0.75em 1em;
+    font-size: 0.75rem; letter-spacing: 0.04em; text-transform: uppercase;
+  }
+  .data-table td { padding: 0.85em 1em; border-bottom: 1px solid #E5E7EB; color: var(--text-steel); }
+  .data-table tr:last-child td { border-bottom: none; }
+  .data-table td strong { color: var(--text-ink); }
+  .table-scroll { overflow-x: auto; border: 1px solid #E5E7EB; }
+
+  .video-embed {
+    position: relative; width: 100%; aspect-ratio: 16 / 9;
+    background: var(--graphite);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .video-embed .play-btn {
+    width: 4rem; height: 4rem; border-radius: 9999px;
+    background: rgba(255,255,255,0.12); border: 1.5px solid rgba(255,255,255,0.3);
+    display: flex; align-items: center; justify-content: center;
+    transition: background-color 180ms ease-in-out, transform 180ms ease-in-out;
+    cursor: pointer;
+  }
+  .video-embed .play-btn:hover { background: var(--accent-amber); border-color: var(--accent-amber); transform: scale(1.06); }
+
+  .footnote-ref {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.7em;
+    color: var(--accent-amber);
+    font-weight: 700;
+    vertical-align: super;
+    border-bottom: none !important;
+    padding: 0 0.15em;
+  }
+  .footnotes {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.8125rem;
+    color: var(--text-steel);
+    border-top: 1px solid #E5E7EB;
+    padding-top: 1.6em;
+  }
+  .footnotes ol { counter-reset: fn; padding-left: 0; list-style: none; }
+  .footnotes li { counter-increment: fn; padding-left: 1.6em; position: relative; }
+  .footnotes li::before { content: counter(fn) '.'; position: absolute; left: 0; color: var(--accent-amber); font-weight: 700; }
+  .footnotes li + li { margin-top: 0.5em; }
+
+  /* ---- TOC ---- */
+  .toc-link { display: block; border-left: 2px solid transparent; color: var(--text-steel); font-size: 0.875rem; transition: color 160ms ease-in-out, border-color 160ms ease-in-out; }
+  .toc-link:hover { color: var(--text-ink); }
+  .toc-link.is-active { color: var(--text-ink); border-left-color: var(--accent-amber); font-weight: 600; }
+  .toc-link[data-level="3"] { padding-left: 1.5rem; font-size: 0.8125rem; }
+
+  /* ---- Sidebar (shared feel with the blog) ---- */
+  .sidebar-card { border: 1px solid #E5E7EB; background: var(--bg-base); }
+  .recent-link { display: block; transition: background-color 180ms ease-in-out; }
+  .recent-link:hover { background: var(--bg-alt); }
+  .recent-link:hover .recent-title { color: var(--accent-amber); }
+  .recent-title { transition: color 180ms ease-in-out; }
+  .cat-row { transition: color 180ms ease-in-out, padding-left 180ms ease-in-out; }
+  .cat-row:hover { color: var(--text-ink); padding-left: 0.35rem; }
+
+  .sidebar-pin { position: static; }
+  @media (min-width: 1024px) { .sidebar-pin { position: sticky; top: calc(var(--header-h) + 1.5rem); } }
+
+  /* ---- Ad slots ---- */
+  .ad-slot { text-align: center; }
+  .ad-slot .ad-label {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 0.625rem; letter-spacing: 0.1em; text-transform: uppercase;
+    color: #9CA3AF; margin-bottom: 0.5rem; display: block;
+  }
+  .ad-slot .ad-placeholder {
+    border: 1.5px dashed #D1D5DB;
+    background: repeating-linear-gradient(135deg, #FAFAFA, #FAFAFA 10px, #F3F4F6 10px, #F3F4F6 20px);
+    color: #9CA3AF;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Inter', sans-serif; font-size: 0.75rem; font-weight: 600;
+  }
+
+  /* ---- Related / article cards (shared with blog) ---- */
+  .article-card { transition: border-color 200ms ease-in-out, box-shadow 200ms ease-in-out; }
+  .article-card:hover { border-color: var(--text-ink); box-shadow: 0 10px 24px -20px rgba(17,24,39,0.45); }
+  .article-card img { transition: transform 500ms ease-out; }
+  .article-card:hover img { transform: scale(1.04); }
+  .article-card-title { transition: color 180ms ease-in-out; }
+  .article-card:hover .article-card-title { color: var(--accent-amber); }
+  .clamp-2 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  .category-tag { background: rgba(15,18,21,0.86); color: #fff; }
+</style>
+</head>
+<body class="bg-base text-ink antialiased">
+
+<!-- ============ HEADER ============ -->
+<header id="siteHeader" class="sticky top-0 z-40 bg-base/95 backdrop-blur border-b border-gray-200">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10">
+    <div class="header-inner flex items-center justify-between h-20">
+      <a href="/" class="flex items-center gap-3 group">
+        <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect x="1" y="1" width="28" height="28" stroke="#111827" stroke-width="1.6"/>
+          <rect x="7" y="7" width="8" height="8" fill="#D97706"/>
+          <rect x="16" y="16" width="7" height="7" stroke="#111827" stroke-width="1.6"/>
+          <line x1="15" y1="11" x2="19.5" y2="16" stroke="#111827" stroke-width="1.6"/>
+        </svg>
+        <span class="tracking-tighter font-extrabold text-xl text-ink">GN<span class="text-amber">Labs</span></span>
+      </a>
+      <nav class="hidden lg:flex items-center gap-9" aria-label="Primary">
+        <a href="/" class="nav-link text-sm font-semibold">Home</a>
+        <a href="/about/" class="nav-link text-sm font-semibold">About</a>
+        <a href="/projects/" class="nav-link text-sm font-semibold">Projects</a>
+        <a href="/practice/" class="nav-link text-sm font-semibold">Practice</a>
+        <a href="/blog/" class="nav-link text-sm font-semibold" aria-current="page">Blog</a>
+      </nav>
+      <div class="flex items-center gap-4">
+        <a href="/contact/" class="hidden lg:inline-flex btn-primary text-sm font-bold px-5 py-2.5">Start Conversation</a>
+        <button id="menuToggle" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobileDrawer" class="lg:hidden flex flex-col justify-center gap-1.5 w-9 h-9">
+          <span class="block h-0.5 w-6 bg-ink"></span>
+          <span class="block h-0.5 w-6 bg-ink"></span>
+          <span class="block h-0.5 w-4 bg-ink self-start ml-3"></span>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="progress-rail h-0.5 w-full"><div id="readProgress" class="h-full"></div></div>
+</header>
+
+<div id="mobileOverlay" class="fixed inset-0 bg-ink/50 z-40 lg:hidden"></div>
+<aside id="mobileDrawer" class="fixed top-0 right-0 h-full w-72 bg-base z-50 border-l border-gray-200 lg:hidden" aria-label="Mobile navigation">
+  <div class="flex items-center justify-between h-20 px-6 border-b border-gray-200">
+    <span class="font-extrabold tracking-tighter text-lg">Menu</span>
+    <button id="menuClose" aria-label="Close navigation menu" class="w-9 h-9 flex items-center justify-center text-2xl leading-none text-steel">&times;</button>
+  </div>
+  <nav class="flex flex-col px-6 py-8 gap-6" aria-label="Mobile primary">
+    <a href="/" class="mobile-link text-lg font-semibold text-ink">Home</a>
+    <a href="/about/" class="mobile-link text-lg font-semibold text-ink">About</a>
+    <a href="/projects/" class="mobile-link text-lg font-semibold text-ink">Projects</a>
+    <a href="/practice/" class="mobile-link text-lg font-semibold text-ink">Practice</a>
+    <a href="/blog/" class="mobile-link text-lg font-semibold text-ink" aria-current="page">Blog</a>
+    <a href="/contact/" class="btn-primary text-center font-bold px-5 py-3 mt-4">Start Conversation</a>
+  </nav>
+</aside>
+
+<!-- ============ ARTICLE HERO ============ -->
+<section class="relative overflow-hidden bg-graphite border-b border-gray-200">
+  <div class="hero-figure relative flex items-end">
+    <img src="https://images.pexels.com/photos/18471567/pexels-photo-18471567.jpeg?auto=compress&cs=tinysrgb&w=1920"
+         alt="Oscilloscope trace of a settling thermal response on a lab bench"
+         class="absolute inset-0 w-full h-full object-cover">
+    <div class="absolute inset-0 bg-gradient-to-t from-graphite via-graphite/70 to-graphite/10"></div>
+    <div class="absolute inset-0 bg-gradient-to-r from-graphite/40 via-transparent to-transparent"></div>
+
+    <div class="relative z-10 max-w-4xl mx-auto px-6 lg:px-10 pb-10 sm:pb-14 pt-24 w-full">
+      <nav aria-label="Breadcrumb" class="mb-6 fade-in">
+        <ol class="flex items-center gap-2 text-[11px] font-mono text-gray-400 flex-wrap">
+          <li><a href="/" class="hover:text-gray-200 transition-colors">Home</a></li>
+          <li aria-hidden="true">/</li>
+          <li><a href="/blog/" class="hover:text-gray-200 transition-colors">Blog</a></li>
+          <li aria-hidden="true">/</li>
+          <li class="text-gray-300 truncate max-w-[12rem] sm:max-w-none">Tuning a PID Loop Against a Model</li>
+        </ol>
+      </nav>
+
+      <span class="category-pill inline-block text-[0.6875rem] px-2.5 py-1 mb-5 fade-in">Systems &amp; Control</span>
+
+      <h1 class="fade-in text-2xl sm:text-4xl lg:text-[2.75rem] font-extrabold tracking-tight leading-[1.15] text-white max-w-3xl">
+        Tuning a PID loop against a model before it ever sees a real tank
+      </h1>
+
+      <div class="fade-in flex flex-wrap items-center gap-4 mt-7">
+        <div class="flex items-center gap-3">
+          <span class="avatar" aria-hidden="true">GN</span>
+          <div>
+            <p class="text-white font-semibold text-sm leading-tight">G. Ndung'u</p>
+            <p class="text-gray-400 text-xs font-mono">Controls &amp; Embedded Engineer</p>
+          </div>
+        </div>
+        <span class="w-px h-8 bg-white/15 hidden sm:block"></span>
+        <div class="text-xs font-mono text-gray-400 flex items-center gap-3">
+          <time datetime="2026-07-19">Jul 19, 2026</time>
+          <span aria-hidden="true">·</span>
+          <span>9 min read</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ LEADERBOARD AD (below hero) ============ -->
+<div class="border-b border-gray-200 bg-alt">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10 py-5">
+    <div class="ad-slot" data-ad="leaderboard-1">
+      <span class="ad-label">Advertisement</span>
+      <div class="ad-placeholder mx-auto" style="max-width:728px; width:100%; height:90px;">728 × 90</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ MAIN: ARTICLE + SIDEBAR ============ -->
+<section class="py-14 lg:py-16">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10 grid lg:grid-cols-12 gap-10 xl:gap-14 items-start">
+
+    <!-- ============ ARTICLE COLUMN ============ -->
+    <article class="lg:col-span-8 min-w-0 max-w-2xl">
+
+      <!-- Share row -->
+      <div class="flex items-center justify-between flex-wrap gap-4 pb-8 border-b border-gray-200 mb-9 fade-in">
+        <div class="flex items-center gap-2">
+          <span class="text-xs font-mono text-steel mr-1">Share</span>
+          <a href="#" class="share-btn" data-share="x" aria-label="Share on X">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M18.9 2H22l-7.6 8.7L23.3 22h-7.2l-5.6-7.3L4 22H1l8.2-9.3L1 2h7.4l5 6.7L18.9 2Zm-1.3 18h2L6.5 4h-2l13.1 16Z"/></svg>
+          </a>
+          <a href="#" class="share-btn" data-share="linkedin" aria-label="Share on LinkedIn">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.36V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29ZM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12ZM7.12 20.45H3.56V9h3.56v11.45ZM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0Z"/></svg>
+          </a>
+          <button type="button" class="share-btn" id="copyLinkBtn" aria-label="Copy link">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.5.5l2-2a5 5 0 0 0-7-7l-1.5 1.5"/><path d="M14 11a5 5 0 0 0-7.5-.5l-2 2a5 5 0 0 0 7 7L13 18"/></svg>
+          </button>
+        </div>
+        <a href="/blog/" class="text-xs font-mono text-steel hover:text-ink transition-colors">← All articles</a>
+      </div>
+
+      <div id="articleBody" class="article-body fade-in">
+
+        <p class="dek">
+          Most PID loops in the field were tuned live, on the real process, by nudging gains until the overshoot looked tolerable. That works, right up until "tolerable" costs you a batch. Here's the alternative: build a model of the thing you're heating first, tune against that, and only then let the tuned gains anywhere near a tank that actually matters.
+        </p>
+
+        <p>
+          The project that forced this discipline on me was a four-tank batch heater retrofit, the same one described in the <a href="/blog/relay-logic-still-runs-lines/">relay logic write-up</a> — a client with a mixing line where thermal overshoot during heat-up was scorching product on the tank walls before the loop caught up. Nobody wanted a repeat of that during commissioning, so the tuning had to be right on the first real attempt, not the fifth.
+        </p>
+
+        <h2 id="why-model-first">Why model first instead of tune live</h2>
+        <p>
+          Live tuning is popular because it's fast and it doesn't require building anything extra. It also means every experiment you run — every step change, every aggressive gain you try — happens on equipment that's actually making product. If an integral term winds up and overshoots by 15°C, that's not a chart on a screen, that's a batch.
+        </p>
+        <p>
+          A model turns tuning into something you can be reckless with. You can push a PID loop into oscillation, watch it fall apart, and learn exactly why — with zero consequence beyond CPU time. The only real cost is the week or two it takes to build a model good enough to trust, which is almost always cheaper than one ruined batch.
+        </p>
+
+        <blockquote>
+          If you can't afford to be wrong on the real system, you can't afford to skip the model.
+          <cite>— a lesson learned the expensive way, twice</cite>
+        </blockquote>
+
+        <h2 id="building-the-model">Building a thermal model worth trusting</h2>
+        <p>
+          The tank in question was a jacketed, 800-liter vessel with steam-heated glycol in the jacket. A first-principles lumped model gets you most of the way: treat the product and the jacket as two thermal masses coupled by a heat-transfer coefficient, and drive the jacket temperature from steam valve position.
+        </p>
+
+        <figure class="article-figure">
+          <img src="https://images.pexels.com/photos/159298/gears-cogs-machine-machinery-159298.jpeg?auto=compress&cs=tinysrgb&w=1400" alt="Detail of a steam valve actuator on an industrial heating jacket" loading="lazy">
+          <figcaption>The steam control valve on Tank 3, mid-retrofit. Its own response lag turned out to matter more than the tank's thermal mass.</figcaption>
+        </figure>
+
+        <p>
+          The two-mass model earns its keep because it captures something a simple first-order approximation misses entirely: the jacket heats up faster than the product, so there's a real lag between valve action and product temperature response. That lag is exactly what makes naive tuning dangerous — a gain that looks sluggish in the first ten seconds can still be building toward a large overshoot a minute later.
+        </p>
+
+        <h3 id="parameter-fitting">Fitting parameters from real data</h3>
+        <p>
+          Rather than trust datasheet values for the heat-transfer coefficient, we ran three open-loop step tests on the actual tank — steam valve stepped from 20% to 60%, response logged at 1 Hz — and fit the two time constants and the gain against that data in <code>scipy.optimize.curve_fit</code>. Twenty minutes of real data produced a model that matched the plant's step response within about 4%, which was more than good enough for tuning purposes.
+        </p>
+
+        <div class="code-block">
+          <span class="code-label">thermal_model.py</span>
+<span class="tok-com"># Two-mass jacket/product model, discretized at dt = 1s</span>
+<span class="tok-kw">def</span> step(state, valve_pct, dt=<span class="tok-num">1.0</span>):
+    T_jacket, T_product = state
+    <span class="tok-com"># Jacket responds fast to valve position</span>
+    dTj = (K_STEAM * valve_pct - T_jacket) / TAU_JACKET
+    <span class="tok-com"># Product lags the jacket through the wall coefficient</span>
+    dTp = (T_jacket - T_product) / TAU_PRODUCT
+    T_jacket += dTj * dt
+    T_product += dTp * dt
+    <span class="tok-kw">return</span> (T_jacket, T_product)
+        </div>
+
+        <div class="callout">
+          <p class="callout-label mb-2">Field note</p>
+          <p class="text-ink text-[0.9375rem] leading-relaxed">
+            If you only have time for one open-loop test, run it at the amplitude closest to your actual operating step. Model fits degrade fastest at the edges of the range you tested — a model tuned on a 20→60% step will misbehave more than you'd expect near 90%.
+          </p>
+        </div>
+
+        <h2 id="tuning-against-the-model">Tuning against the model</h2>
+        <p>
+          With a model that behaved like the real tank, tuning became a search problem instead of a live experiment. We ran a grid sweep of <em>K<sub>p</sub></em>, <em>K<sub>i</sub></em>, and <em>K<sub>d</sub></em> against a standard setpoint step, scoring each combination on overshoot, settling time, and integral of absolute error. Three candidate gain sets came out ahead of the rest:
+        </p>
+
+        <div class="table-scroll">
+          <table class="data-table">
+            <thead>
+              <tr><th>Gain set</th><th>Overshoot</th><th>Settling time</th><th>Notes</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><strong>Conservative</strong></td><td>0.8°C</td><td>340s</td><td>Safe default; a little slow for high-throughput days</td></tr>
+              <tr><td><strong>Balanced</strong></td><td>2.1°C</td><td>210s</td><td>Chosen for production</td></tr>
+              <tr><td><strong>Aggressive</strong></td><td>5.6°C</td><td>150s</td><td>Faster, but eats into the scorch margin</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p>
+          We picked "Balanced" — not the fastest option, but the one with the largest margin between its overshoot and the temperature where product actually starts to scorch. Optimizing purely for settling time is a classic trap: the model will happily hand you gains that are fast right up until a slightly fouled heat exchanger or a colder-than-usual feed pushes the real system past a threshold the simulation never saw.
+        </p>
+
+        <ol>
+          <li>Fit the model against open-loop step data from the real tank, not datasheet values.</li>
+          <li>Sweep gains against the model and score on overshoot, settling time, and IAE together — never on speed alone.</li>
+          <li>Pick the gain set with margin against your actual failure threshold, not the one that wins the benchmark.</li>
+          <li>Validate the chosen gains on a hardware-in-the-loop rig before they ever reach the PLC controlling the real tank.</li>
+        </ol>
+
+        <div class="pull-quote">
+          "Fastest settling time" is a benchmark score. "Largest margin before the batch scorches" is an engineering decision. A model will happily give you the first one if you don't ask for the second.
+        </div>
+
+        <h2 id="hil-validation">Validating on hardware-in-the-loop</h2>
+        <p>
+          A model, however well fitted, is still a simplification — which is why the gains never went straight from simulation to the plant. Between the two sat a hardware-in-the-loop bench: the actual PLC and actual steam valve actuator, wired to a small real-time simulator running the same thermal model in place of the physical tank. This is roughly the same rig described in the <a href="/blog/what-a-hil-bench-needs-to-catch/">HIL bench article</a>, repurposed for a heating loop instead of a mixing sequence.
+        </p>
+
+        <p>
+          Running the real controller hardware against a simulated plant catches a category of bug that a pure software simulation cannot: PLC scan-time jitter, valve actuator deadband, and the very real fact that the steam valve doesn't move instantly no matter what the model assumes. On this project, HIL testing surfaced a 400ms actuator lag that wasn't in the original model at all — small enough to ignore for slow tuning, large enough to matter once we tightened the loop.
+        </p>
+
+        <div class="video-embed" role="img" aria-label="Placeholder for a recorded walkthrough of the HIL bench in operation">
+          <button type="button" class="play-btn" aria-label="Play video walkthrough">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
+          </button>
+        </div>
+        <p class="text-xs text-steel !mt-3 text-center">A 4-minute walkthrough of the HIL bench catching the actuator lag described above.</p>
+
+        <h2 id="what-shipped">What actually shipped</h2>
+        <p>
+          The "Balanced" gain set, adjusted slightly after HIL testing exposed the actuator lag, went into production on all four tanks. Batch variance — the figure that started this whole project — dropped from roughly 6% to under 1%,<span class="footnote-ref"><a href="#fn1" id="fnref1">1</a></span> and in eight months of operation there hasn't been a single scorch event traceable to overshoot.
+        </p>
+        <p>
+          None of this required exotic control theory. A two-mass model, a grid search, and a HIL bench are all things most controls teams already have access to — the discipline is in refusing to skip straight from "the model looks good" to "ship it," and in scoring gain candidates on margin rather than speed.
+        </p>
+
+        <div class="footnotes">
+          <ol>
+            <li id="fn1">Measured across 40 consecutive batches pre- and post-retrofit, same product and ambient conditions. <a href="#fnref1">↩</a></li>
+          </ol>
+        </div>
+
+      </div>
+
+      <!-- In-content ad -->
+      <div class="my-12">
+        <div class="ad-slot" data-ad="in-article-1">
+          <span class="ad-label">Advertisement</span>
+          <div class="ad-placeholder mx-auto" style="max-width:100%; width:100%; height:120px;">Fluid · 336 × 280 min</div>
+        </div>
+      </div>
+
+      <!-- Share row (bottom) -->
+      <div class="flex items-center justify-between flex-wrap gap-4 py-7 border-y border-gray-200 mb-12">
+        <div class="flex items-center gap-2">
+          <span class="text-xs font-mono text-steel mr-1">Found this useful?</span>
+          <a href="#" class="share-btn" data-share="x" aria-label="Share on X">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M18.9 2H22l-7.6 8.7L23.3 22h-7.2l-5.6-7.3L4 22H1l8.2-9.3L1 2h7.4l5 6.7L18.9 2Zm-1.3 18h2L6.5 4h-2l13.1 16Z"/></svg>
+          </a>
+          <a href="#" class="share-btn" data-share="linkedin" aria-label="Share on LinkedIn">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.36V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29ZM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12ZM7.12 20.45H3.56V9h3.56v11.45ZM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0Z"/></svg>
+          </a>
+          <button type="button" class="share-btn" data-copy-secondary aria-label="Copy link">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.5.5l2-2a5 5 0 0 0-7-7l-1.5 1.5"/><path d="M14 11a5 5 0 0 0-7.5-.5l-2 2a5 5 0 0 0 7 7L13 18"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Author bio -->
+      <div class="border border-gray-200 p-6 sm:p-7 flex flex-col sm:flex-row gap-5 sm:items-center mb-12">
+        <span class="avatar shrink-0" style="background:#111827; width:3.5rem; height:3.5rem; font-size:1.125rem;" aria-hidden="true">GN</span>
+        <div class="flex-1">
+          <p class="text-[11px] font-mono text-steel mb-1">Written by</p>
+          <h2 class="font-bold text-ink text-lg mb-1.5">G. Ndung'u</h2>
+          <p class="text-sm text-steel leading-relaxed">Runs GN Labs, an independent engineering practice covering embedded systems, industrial automation, and the software connecting them. Writes about the retrofits and reviews that actually happened, not the tidy version.</p>
+        </div>
+        <a href="/about/" class="btn-secondary font-bold px-5 py-2.5 text-sm text-center shrink-0">More about GN Labs</a>
+      </div>
+
+      <!-- Prev / Next -->
+      <div class="grid sm:grid-cols-2 gap-4 mb-14">
+        <a href="/blog/idempotency-ot-it-boundary/" class="group border border-gray-200 p-5 hover:border-ink transition-colors">
+          <p class="text-[11px] font-mono text-steel mb-2">← Newer</p>
+          <p class="font-bold text-ink text-sm leading-snug group-hover:text-amber transition-colors">Idempotency keys are not optional at the OT/IT boundary</p>
+        </a>
+        <a href="/blog/structured-text-over-ladder/" class="group border border-gray-200 p-5 sm:text-right hover:border-ink transition-colors">
+          <p class="text-[11px] font-mono text-steel mb-2">Older →</p>
+          <p class="font-bold text-ink text-sm leading-snug group-hover:text-amber transition-colors">Structured text over ladder: an argument, not a preference</p>
+        </a>
+      </div>
+
+      <!-- Related articles -->
+      <div class="mb-4">
+        <h2 class="font-extrabold text-xl text-ink mb-6">Related reading</h2>
+        <div id="relatedGrid" class="grid sm:grid-cols-3 gap-5"></div>
+      </div>
+
+      <!-- Sell block: turn a reader into a conversation -->
+      <div class="mt-14 bg-graphite text-white p-8 sm:p-10">
+        <p class="text-[11px] font-mono text-amber mb-3">Running into something similar?</p>
+        <h2 class="font-extrabold text-xl sm:text-2xl leading-snug mb-3 max-w-lg">Got a loop that overshoots and a batch you can't afford to lose?</h2>
+        <p class="text-gray-400 text-sm leading-relaxed mb-7 max-w-lg">This is exactly the kind of problem GN Labs takes on — model-first tuning, HIL validation, and gains that ship with margin, not just a good benchmark number.</p>
+        <div class="flex flex-wrap gap-3">
+          <a href="/contact/" class="btn-primary font-bold px-6 py-3 text-sm">Start a conversation</a>
+          <a href="/projects/" class="font-bold px-6 py-3 text-sm border-2 border-white text-white hover:bg-white hover:text-ink transition-colors">See past projects</a>
+        </div>
+      </div>
+
+    </article>
+
+    <!-- ============ SIDEBAR ============ -->
+    <aside class="lg:col-span-4 min-w-0" aria-label="Article sidebar">
+      <div class="space-y-6 lg:sticky" style="top: calc(var(--header-h) + 1.5rem);">
+
+        <!-- Table of contents (auto-built from article headings) -->
+        <div class="sidebar-card p-6">
+          <div class="flex items-center justify-between mb-4">
+            <h2 class="text-[11px] font-mono tracking-wide text-steel">On this page</h2>
+            <span class="w-6 h-px bg-amber" aria-hidden="true"></span>
+          </div>
+          <nav id="tocList" class="space-y-0.5" aria-label="Table of contents"></nav>
+        </div>
+
+        <!-- Sidebar ad -->
+        <div class="ad-slot" data-ad="sidebar-1">
+          <span class="ad-label">Advertisement</span>
+          <div class="ad-placeholder mx-auto" style="width:100%; max-width:300px; height:250px;">300 × 250</div>
+        </div>
+
+        <!-- Newsletter -->
+        <div class="bg-graphite text-white p-6">
+          <p class="text-[11px] font-mono text-amber tracking-wide mb-3">Field notes, by email</p>
+          <h2 class="font-bold text-[1.0625rem] leading-snug mb-2">New writing on control systems and edge software</h2>
+          <p class="text-sm text-gray-400 mb-5">Roughly monthly. No spam, unsubscribe anytime.</p>
+          <form id="sidebarNewsletterForm" class="flex flex-col gap-3">
+            <label for="sidebarEmail" class="sr-only">Email address</label>
+            <input id="sidebarEmail" type="email" required placeholder="you@company.com" class="bg-white/5 border border-white/20 px-4 py-2.5 text-sm text-white placeholder-gray-500 outline-none focus:border-amber">
+            <button type="submit" class="btn-primary font-bold px-5 py-2.5 text-sm">Subscribe</button>
+          </form>
+        </div>
+
+        <!-- Latest articles -->
+        <div class="sidebar-card p-6">
+          <div class="flex items-center justify-between mb-4">
+            <h2 class="text-[11px] font-mono tracking-wide text-steel">Latest articles</h2>
+            <span class="w-6 h-px bg-amber" aria-hidden="true"></span>
+          </div>
+          <div id="recentList" class="space-y-1"></div>
+        </div>
+
+        <!-- Categories -->
+        <div class="sidebar-card p-6">
+          <div class="flex items-center justify-between mb-4">
+            <h2 class="text-[11px] font-mono tracking-wide text-steel">Browse by domain</h2>
+            <span class="w-6 h-px bg-amber" aria-hidden="true"></span>
+          </div>
+          <ul class="space-y-3">
+            <li><a href="/blog/?category=automation" class="cat-row flex items-center justify-between text-sm text-steel"><span>Industrial Automation</span><span class="text-gray-300">→</span></a></li>
+            <li><a href="/blog/?category=control" class="cat-row flex items-center justify-between text-sm text-steel"><span>Systems &amp; Control</span><span class="text-gray-300">→</span></a></li>
+            <li><a href="/blog/?category=embedded" class="cat-row flex items-center justify-between text-sm text-steel"><span>Embedded &amp; Hardware</span><span class="text-gray-300">→</span></a></li>
+            <li><a href="/blog/?category=software" class="cat-row flex items-center justify-between text-sm text-steel"><span>Software &amp; Cloud</span><span class="text-gray-300">→</span></a></li>
+          </ul>
+        </div>
+
+        <!-- Pinned brand / sell block: fills the column once widgets above scroll away -->
+        <div class="sidebar-pin">
+          <div class="border border-gray-300 bg-alt p-6">
+            <div class="flex items-center gap-2.5 mb-4">
+              <svg width="22" height="22" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <rect x="1" y="1" width="28" height="28" stroke="#111827" stroke-width="1.6"/>
+                <rect x="7" y="7" width="8" height="8" fill="#D97706"/>
+                <rect x="16" y="16" width="7" height="7" stroke="#111827" stroke-width="1.6"/>
+                <line x1="15" y1="11" x2="19.5" y2="16" stroke="#111827" stroke-width="1.6"/>
+              </svg>
+              <span class="tracking-tighter font-extrabold text-ink">GN<span class="text-amber">Labs</span></span>
+            </div>
+            <p class="text-sm text-steel leading-relaxed mb-5">Have a control loop, a retrofit, or a system that needs the same kind of scrutiny as this article?</p>
+            <a href="/contact/" class="btn-primary inline-flex font-bold px-4 py-2.5 text-sm">Start a conversation</a>
+            <div class="mt-5 pt-5 border-t border-gray-300 flex items-center justify-between">
+              <span class="text-[11px] font-mono text-steel">Currently taking work</span>
+              <span class="w-2 h-2 bg-techblue rounded-full" aria-hidden="true"></span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </aside>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="bg-slate text-gray-300">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10 py-16 grid sm:grid-cols-2 lg:grid-cols-4 gap-10">
+    <div>
+      <span class="tracking-tighter font-extrabold text-xl text-white">GN<span class="text-amber">Labs</span></span>
+      <p class="mt-4 text-sm text-gray-400 leading-relaxed max-w-xs">Independent engineering practice covering embedded systems, industrial automation, and the software that connects them.</p>
+    </div>
+    <div>
+      <h2 class="text-white font-semibold text-sm mb-4">Quick Links</h2>
+      <ul class="space-y-3 text-sm text-gray-400">
+        <li><a href="/" class="hover:text-white transition-colors">Home</a></li>
+        <li><a href="/about/" class="hover:text-white transition-colors">About</a></li>
+        <li><a href="/projects/" class="hover:text-white transition-colors">Projects</a></li>
+        <li><a href="/practice/" class="hover:text-white transition-colors">Practice</a></li>
+        <li><a href="/blog/" class="hover:text-white transition-colors">Blog</a></li>
+      </ul>
+    </div>
+    <div>
+      <h2 class="text-white font-semibold text-sm mb-4">Core Technical Domains</h2>
+      <ul class="space-y-3 text-sm text-gray-400">
+        <li>Embedded &amp; Hardware</li>
+        <li>Industrial Automation</li>
+        <li>Systems &amp; Control</li>
+        <li>Software &amp; Cloud</li>
+      </ul>
+    </div>
+    <div>
+      <h2 class="text-white font-semibold text-sm mb-4">Legal / Compliance</h2>
+      <ul class="space-y-3 text-sm text-gray-400 mb-6">
+        <li><a href="/privacy-policy/" class="hover:text-white transition-colors">Privacy Policy</a></li>
+        <li><a href="/terms-of-service/" class="hover:text-white transition-colors">Terms of Service</a></li>
+      </ul>
+      <div class="flex gap-4">
+        <a href="#" aria-label="GitHub" class="text-gray-400 hover:text-white transition-colors"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.38 7.86 10.9.58.1.79-.25.79-.56 0-.28-.01-1.02-.02-2-3.2.7-3.88-1.54-3.88-1.54-.52-1.34-1.28-1.7-1.28-1.7-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.68 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.04 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.79 0c2.21-1.49 3.18-1.18 3.18-1.18.63 1.58.23 2.75.11 3.04.74.81 1.19 1.83 1.19 3.09 0 4.41-2.69 5.39-5.25 5.67.41.36.78 1.07.78 2.16 0 1.56-.01 2.82-.01 3.2 0 .32.21.67.8.56A10.52 10.52 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5Z"/></svg></a>
+        <a href="#" aria-label="LinkedIn" class="text-gray-400 hover:text-white transition-colors"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.36V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29ZM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12ZM7.12 20.45H3.56V9h3.56v11.45ZM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0Z"/></svg></a>
+        <a href="/blog/" aria-label="RSS Feed" class="text-gray-400 hover:text-white transition-colors"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M4 4a16 16 0 0 1 16 16h-3a13 13 0 0 0-13-13V4Zm0 6a10 10 0 0 1 10 10h-3a7 7 0 0 0-7-7v-3Zm2.5 6.5A2.5 2.5 0 1 1 4 19a2.5 2.5 0 0 1 2.5-2.5Z"/></svg></a>
+      </div>
+    </div>
+  </div>
+  <div class="border-t border-white/10">
+    <div class="max-w-7xl mx-auto px-6 lg:px-10 py-6 text-xs text-gray-500">© 2026 GN Labs. All specifications subject to revision without notice.</div>
+  </div>
+</footer>
+
+<button id="scrollTopBtn" aria-label="Scroll to top" class="fixed bottom-6 right-6 z-40 w-11 h-11 bg-ink text-white flex items-center justify-center">
+  <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 13V3M8 3L3 8M8 3l5 5" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</button>
+
+<!-- ============ JSON-LD: Article structured data ============ -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Tuning a PID loop against a model before it ever sees a real tank",
+  "description": "A practical walkthrough of building a thermal model, tuning gains against it, and validating those gains on a hardware-in-the-loop bench before anything touches production.",
+  "image": "https://images.pexels.com/photos/18471567/pexels-photo-18471567.jpeg?auto=compress&cs=tinysrgb&w=1200",
+  "author": { "@type": "Person", "name": "G. Ndung'u" },
+  "publisher": {
+    "@type": "Organization",
+    "name": "GN Labs",
+    "logo": { "@type": "ImageObject", "url": "https://gnlabs.site/favicon.svg" }
+  },
+  "datePublished": "2026-07-19",
+  "mainEntityOfPage": "https://gnlabs.site/blog/tuning-pid-against-a-model/"
+}
+</script>
+
+<script>
+  // ==========================================================================
+  // ADS: toggle + placeholder wiring
+  // ==========================================================================
+  const ADS_ENABLED = true;
+  function initAds() {
+    document.querySelectorAll('.ad-slot').forEach(slot => {
+      slot.style.display = ADS_ENABLED ? '' : 'none';
+      // Once a real network is wired, this is where you'd push a request per
+      // unit, e.g.: (window.adsbygoogle = window.adsbygoogle || []).push({});
+    });
+  }
+  initAds();
+
+  // ---- Shared article data (same shape as the blog page) ----
+  const CATEGORY_LABEL = {
+    automation: 'Industrial Automation', control: 'Systems & Control',
+    embedded: 'Embedded & Hardware', software: 'Software & Cloud'
+  };
+  const CATEGORY_SHORT = { automation: 'Automation', control: 'Control', embedded: 'Embedded', software: 'Software' };
+
+  const allArticles = [
+    { title: 'Why relay logic still runs a third of production lines — and when to leave it alone', slug: 'relay-logic-still-runs-lines', excerpt: 'A framework for deciding whether a legacy control system needs replacing or just needs to be understood.', category: 'automation', image: 'https://picsum.photos/seed/gnlabs-blog-relay/700/460', date: '2026-09-08', readTime: '7 min read' },
+    { title: 'Store-and-forward buffering for sensors that lose signal for hours', slug: 'store-and-forward-buffering', excerpt: 'Designing an edge device around the assumption that the network is absent, not present.', category: 'embedded', image: 'https://picsum.photos/seed/gnlabs-blog-buffer/700/460', date: '2026-08-22', readTime: '6 min read' },
+    { title: 'Idempotency keys are not optional at the OT/IT boundary', slug: 'idempotency-ot-it-boundary', excerpt: 'A dropped acknowledgement over an unreliable fieldbus link can double-write a batch record.', category: 'software', image: 'https://picsum.photos/seed/gnlabs-blog-idempotent/700/460', date: '2026-08-05', readTime: '5 min read' },
+    { title: 'What a hardware-in-the-loop bench actually needs to catch', slug: 'what-a-hil-bench-needs-to-catch', excerpt: 'Not every fault is worth simulating — the failure classes that justify building a HIL rig at all.', category: 'control', image: 'https://picsum.photos/seed/gnlabs-blog-hilbench/700/460', date: '2026-05-11', readTime: '6 min read' },
+    { title: 'Grafana dashboards operators actually look at', slug: 'grafana-dashboards-operators-use', excerpt: 'Most plant dashboards are built for the engineer who made them, not the operator glancing at one mid-shift.', category: 'software', image: 'https://picsum.photos/seed/gnlabs-blog-grafana/700/460', date: '2026-06-14', readTime: '5 min read' },
+    { title: 'Power budgeting an ESP32 sensor node for an 18-month battery life', slug: 'power-budgeting-esp32-sensor-node', excerpt: 'Deep sleep current, wake cadence, and the radio cost that dominates the whole budget.', category: 'embedded', image: 'https://picsum.photos/seed/gnlabs-blog-esp32/700/460', date: '2026-05-28', readTime: '7 min read' },
+  ];
+  const CURRENT_SLUG = 'tuning-pid-against-a-model';
+
+  function escapeHtml(str) {
+    return String(str).replace(/[&<>"']/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' })[c]);
+  }
+  function formatDate(iso) {
+    const d = new Date(iso);
+    return isNaN(d) ? iso : d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+  }
+  function articleUrl(a) { return `/blog/${encodeURIComponent(a.slug)}/`; }
+
+  function relatedCard(a) {
+    return `
+      <article class="article-card group flex flex-col border border-gray-200 bg-base">
+        <a href="${articleUrl(a)}" class="relative block aspect-[16/10] overflow-hidden bg-gray-100" tabindex="-1" aria-hidden="true">
+          <img src="${escapeHtml(a.image)}" alt="" class="w-full h-full object-cover" loading="lazy">
+          <span class="category-tag absolute top-2.5 left-2.5 text-[0.625rem] font-semibold tracking-wide px-2 py-1">${escapeHtml(CATEGORY_SHORT[a.category])}</span>
+        </a>
+        <div class="p-4 flex flex-col flex-1">
+          <p class="text-[11px] font-mono text-steel mb-2">${formatDate(a.date)}</p>
+          <h3 class="article-card-title font-bold text-ink text-sm leading-snug mb-1.5 clamp-2"><a href="${articleUrl(a)}">${escapeHtml(a.title)}</a></h3>
+        </div>
+      </article>`;
+  }
+  document.getElementById('relatedGrid').innerHTML = allArticles
+    .filter(a => a.slug !== CURRENT_SLUG)
+    .slice(0, 3)
+    .map(relatedCard).join('');
+
+  function renderRecent() {
+    const recent = [...allArticles].sort((a, b) => new Date(b.date) - new Date(a.date)).slice(0, 3);
+    document.getElementById('recentList').innerHTML = recent.map(a => `
+      <a href="${articleUrl(a)}" class="recent-link flex gap-3 items-start p-1.5 -mx-1.5">
+        <span class="w-16 h-14 shrink-0 overflow-hidden bg-gray-100"><img src="${escapeHtml(a.image)}" alt="" class="w-full h-full object-cover" loading="lazy"></span>
+        <span class="min-w-0">
+          <span class="recent-title block text-[0.8125rem] font-semibold text-ink leading-snug clamp-2">${escapeHtml(a.title)}</span>
+          <span class="block text-[11px] text-steel font-mono mt-1">${formatDate(a.date)}</span>
+        </span>
+      </a>`).join('');
+  }
+  renderRecent();
+
+  // ---- Auto-build the TOC from the article's own h2/h3 elements ----
+  function buildToc() {
+    const headings = Array.from(document.querySelectorAll('#articleBody h2, #articleBody h3'));
+    const tocList = document.getElementById('tocList');
+    tocList.innerHTML = headings.map(h => {
+      const level = h.tagName === 'H3' ? 3 : 2;
+      return `<a href="#${h.id}" class="toc-link py-1.5 pl-4" data-toc data-level="${level}">${h.textContent}</a>`;
+    }).join('');
+    return headings;
+  }
+  const tocHeadings = buildToc();
+  const tocLinks = Array.from(document.querySelectorAll('[data-toc]'));
+
+  function setActiveToc(id) {
+    tocLinks.forEach(link => link.classList.toggle('is-active', link.getAttribute('href') === '#' + id));
+  }
+  const spyObserver = new IntersectionObserver((entries) => {
+    const visible = entries.filter(e => e.isIntersecting);
+    if (visible.length === 0) return;
+    visible.sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
+    setActiveToc(visible[0].target.id);
+  }, { rootMargin: '-15% 0px -70% 0px', threshold: 0 });
+  tocHeadings.forEach(h => spyObserver.observe(h));
+  if (tocHeadings[0]) setActiveToc(tocHeadings[0].id);
+
+  // ---- Header scroll compaction + reading progress ----
+  const siteHeader = document.getElementById('siteHeader');
+  const readProgress = document.getElementById('readProgress');
+  const scrollTopBtn = document.getElementById('scrollTopBtn');
+  function onScroll() {
+    siteHeader.classList.toggle('is-scrolled', window.scrollY > 24);
+    const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+    readProgress.style.width = scrollable > 0 ? Math.min(100, (window.scrollY / scrollable) * 100) + '%' : '0%';
+    scrollTopBtn.classList.toggle('show', window.scrollY > 600);
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  // ---- Mobile drawer ----
+  const menuToggle = document.getElementById('menuToggle');
+  const menuClose = document.getElementById('menuClose');
+  const mobileDrawer = document.getElementById('mobileDrawer');
+  const mobileOverlay = document.getElementById('mobileOverlay');
+  function openDrawer() { mobileDrawer.classList.add('open'); mobileOverlay.classList.add('open'); menuToggle.setAttribute('aria-expanded', 'true'); }
+  function closeDrawer() { mobileDrawer.classList.remove('open'); mobileOverlay.classList.remove('open'); menuToggle.setAttribute('aria-expanded', 'false'); }
+  menuToggle.addEventListener('click', openDrawer);
+  menuClose.addEventListener('click', closeDrawer);
+  mobileOverlay.addEventListener('click', closeDrawer);
+  document.querySelectorAll('.mobile-link').forEach(link => link.addEventListener('click', closeDrawer));
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeDrawer(); });
+  scrollTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+  // ---- Fade-ins ----
+  const fadeObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('is-visible'); fadeObserver.unobserve(entry.target); } });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-in').forEach(el => fadeObserver.observe(el));
+
+  // ---- Share buttons ----
+  const pageUrl = () => window.location.href;
+  const pageTitle = () => document.title;
+  document.querySelectorAll('[data-share="x"]').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(pageTitle())}&url=${encodeURIComponent(pageUrl())}`, '_blank', 'noopener,width=560,height=520');
+    });
+  });
+  document.querySelectorAll('[data-share="linkedin"]').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(pageUrl())}`, '_blank', 'noopener,width=560,height=520');
+    });
+  });
+  function copyLink(btn) {
+    navigator.clipboard.writeText(pageUrl()).then(() => {
+      btn.classList.add('copied');
+      setTimeout(() => btn.classList.remove('copied'), 1600);
+    });
+  }
+  document.getElementById('copyLinkBtn').addEventListener('click', (e) => copyLink(e.currentTarget));
+  document.querySelectorAll('[data-copy-secondary]').forEach(btn => btn.addEventListener('click', () => copyLink(btn)));
+
+  // ---- Sidebar newsletter ----
+  document.getElementById('sidebarNewsletterForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+    e.target.innerHTML = '<p class="text-sm font-semibold text-white py-1">Subscribed. First issue lands next cycle.</p>';
+  });
+
+  // ---- Video embed facade ----
+  document.querySelector('.video-embed .play-btn')?.addEventListener('click', function () {
+    this.closest('.video-embed').innerHTML = '<p class="text-gray-400 text-sm font-mono px-6 text-center">Video placeholder — wire an actual embed (YouTube/Vimeo iframe or hosted MP4) here.</p>';
+  });
+</script>
+
+</body>
+</html>
