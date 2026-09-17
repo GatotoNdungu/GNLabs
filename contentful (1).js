@@ -33,7 +33,7 @@ window.GNContentful = (function () {
   // file, or in blog.html / article.html, needs to change after that.
   // --------------------------------------------------------------------
   const SPACE_ID = 'qz1tpi20918f';
-  const ACCESS_TOKEN = '';
+  const ACCESS_TOKEN = 'B3_yCnVFGynp0gz5wQe_7yZ_wHovCmpuSFcW7_ai8NY';
   const ENVIRONMENT = 'master';
   const CONTENT_TYPE = 'article';
 
