@@ -32,8 +32,8 @@ window.GNContentful = (function () {
   // FILL THESE IN once the Contentful Space exists — nothing else in this
   // file, or in blog.html / article.html, needs to change after that.
   // --------------------------------------------------------------------
-  const SPACE_ID = '';
-  const ACCESS_TOKEN = '';
+  const SPACE_ID = 'qz1tpi20918f';
+  const ACCESS_TOKEN = 'B3_yCnVFGynp0gz5wQe_7yZ_wHovCmpuSFcW7_ai8NY';
   const ENVIRONMENT = 'master';
   const CONTENT_TYPE = 'article';
 
