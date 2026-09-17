@@ -936,7 +936,7 @@
     document.getElementById('heroReadTime').textContent = article.readTime;
 
     if (article.body) {
-      document.getElementById('articleBody').innerHTML = window.GNContentful.renderRichText(article.body);
+      document.getElementById('articleBody').innerHTML = window.GNContentful.renderRichText(article.body, article.assetMap, article.entryMap);
     }
     return true;
   }
