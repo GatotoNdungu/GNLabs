@@ -48,26 +48,26 @@
 
 <!--
   ============================================================================
-  AD NETWORK WIRING
+  ADS
   ============================================================================
-  Every ad on this page lives inside a <div class="ad-slot"> with a fixed
-  min-height, so the layout never jumps when a real ad loads in (or fails to).
-  To go live with Google AdSense / Ad Manager once approved:
+  This page has no manual ad placeholders on purpose. Auto-serving networks
+  (Google AdSense Auto ads, Ezoic, Mediavine, etc.) place and manage ad units
+  themselves once you add their one loader script and pass their site
+  verification — they scan the page's actual layout and insert units where
+  their algorithm decides, which is the entire value of "auto ads" over
+  hand-placed slots. Onboarding usually looks like:
 
-    1. Add the loader script here in <head>, once, with your publisher ID:
-       <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script>
+    1. Add their loader script tag here in <head> (each network gives you
+       an exact snippet with your site/publisher ID after approval).
+    2. Complete whatever site verification they require (a meta tag here,
+       or a small file at the site root — network-specific).
+    3. The network's script then inserts ad units into the page on its own;
+       nothing else in this file needs to change for that.
 
-    2. Inside each .ad-slot placeholder below, replace the dashed placeholder
-       <div> with your <ins class="adsbygoogle"> unit, keeping the wrapper's
-       classes and min-height untouched.
-
-    3. Call (adsbygoogle = window.adsbygoogle || []).push({}) once per unit —
-       the initAds() stub near the bottom of this file is where that goes.
-
-  Until then, set ADS_ENABLED to false in the script below to hide every slot
-  cleanly rather than show empty boxes. NOTE: turning ads on will put you in
-  scope of the "no advertising cookies / not sold to anyone" language on the
-  Privacy Policy page — that page should be updated before ads actually ship.
+  NOTE: turning ads on puts you in scope of the "no advertising cookies /
+  not sold to anyone" language on the Privacy Policy page — update that
+  page before ads actually go live, since most of these networks do set
+  cookies for targeting/measurement.
   ============================================================================
 -->
 
@@ -129,9 +129,6 @@
   #readProgress { background: var(--accent-amber); width: 0%; transition: width 90ms linear; }
 
   /* ---- Hero ---- */
-  .hero-figure { min-height: 66vh; }
-  @media (max-width: 640px) { .hero-figure { min-height: 76vh; } }
-
   .category-pill {
     background: var(--accent-amber); color: #fff;
     font-weight: 700; letter-spacing: 0.03em;
@@ -141,7 +138,6 @@
     width: 2.5rem; height: 2.5rem;
     display: flex; align-items: center; justify-content: center;
     background: var(--accent-amber); color: #fff; font-weight: 800; font-size: 0.875rem;
-    border: 2px solid rgba(255,255,255,0.25);
   }
 
   .share-btn {
@@ -363,21 +359,6 @@
   .sidebar-pin { position: static; }
   @media (min-width: 1024px) { .sidebar-pin { position: sticky; top: calc(var(--header-h) + 1.5rem); } }
 
-  /* ---- Ad slots ---- */
-  .ad-slot { text-align: center; }
-  .ad-slot .ad-label {
-    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-    font-size: 0.625rem; letter-spacing: 0.1em; text-transform: uppercase;
-    color: #9CA3AF; margin-bottom: 0.5rem; display: block;
-  }
-  .ad-slot .ad-placeholder {
-    border: 1.5px dashed #D1D5DB;
-    background: repeating-linear-gradient(135deg, #FAFAFA, #FAFAFA 10px, #F3F4F6 10px, #F3F4F6 20px);
-    color: #9CA3AF;
-    display: flex; align-items: center; justify-content: center;
-    font-family: 'Inter', sans-serif; font-size: 0.75rem; font-weight: 600;
-  }
-
   /* ---- Related / article cards (shared with blog) ---- */
   .article-card { transition: border-color 200ms ease-in-out, box-shadow 200ms ease-in-out; }
   .article-card:hover { border-color: var(--text-ink); box-shadow: 0 10px 24px -20px rgba(17,24,39,0.45); }
@@ -441,59 +422,39 @@
 </aside>
 
 <!-- ============ ARTICLE HERO ============ -->
-<section class="relative overflow-hidden bg-graphite border-b border-gray-200">
-  <div class="hero-figure relative flex items-end">
-    <img id="heroImage" src="https://images.pexels.com/photos/18471567/pexels-photo-18471567.jpeg?auto=compress&cs=tinysrgb&w=1920"
-         alt="Oscilloscope trace of a settling thermal response on a lab bench"
-         class="absolute inset-0 w-full h-full object-cover">
-    <div class="absolute inset-0 bg-gradient-to-t from-graphite via-graphite/70 to-graphite/10"></div>
-    <div class="absolute inset-0 bg-gradient-to-r from-graphite/40 via-transparent to-transparent"></div>
+<section class="bg-base border-b border-gray-200">
+  <div class="max-w-4xl mx-auto px-6 lg:px-10 pt-12 sm:pt-16 pb-8 sm:pb-10">
+    <span id="heroCategoryPill" class="category-pill inline-block text-[0.6875rem] px-2.5 py-1 mb-5 fade-in">Systems &amp; Control</span>
 
-    <div class="relative z-10 max-w-4xl mx-auto px-6 lg:px-10 pb-10 sm:pb-14 pt-24 w-full">
-      <nav aria-label="Breadcrumb" class="mb-6 fade-in">
-        <ol class="flex items-center gap-2 text-[11px] font-mono text-gray-400 flex-wrap">
-          <li><a href="/" class="hover:text-gray-200 transition-colors">Home</a></li>
-          <li aria-hidden="true">/</li>
-          <li><a href="/blog/" class="hover:text-gray-200 transition-colors">Blog</a></li>
-          <li aria-hidden="true">/</li>
-          <li id="heroBreadcrumbCurrent" class="text-gray-300 truncate max-w-[12rem] sm:max-w-none">Tuning a PID Loop Against a Model</li>
-        </ol>
-      </nav>
+    <h1 id="heroTitle" class="fade-in text-2xl sm:text-4xl lg:text-[2.75rem] font-extrabold tracking-tight leading-[1.15] text-ink max-w-3xl">
+      Tuning a PID loop against a model before it ever sees a real tank
+    </h1>
 
-      <span id="heroCategoryPill" class="category-pill inline-block text-[0.6875rem] px-2.5 py-1 mb-5 fade-in">Systems &amp; Control</span>
-
-      <h1 id="heroTitle" class="fade-in text-2xl sm:text-4xl lg:text-[2.75rem] font-extrabold tracking-tight leading-[1.15] text-white max-w-3xl">
-        Tuning a PID loop against a model before it ever sees a real tank
-      </h1>
-
-      <div class="fade-in flex flex-wrap items-center gap-4 mt-7">
-        <div class="flex items-center gap-3">
-          <span class="avatar" aria-hidden="true">GN</span>
-          <div>
-            <p class="text-white font-semibold text-sm leading-tight">G. Ndung'u</p>
-            <p class="text-gray-400 text-xs font-mono">Controls &amp; Embedded Engineer</p>
-          </div>
-        </div>
-        <span class="w-px h-8 bg-white/15 hidden sm:block"></span>
-        <div class="text-xs font-mono text-gray-400 flex items-center gap-3">
-          <time id="heroDate" datetime="2026-07-19">Jul 19, 2026</time>
-          <span aria-hidden="true">·</span>
-          <span id="heroReadTime">9 min read</span>
-        </div>
+    <div class="fade-in flex flex-wrap items-center gap-4 mt-6">
+      <div class="flex items-center gap-3">
+        <span class="avatar" aria-hidden="true">GN</span>
+        <p class="text-ink font-semibold text-sm">GN Labs</p>
+      </div>
+      <span class="w-px h-6 bg-gray-300 hidden sm:block"></span>
+      <div class="text-xs font-mono text-steel flex items-center gap-3">
+        <time id="heroDate" datetime="2026-07-19">Jul 19, 2026</time>
+        <span aria-hidden="true">·</span>
+        <span id="heroReadTime">9 min read</span>
       </div>
     </div>
   </div>
-</section>
 
-<!-- ============ LEADERBOARD AD (below hero) ============ -->
-<div class="border-b border-gray-200 bg-alt">
-  <div class="max-w-7xl mx-auto px-6 lg:px-10 py-5">
-    <div class="ad-slot" data-ad="leaderboard-1">
-      <span class="ad-label">Advertisement</span>
-      <div class="ad-placeholder mx-auto" style="max-width:728px; width:100%; height:90px;">728 × 90</div>
-    </div>
-  </div>
-</div>
+  <!-- Featured image: a fixed aspect ratio scales cleanly at every screen
+       size, so it never balloons into a full-viewport block on mobile the
+       way a min-height hero would. Taller on small screens (more of the
+       image is visible without much width to work with), wider and more
+       cinematic once there's room for it. -->
+  <figure class="w-full aspect-[4/3] sm:aspect-[16/9] lg:aspect-[21/9] bg-gray-100 overflow-hidden">
+    <img id="heroImage" src="https://images.pexels.com/photos/18471567/pexels-photo-18471567.jpeg?auto=compress&cs=tinysrgb&w=1920"
+         alt="Oscilloscope trace of a settling thermal response on a lab bench"
+         class="w-full h-full object-cover">
+  </figure>
+</section>
 
 <!-- ============ MAIN: ARTICLE + SIDEBAR ============ -->
 <section class="py-14 lg:py-16">
@@ -647,14 +608,6 @@
 
       </div>
 
-      <!-- In-content ad -->
-      <div class="my-12">
-        <div class="ad-slot" data-ad="in-article-1">
-          <span class="ad-label">Advertisement</span>
-          <div class="ad-placeholder mx-auto" style="max-width:100%; width:100%; height:120px;">Fluid · 336 × 280 min</div>
-        </div>
-      </div>
-
       <!-- Share row (bottom) -->
       <div class="flex items-center justify-between flex-wrap gap-4 py-7 border-y border-gray-200 mb-12">
         <div class="flex items-center gap-2">
@@ -676,8 +629,8 @@
         <span class="avatar shrink-0" style="background:#111827; width:3.5rem; height:3.5rem; font-size:1.125rem;" aria-hidden="true">GN</span>
         <div class="flex-1">
           <p class="text-[11px] font-mono text-steel mb-1">Written by</p>
-          <h2 class="font-bold text-ink text-lg mb-1.5">G. Ndung'u</h2>
-          <p class="text-sm text-steel leading-relaxed">Runs GN Labs, an independent engineering practice covering embedded systems, industrial automation, and the software connecting them. Writes about the retrofits and reviews that actually happened, not the tidy version.</p>
+          <h2 class="font-bold text-ink text-lg mb-1.5">GN Labs</h2>
+          <p class="text-sm text-steel leading-relaxed">An independent engineering practice covering embedded systems, industrial automation, and the software connecting them. Writing about the retrofits and reviews that actually happened, not the tidy version.</p>
         </div>
         <a href="/about/" class="btn-secondary font-bold px-5 py-2.5 text-sm text-center shrink-0">More about GN Labs</a>
       </div>
@@ -724,12 +677,6 @@
             <span class="w-6 h-px bg-amber" aria-hidden="true"></span>
           </div>
           <nav id="tocList" class="space-y-0.5" aria-label="Table of contents"></nav>
-        </div>
-
-        <!-- Sidebar ad -->
-        <div class="ad-slot" data-ad="sidebar-1">
-          <span class="ad-label">Advertisement</span>
-          <div class="ad-placeholder mx-auto" style="width:100%; max-width:300px; height:250px;">300 × 250</div>
         </div>
 
         <!-- Newsletter -->
@@ -850,7 +797,7 @@
   "headline": "Tuning a PID loop against a model before it ever sees a real tank",
   "description": "A practical walkthrough of building a thermal model, tuning gains against it, and validating those gains on a hardware-in-the-loop bench before anything touches production.",
   "image": "https://images.pexels.com/photos/18471567/pexels-photo-18471567.jpeg?auto=compress&cs=tinysrgb&w=1200",
-  "author": { "@type": "Person", "name": "G. Ndung'u" },
+  "author": { "@type": "Organization", "name": "GN Labs" },
   "publisher": {
     "@type": "Organization",
     "name": "GN Labs",
@@ -862,19 +809,6 @@
 </script>
 
 <script>
-  // ==========================================================================
-  // ADS: toggle + placeholder wiring
-  // ==========================================================================
-  const ADS_ENABLED = true;
-  function initAds() {
-    document.querySelectorAll('.ad-slot').forEach(slot => {
-      slot.style.display = ADS_ENABLED ? '' : 'none';
-      // Once a real network is wired, this is where you'd push a request per
-      // unit, e.g.: (window.adsbygoogle = window.adsbygoogle || []).push({});
-    });
-  }
-  initAds();
-
   // ---- Shared article data (same shape as the blog page) ----
   const CATEGORY_LABEL = {
     automation: 'Industrial Automation', control: 'Systems & Control',
@@ -993,7 +927,6 @@
       if (ogImageEl) ogImageEl.content = article.image;
     }
     if (article.image) document.getElementById('heroImage').src = article.image;
-    document.getElementById('heroBreadcrumbCurrent').textContent = article.title;
     document.getElementById('heroCategoryPill').textContent = CATEGORY_LABEL[article.category] || article.category;
     document.getElementById('heroTitle').textContent = article.title;
     const heroDateEl = document.getElementById('heroDate');
