@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Contact | GN Labs — Send a Brief by Form, Email, WhatsApp or Phone</title>
+<meta name="description" content="Describe the system you're working on and get a reply within one business day. Reach GN Labs by the form, email, WhatsApp or phone.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://gnlabs.site/contact">
+<meta property="og:site_name" content="GN Labs">
+<meta property="og:title" content="Contact | GN Labs">
+<meta property="og:description" content="Describe the system you're working on and get a reply within one business day.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://gnlabs.site/contact">
+<meta property="og:image" content="https://gnlabs.site/og-cover.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='2' y='2' width='28' height='28' rx='7' fill='%23ee6c4d'/%3E%3Cpath d='M10 16h5v5h-5zM17 11h5v5h-5z' fill='%233a444b'/%3E%3Cpath d='M12.5 16v-3.5h4.5' stroke='%233a444b' stroke-width='2' fill='none'/%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%234a555d'/%3E%3Crect x='3' y='3' width='26' height='26' rx='6' fill='%23ee6c4d'/%3E%3Cpath d='M10 16h5v5h-5zM17 11h5v5h-5z' fill='%233a444b'/%3E%3Cpath d='M12.5 16v-3.5h4.5' stroke='%233a444b' stroke-width='2' fill='none'/%3E%3C/svg%3E">
+<meta name="theme-color" content="#4a555d">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+ {"@type":"BreadcrumbList","itemListElement":[
+  {"@type":"ListItem","position":1,"name":"Home","item":"https://gnlabs.site/"},
+  {"@type":"ListItem","position":2,"name":"Contact","item":"https://gnlabs.site/contact"}]},
+ {"@type":"ContactPage","name":"Contact GN Labs","url":"https://gnlabs.site/contact",
+  "mainEntity":{"@type":"Organization","name":"GN Labs","url":"https://gnlabs.site/",
+   "contactPoint":{"@type":"ContactPoint","contactType":"customer support","email":"hello@gnlabs.site","telephone":"+1-555-019-2847","availableLanguage":"English"}}}
+]}
+</script>
+<script>
+/* Font loader — identical to the rest of the site. */
+(function(){
+  var kit = "";
+  var l = document.createElement("link"); l.rel = "stylesheet";
+  l.href = kit ? "https://use.typekit.net/" + kit + ".css"
+               : "https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600&display=swap";
+  document.head.appendChild(l);
+})();
+</script>
+<style>
+/* ===== shared brand tokens + chrome ===== */
+:root{
+  --font:"proxima-nova","Figtree",Arial,Helvetica,sans-serif;
+  --dark:#4a555d; --dark-2:#3a444b; --slate:#3f546d; --news:#39464b;
+  --cta:#ee6c4d; --cta-h:#d85a3c; --link:#3b82c4; --link-l:#6aa9de;
+  --head:#3f546d; --text:#4e4e4e; --text2:#666; --grey:#eeeeee; --line:#e6e6e6; --max:1200px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font:400 16px/26px var(--font);color:var(--text);background:#fff;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+a{color:inherit}
+ul{list-style:none}
+button,input,textarea{font-family:inherit}
+[hidden]{display:none!important}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 15px}
+.btn{display:inline-block;height:42px;padding:11px 20px;border:0;border-radius:3px;background:var(--cta);color:#fff;font:500 15px/20px var(--font);text-decoration:none;text-align:center;cursor:pointer}
+.btn:hover{background:var(--cta-h)}
+.btn:disabled{opacity:.5;cursor:default}
+
+header{position:sticky;top:0;z-index:30;background:var(--dark);color:#fff}
+.bar{display:flex;align-items:center;justify-content:space-between;height:64px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:600;font-size:1.1rem;text-decoration:none;letter-spacing:.3px}
+.brand svg{width:30px;height:30px}
+nav ul{display:flex;gap:6px;align-items:center}
+nav a:not(.btn){display:block;padding:8px 12px;text-decoration:none;border-radius:6px;font-size:14px;font-weight:500;color:#e6e9ec;line-height:1.4}
+nav a:not(.btn):hover{background:#ffffff1a;color:#fff}
+nav a.current{background:#ffffff1a;color:#fff}
+nav .btn{height:auto;padding:8px 16px;font-size:14px;line-height:1.3}
+.nav-cta{margin-left:8px}
+.burger{display:none;background:none;border:0;color:#fff;font-size:1.6rem;cursor:pointer}
+@media(max-width:860px){
+  .burger{display:block}
+  #nav{position:absolute;left:0;right:0;top:64px;background:var(--dark-2);display:none;padding:10px 20px 18px}
+  #nav.open{display:block}
+  #nav ul{flex-direction:column;align-items:stretch}
+  .nav-cta{margin:8px 0 0}
+}
+.news{background:var(--news);padding:28px 0;color:#fff}
+.news .wrap{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
+.news p{font-size:14px;line-height:20px;max-width:420px}
+.news form{display:flex;gap:12px;flex-wrap:wrap;justify-content:flex-end}
+.news input{height:42px;width:340px;max-width:100%;border:0;border-radius:3px;padding:12px;font:300 16px var(--font)}
+.news .btn{width:130px;padding:11px 0}
+.news .msg{width:100%;font-size:14px;min-height:20px;text-align:right}
+@media(max-width:745px){.news .wrap{flex-direction:column;text-align:center}.news form{justify-content:center}.news .msg{text-align:center}}
+footer{background:var(--dark);color:#dfdfdf;padding:52px 0 26px;font-size:14px;line-height:1.6}
+.f-grid{display:grid;grid-template-columns:1.4fr repeat(3,1fr);gap:30px}
+footer h4{color:#fff;margin-bottom:12px;font-size:15px;font-weight:600}
+footer li{margin-bottom:8px}
+footer a{text-decoration:none;font-weight:300}
+footer a:hover{color:#fff;text-decoration:underline}
+.f-bottom{border-top:1px solid #87979d;margin-top:34px;padding-top:18px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;color:#cfd4d7;font-weight:300}
+@media(max-width:760px){.f-grid{grid-template-columns:1fr 1fr}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}html{scroll-behavior:auto}}
+
+/* ==========================================================================
+   CONTACT PAGE
+========================================================================== */
+.fade-in{opacity:0;transform:translateY(14px);transition:opacity .45s ease-out,transform .45s ease-out}
+.fade-in.is-visible{opacity:1;transform:translateY(0)}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:600;letter-spacing:.6px;text-transform:uppercase;color:var(--cta);margin-bottom:12px}
+
+.page-head{background:linear-gradient(180deg,#f7f8f9,#fff);padding:64px 0 14px;text-align:center}
+.page-head h1{font-size:40px;line-height:48px;font-weight:600;color:var(--head);letter-spacing:-.01em;margin-bottom:12px}
+.page-head p.lead{max-width:600px;margin:0 auto;font-size:17px;line-height:27px;font-weight:300;color:var(--text2)}
+.crumb{font-size:13px;color:var(--text2);margin-bottom:18px}
+.crumb a{color:var(--link);text-decoration:none}.crumb a:hover{text-decoration:underline}
+@media(max-width:640px){.page-head{padding:40px 0 8px}.page-head h1{font-size:28px;line-height:35px}.page-head p.lead{font-size:15px;line-height:24px}}
+
+.layout{display:grid;grid-template-columns:1.5fr 1fr;gap:44px;align-items:start;padding:40px 15px 60px}
+@media(max-width:940px){.layout{grid-template-columns:minmax(0,1fr);gap:34px}}
+
+.form-card{background:#fff;border:1px solid var(--line);border-radius:6px;padding:34px;box-shadow:0 24px 50px -34px rgba(20,30,40,.35)}
+.form-card h2{font-size:22px;line-height:28px;font-weight:600;color:var(--head);margin-bottom:4px}
+.form-card .hint{font-size:14px;color:var(--text2);margin-bottom:24px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.field{margin-bottom:18px}
+.field label{display:block;font-size:12px;font-weight:600;letter-spacing:.4px;text-transform:uppercase;color:var(--text2);margin-bottom:6px}
+.field label .req{color:var(--cta)}
+.field input,.field textarea{width:100%;border:1.5px solid #d9dee1;border-radius:3px;padding:11px 13px;font:400 15px/22px var(--font);color:var(--text);background:#fff;outline:none;transition:border-color .15s ease,box-shadow .15s ease}
+.field textarea{resize:vertical;min-height:140px}
+.field input:focus,.field textarea:focus{border-color:var(--link);box-shadow:0 0 0 3px rgba(59,130,196,.14)}
+.field .err{display:none;font-size:12.5px;color:#c0392b;margin-top:5px}
+.field.bad input,.field.bad textarea{border-color:#c0392b}
+.field.bad .err{display:block}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.chip{height:32px;padding:0 14px;border:1.5px solid var(--line);border-radius:18px;background:#fff;font-size:12.5px;font-weight:600;color:var(--text2);cursor:pointer;transition:border-color .15s ease,color .15s ease,background .15s ease}
+.chip:hover{border-color:var(--link-l);color:var(--head)}
+.chip.is-selected{background:var(--head);border-color:var(--head);color:#fff}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.form-foot{display:flex;flex-wrap:wrap;align-items:center;gap:16px;margin-top:6px}
+.form-foot small{font-size:13px;color:var(--text2)}
+.form-foot small a{color:var(--link)}
+#formStatus{display:none;margin-top:18px;padding:12px 14px;background:#edf7f1;border-left:3px solid #3aa76d;font-size:14px;color:#2d6a4a}
+@media(max-width:640px){.form-card{padding:24px 20px}.row2{grid-template-columns:minmax(0,1fr);gap:0}}
+
+.side{display:flex;flex-direction:column;gap:16px}
+.side h2{font-size:12px;font-weight:600;letter-spacing:.7px;text-transform:uppercase;color:var(--text2);margin-bottom:2px}
+.method{display:flex;align-items:center;gap:16px;padding:18px 20px;background:#fff;border:1px solid var(--line);border-radius:5px;text-decoration:none;color:inherit;transition:box-shadow .2s ease,transform .2s ease,border-color .2s ease}
+.method:hover{box-shadow:0 16px 34px -26px rgba(20,30,40,.35);transform:translateY(-2px);border-color:#d3d9dd}
+.method .ic{flex:none;width:44px;height:44px;border-radius:10px;background:#eef3f8;color:var(--link);display:flex;align-items:center;justify-content:center;transition:background .2s ease,color .2s ease}
+.method:hover .ic{background:var(--cta);color:#fff}
+.method .ic svg{width:22px;height:22px}
+.method small{display:block;font-size:12px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;color:var(--text2)}
+.method b{display:block;font-size:16px;font-weight:600;color:var(--head);overflow-wrap:anywhere}
+.method .go{margin-left:auto;color:var(--link);flex:none}
+.method .go svg{width:16px;height:16px}
+.info{background:var(--news);color:#fff;border-radius:5px;padding:22px}
+.info h3{font-size:12px;font-weight:600;letter-spacing:.7px;text-transform:uppercase;color:#cdd5da;margin-bottom:12px}
+.info dl div{display:flex;justify-content:space-between;gap:14px;padding:9px 0;border-top:1px solid rgba(255,255,255,.14);font-size:14px}
+.info dl div:first-child{border-top:0}
+.info dt{color:#cdd5da;font-weight:300}
+.info dd{font-weight:500;text-align:right}
+.live{display:inline-block;width:8px;height:8px;border-radius:50%;background:#3aa76d;margin-right:7px;box-shadow:0 0 0 3px rgba(58,167,109,.25)}
+
+.faq{background:#f7f8f9;padding:70px 0}
+.faq-wrap{display:grid;grid-template-columns:1fr 1.7fr;gap:60px}
+.faq h2{font-size:30px;line-height:38px;font-weight:600;color:var(--head);letter-spacing:-.01em;margin-bottom:10px}
+.faq .lead{font-size:16px;line-height:25px;font-weight:300;color:var(--text2)}
+.faq-list{border-top:1px solid #dfe3e6}
+.faq-item{border-bottom:1px solid #dfe3e6}
+.faq-item summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:20px;padding:19px 0;font-size:16.5px;line-height:24px;font-weight:600;color:var(--head);transition:color .15s ease}
+.faq-item summary::-webkit-details-marker{display:none}
+.faq-item summary:hover{color:var(--link)}
+.faq-item summary svg{flex:none;width:18px;height:18px;color:var(--link);transition:transform .22s ease}
+.faq-item[open] summary svg{transform:rotate(180deg)}
+.faq-item .ans{padding:0 40px 20px 0;font-size:15px;line-height:24px;font-weight:300;color:var(--text2)}
+@media(max-width:900px){.faq-wrap{grid-template-columns:minmax(0,1fr);gap:24px}.faq{padding:52px 0}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap bar">
+    <a class="brand" href="/" aria-label="GN Labs home">
+      <svg viewBox="0 0 32 32" fill="none" aria-hidden="true"><rect x="2" y="2" width="28" height="28" rx="7" style="fill:var(--cta)"/><path d="M10 16h5v5h-5zM17 11h5v5h-5z" style="fill:var(--dark-2)"/><path d="M12.5 16v-3.5h4.5" style="stroke:var(--dark-2)" stroke-width="2"/></svg>
+      GN Labs
+    </a>
+    <button class="burger" id="burger" aria-label="Toggle menu" aria-expanded="false">&#9776;</button>
+    <nav id="nav"><ul id="nav-list"></ul></nav>
+  </div>
+</header>
+
+<main>
+
+<section class="page-head">
+  <div class="wrap fade-in">
+    <p class="crumb"><a href="/">Home</a> / <span>Contact</span></p>
+    <p class="eyebrow">Contact</p>
+    <h1>Tell us what you're working on</h1>
+    <p class="lead">A few lines on the system and where it falls short is all we need. You'll get a reply within one business day, from the person who'd do the work.</p>
+  </div>
+</section>
+
+<div class="wrap layout">
+
+  <form class="form-card fade-in" id="contactForm" novalidate>
+    <h2>Send a message</h2>
+    <p class="hint">Fields marked * are required.</p>
+
+    <p class="hp" aria-hidden="true"><label>Leave this empty <input type="text" name="website" tabindex="-1" autocomplete="off"></label></p>
+
+    <div class="row2">
+      <div class="field"><label for="name">Name <span class="req">*</span></label><input id="name" name="name" type="text" autocomplete="name" required><p class="err">Please enter your name.</p></div>
+      <div class="field"><label for="email">Email <span class="req">*</span></label><input id="email" name="email" type="email" autocomplete="email" required><p class="err">Please enter a valid email.</p></div>
+    </div>
+
+    <div class="field">
+      <label for="scope">System scope</label>
+      <input id="scope" name="scope" type="text" placeholder="e.g. PLC retrofit, edge telemetry, control loop review">
+      <div class="chips" id="scopeChips">
+        <button type="button" class="chip" data-scope="PLC retrofit">PLC retrofit</button>
+        <button type="button" class="chip" data-scope="Edge telemetry">Edge telemetry</button>
+        <button type="button" class="chip" data-scope="Control loop review">Control loop review</button>
+        <button type="button" class="chip" data-scope="Firmware &amp; embedded">Firmware &amp; embedded</button>
+        <button type="button" class="chip" data-scope="Not sure yet">Not sure yet</button>
+      </div>
+    </div>
+
+    <div class="field">
+      <label for="message">Message <span class="req">*</span></label>
+      <textarea id="message" name="message" required placeholder="What's the system, what's it doing that it shouldn't, and what have you already tried?"></textarea>
+      <p class="err">Tell us a little about the problem.</p>
+    </div>
+
+    <div class="form-foot">
+      <button class="btn" type="submit" id="submitBtn">Send message</button>
+      <small>We reply within one business day. See our <a href="/privacy-policy">privacy policy</a>.</small>
+    </div>
+    <p id="formStatus" role="status" aria-live="polite">Message received. We'll reply within one business day.</p>
+  </form>
+
+  <aside class="side fade-in" aria-label="Other ways to reach us">
+    <h2>Prefer to reach out directly?</h2>
+
+    <a class="method" href="mailto:hello@gnlabs.site">
+      <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span>
+      <span><small>Email</small><b>hello@gnlabs.site</b></span>
+      <span class="go"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+    </a>
+
+    <a class="method" href="https://wa.me/15550192847?text=Hi%20GN%20Labs%2C%20I%27d%20like%20to%20talk%20about%20a%20system." target="_blank" rel="noopener">
+      <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12a8 8 0 0 1-11.9 7L4 20l1.1-4A8 8 0 1 1 20 12Z"/><path d="M9 9.5c0 3 2.5 5.5 5.5 5.5l1-1.5-2-1-.8.8c-.8-.4-1.6-1.2-2-2l.8-.8-1-2z"/></svg></span>
+      <span><small>WhatsApp</small><b>+1 (555) 019-2847</b></span>
+      <span class="go"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+    </a>
+
+    <a class="method" href="tel:+15550192847">
+      <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2Z"/></svg></span>
+      <span><small>Phone</small><b>+1 (555) 019-2847</b></span>
+      <span class="go"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+    </a>
+
+    <div class="info">
+      <h3>Good to know</h3>
+      <dl>
+        <div><dt>Reply time</dt><dd>Within 1 business day</dd></div>
+        <div><dt>Time zone</dt><dd>EAT (UTC+3)</dd></div>
+        <div><dt>Working mode</dt><dd>Remote first, on site by arrangement</dd></div>
+        <div><dt>Status</dt><dd><span class="live"></span>Taking enquiries</dd></div>
+      </dl>
+    </div>
+  </aside>
+</div>
+
+<section class="faq">
+  <div class="wrap faq-wrap">
+    <div class="fade-in">
+      <p class="eyebrow">Before you write</p>
+      <h2>Common questions</h2>
+      <p class="lead">A little preparation makes the first reply far more useful.</p>
+    </div>
+    <div class="faq-list fade-in">
+      <details class="faq-item">
+        <summary>What should I include in the message?<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg></summary>
+        <p class="ans">What the system is, what it's doing that it shouldn't (or what you want it to do that it can't yet), and anything you've already tried. Photos, model numbers and error messages help a great deal.</p>
+      </details>
+      <details class="faq-item">
+        <summary>How quickly will I hear back?<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg></summary>
+        <p class="ans">Within one business day. If your matter is urgent, WhatsApp or a call is the fastest route.</p>
+      </details>
+      <details class="faq-item">
+        <summary>What if you're not the right fit?<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg></summary>
+        <p class="ans">We'll say so plainly and, where we can, point you to someone better placed. A quick honest answer is more useful than a long proposal for work we shouldn't take.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Is there a cost to the first conversation?<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg></summary>
+        <p class="ans">No. The first conversation is about understanding the problem. Anything chargeable is quoted in writing before work begins.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Is my information kept private?<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg></summary>
+        <p class="ans">Yes. Details about your systems are used only to respond to you and are never shared. We're happy to sign an NDA before you send anything sensitive.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<div class="news">
+  <div class="wrap">
+    <p>Get new write-ups and build notes by email. Roughly monthly, no spam.</p>
+    <form id="newsForm">
+      <input type="email" required placeholder="Email address" aria-label="Email address">
+      <button class="btn" type="submit">Subscribe</button>
+      <div class="msg" id="newsMsg" role="status"></div>
+    </form>
+  </div>
+</div>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="f-grid" id="footer-grid"></div>
+    <div class="f-bottom"><span>&copy; <span id="year"></span> GN Labs</span><span>All rights reserved</span></div>
+  </div>
+</footer>
+
+<script>
+const NAV = [
+  {label:"Services", url:"/services"},
+  {label:"Projects", url:"/projects"},
+  {label:"Resources", url:"/resources"},
+  {label:"About", url:"/about"},
+  {label:"Contact", url:"/contact", current:true}
+];
+const FOOTER = {
+  blurb:"Embedded systems, IoT firmware and industrial control.",
+  columns:[
+    {title:"Services", links:[["Sensor nodes","/services#sensor-nodes"],["Alarm systems","/services#alarms"],["PLC & SCADA","/services#control"]]},
+    {title:"Resources", links:[["Articles","/resources"],["Projects","/projects"],["Docs","/docs"]]},
+    {title:"Company", links:[["About","/about"],["Contact","/contact"],["Privacy","/privacy"],["Terms","/terms"]]}
+  ]
+};
+document.getElementById("nav-list").innerHTML =
+  NAV.map(n => `<li><a href="${n.url}"${n.current ? ' class="current" aria-current="page"' : ''}>${n.label}</a></li>`).join("")
+  + `<li class="nav-cta"><a class="btn" href="#contactForm">Send a brief</a></li>`;
+document.getElementById("footer-grid").innerHTML =
+  `<div><a class="brand" href="/" style="color:#fff;margin-bottom:12px">GN Labs</a><p>${FOOTER.blurb}</p></div>`
+  + FOOTER.columns.map(c => `<div><h4>${c.title}</h4><ul>${c.links.map(l => `<li><a href="${l[1]}">${l[0]}</a></li>`).join("")}</ul></div>`).join("");
+document.getElementById("year").textContent = new Date().getFullYear();
+const burger = document.getElementById("burger"), navEl = document.getElementById("nav");
+burger.addEventListener("click", () => { const o = navEl.classList.toggle("open"); burger.setAttribute("aria-expanded", o); });
+navEl.addEventListener("click", e => { if (e.target.closest("a")) { navEl.classList.remove("open"); burger.setAttribute("aria-expanded", false); } });
+
+/* scope chips fill the scope field; typing a custom scope clears the highlight */
+const scopeInput = document.getElementById("scope");
+const chips = Array.from(document.querySelectorAll("#scopeChips .chip"));
+function syncChips(){ chips.forEach(c => c.classList.toggle("is-selected", c.dataset.scope === scopeInput.value.trim())); }
+chips.forEach(c => c.addEventListener("click", () => { scopeInput.value = c.dataset.scope; syncChips(); }));
+scopeInput.addEventListener("input", syncChips);
+/* optional prefill from other pages, e.g. /contact?scope=PLC%20retrofit */
+const pre = new URLSearchParams(location.search).get("scope");
+if (pre) { scopeInput.value = pre.slice(0, 120); syncChips(); }
+
+/* form: validation + success state. Put a real endpoint in FORM_ENDPOINT. */
+const FORM_ENDPOINT = ""; // e.g. a Formspree / Cloudflare Worker URL
+const form = document.getElementById("contactForm");
+const submitBtn = document.getElementById("submitBtn");
+const formMsg = document.getElementById("formStatus");
+function validateField(el){
+  const wrap = el.closest(".field"); if (!wrap) return true;
+  const ok = el.checkValidity() && el.value.trim() !== "";
+  wrap.classList.toggle("bad", !ok);
+  return ok;
+}
+form.querySelectorAll("[required]").forEach(el => el.addEventListener("blur", () => validateField(el)));
+form.addEventListener("submit", async e => {
+  e.preventDefault();
+  if (form.elements.website && form.elements.website.value) return;   // honeypot: bots only
+  const fields = Array.from(form.querySelectorAll("[required]"));
+  const results = fields.map(validateField);
+  if (results.includes(false)) { fields[results.indexOf(false)].focus(); formMsg.style.display = "none"; return; }
+  submitBtn.disabled = true; submitBtn.textContent = "Sending…";
+  try {
+    if (FORM_ENDPOINT) {
+      const res = await fetch(FORM_ENDPOINT, { method:"POST", headers:{ "Accept":"application/json" }, body:new FormData(form) });
+      if (!res.ok) throw new Error("Request failed");
+    } else {
+      await new Promise(r => setTimeout(r, 600));
+    }
+    formMsg.style.cssText = "display:block"; formMsg.textContent = "Message received. We'll reply within one business day.";
+    form.reset(); syncChips();
+  } catch (err) {
+    formMsg.style.cssText = "display:block;background:#fdf0ee;border-left-color:#c0392b;color:#8a2c20";
+    formMsg.textContent = "Something went wrong sending that. Please try again, or email hello@gnlabs.site.";
+  } finally {
+    submitBtn.disabled = false; submitBtn.textContent = "Send message";
+  }
+});
+
+document.getElementById("newsForm").addEventListener("submit", e => {
+  e.preventDefault();
+  const msg = document.getElementById("newsMsg"); msg.textContent = "Sending…";
+  setTimeout(() => { msg.textContent = "Thanks, you're subscribed."; e.target.reset(); }, 500);
+});
+
+const fadeObserver = new IntersectionObserver(entries => {
+  entries.forEach(en => { if (en.isIntersecting) { en.target.classList.add("is-visible"); fadeObserver.unobserve(en.target); } });
+}, { threshold: 0.12 });
+document.querySelectorAll(".fade-in").forEach(el => fadeObserver.observe(el));
+</script>
+</body>
+</html>

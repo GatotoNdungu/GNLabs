@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Services | GN Labs — Sensor Nodes, Alarm Systems, PLC &amp; SCADA</title>
+<meta name="description" content="Embedded sensor nodes and IoT firmware, alarm and monitoring systems, PLC and SCADA control, and the cloud integration that ties them together. Scoped in writing, built to be maintained by your team.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://gnlabs.site/services/">
+<meta property="og:site_name" content="GN Labs">
+<meta property="og:title" content="Services | GN Labs">
+<meta property="og:description" content="Sensor nodes, alarm systems, PLC and SCADA control, and cloud integration — engineered, documented and handed over.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://gnlabs.site/services/">
+<meta property="og:image" content="https://gnlabs.site/og-cover.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Services | GN Labs">
+<meta name="twitter:description" content="Sensor nodes, alarm systems, PLC and SCADA control, and cloud integration.">
+
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='2' y='2' width='28' height='28' rx='7' fill='%23ee6c4d'/%3E%3Cpath d='M10 16h5v5h-5zM17 11h5v5h-5z' fill='%233a444b'/%3E%3Cpath d='M12.5 16v-3.5h4.5' stroke='%233a444b' stroke-width='2' fill='none'/%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%234a555d'/%3E%3Crect x='3' y='3' width='26' height='26' rx='6' fill='%23ee6c4d'/%3E%3Cpath d='M10 16h5v5h-5zM17 11h5v5h-5z' fill='%233a444b'/%3E%3Cpath d='M12.5 16v-3.5h4.5' stroke='%233a444b' stroke-width='2' fill='none'/%3E%3C/svg%3E">
+<meta name="theme-color" content="#4a555d">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {"@type":"BreadcrumbList","itemListElement":[
+      {"@type":"ListItem","position":1,"name":"Home","item":"https://gnlabs.site/"},
+      {"@type":"ListItem","position":2,"name":"Services","item":"https://gnlabs.site/services/"}
+    ]},
+    {"@type":"ProfessionalService","name":"GN Labs","url":"https://gnlabs.site/",
+      "description":"Embedded systems, IoT firmware and industrial control engineering.",
+      "hasOfferCatalog":{"@type":"OfferCatalog","name":"Engineering services","itemListElement":[
+        {"@type":"Offer","itemOffered":{"@type":"Service","name":"Sensor nodes and IoT firmware"}},
+        {"@type":"Offer","itemOffered":{"@type":"Service","name":"Alarm and monitoring systems"}},
+        {"@type":"Offer","itemOffered":{"@type":"Service","name":"PLC, SCADA and control panels"}},
+        {"@type":"Offer","itemOffered":{"@type":"Service","name":"Cloud and data integration"}}
+      ]}},
+    {"@type":"FAQPage","mainEntity":[
+      {"@type":"Question","name":"How is work priced?","acceptedAnswer":{"@type":"Answer","text":"Most projects are quoted as a fixed fee against a written scope, so the price doesn't drift with the hours. Ongoing support is a monthly figure. Quotes follow a short scoping call."}},
+      {"@type":"Question","name":"Do you work on site?","acceptedAnswer":{"@type":"Answer","text":"Design and software are done remotely. Site visits are used for surveys, commissioning and anything that needs hands on the equipment. Travel is agreed beforehand and billed at cost."}},
+      {"@type":"Question","name":"Who owns the code and drawings?","acceptedAnswer":{"@type":"Answer","text":"You do, on delivery and payment. Generic tools developed across projects stay with GN Labs and are licensed to you for as long as you run the system."}},
+      {"@type":"Question","name":"Can you work alongside our existing team or contractor?","acceptedAnswer":{"@type":"Answer","text":"Yes. A common setup is GN Labs owning one clearly defined part, such as the firmware or the data link, while your team keeps the rest. Responsibilities are written down before work starts."}},
+      {"@type":"Question","name":"What happens after handover?","acceptedAnswer":{"@type":"Answer","text":"Every project includes a support window after commissioning to fix anything that surfaces. After that you can run the system yourselves or keep us on a support plan."}}
+    ]}
+  ]
+}
+</script>
+
+<script>
+/* Font loader — identical to the homepage's. */
+(function(){
+  var kit = "";
+  var l = document.createElement("link"); l.rel = "stylesheet";
+  l.href = kit ? "https://use.typekit.net/" + kit + ".css"
+               : "https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600&display=swap";
+  document.head.appendChild(l);
+})();
+</script>
+<style>
+/* ===== shared brand tokens + chrome (same as homepage / resources / projects) ===== */
+:root{
+  --font:"proxima-nova","Figtree",Arial,Helvetica,sans-serif;
+  --dark:#4a555d; --dark-2:#3a444b; --slate:#3f546d; --news:#39464b;
+  --cta:#ee6c4d; --cta-h:#d85a3c; --link:#3b82c4; --link-l:#6aa9de;
+  --head:#3f546d; --text:#4e4e4e; --text2:#666; --grey:#eeeeee; --line:#e6e6e6; --max:1200px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font:400 16px/26px var(--font);color:var(--text);background:#fff;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+a{color:inherit}
+ul{list-style:none}
+button,input,select,textarea{font-family:inherit}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 15px}
+section[id]{scroll-margin-top:120px}
+.btn{display:inline-block;height:42px;padding:11px 20px;border:0;border-radius:3px;background:var(--cta);color:#fff;font:500 15px/20px var(--font);text-decoration:none;text-align:center;cursor:pointer}
+.btn:hover{background:var(--cta-h)}
+.btn.hollow{background:transparent;border:2px solid var(--link-l);line-height:16px;padding:10px 18px;color:var(--head)}
+.btn.hollow:hover{background:var(--link);color:#fff;border-color:var(--link)}
+.btn.hollow-light{background:transparent;border:2px solid rgba(255,255,255,.55);line-height:16px;padding:10px 18px;color:#fff}
+.btn.hollow-light:hover{background:#fff;color:var(--dark-2);border-color:#fff}
+.btn:disabled{opacity:.5;cursor:default}
+.link-arrow{display:inline-flex;align-items:center;gap:6px;font-size:15px;line-height:20px;font-weight:500;color:var(--link);text-decoration:none}
+.link-arrow svg{width:14px;height:14px;transition:transform .15s ease}
+.link-arrow:hover svg{transform:translateX(3px)}
+
+header{position:sticky;top:0;z-index:30;background:var(--dark);color:#fff}
+.bar{display:flex;align-items:center;justify-content:space-between;height:64px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:600;font-size:1.1rem;text-decoration:none;letter-spacing:.3px}
+.brand svg{width:30px;height:30px}
+nav ul{display:flex;gap:6px;align-items:center}
+nav a:not(.btn){display:block;padding:8px 12px;text-decoration:none;border-radius:6px;font-size:14px;font-weight:500;color:#e6e9ec;line-height:1.4}
+nav a:not(.btn):hover{background:#ffffff1a;color:#fff}
+nav a.current{background:#ffffff1a;color:#fff}
+nav .btn{height:auto;padding:8px 16px;font-size:14px;line-height:1.3}
+.nav-cta{margin-left:8px}
+.burger{display:none;background:none;border:0;color:#fff;font-size:1.6rem;cursor:pointer}
+@media(max-width:860px){
+  .burger{display:block}
+  #nav{position:absolute;left:0;right:0;top:64px;background:var(--dark-2);display:none;padding:10px 20px 18px}
+  #nav.open{display:block}
+  #nav ul{flex-direction:column;align-items:stretch}
+  .nav-cta{margin:8px 0 0}
+}
+
+.news{background:var(--news);padding:28px 0;color:#fff}
+.news .wrap{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
+.news p{font-size:14px;line-height:20px;max-width:420px}
+.news form{display:flex;gap:12px;flex-wrap:wrap;justify-content:flex-end}
+.news input{height:42px;width:340px;max-width:100%;border:0;border-radius:3px;padding:12px;font:300 16px var(--font)}
+.news .btn{width:130px;padding:11px 0}
+.news .msg{width:100%;font-size:14px;min-height:20px;text-align:right}
+@media(max-width:745px){.news .wrap{flex-direction:column;text-align:center}.news form{justify-content:center}.news .msg{text-align:center}}
+
+footer{background:var(--dark);color:#dfdfdf;padding:52px 0 26px;font-size:14px;line-height:1.6}
+.f-grid{display:grid;grid-template-columns:1.4fr repeat(3,1fr);gap:30px}
+footer h4{color:#fff;margin-bottom:12px;font-size:15px;font-weight:600}
+footer li{margin-bottom:8px}
+footer a{text-decoration:none;font-weight:300}
+footer a:hover{color:#fff;text-decoration:underline}
+.f-bottom{border-top:1px solid #87979d;margin-top:34px;padding-top:18px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;color:#cfd4d7;font-weight:300}
+@media(max-width:760px){.f-grid{grid-template-columns:1fr 1fr}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}html{scroll-behavior:auto}}
+
+/* ==========================================================================
+   SERVICES PAGE
+========================================================================== */
+.fade-in{opacity:0;transform:translateY(14px);transition:opacity .45s ease-out,transform .45s ease-out}
+.fade-in.is-visible{opacity:1;transform:translateY(0)}
+
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:600;letter-spacing:.6px;text-transform:uppercase;color:var(--cta);margin-bottom:12px}
+.sec-title{font-size:32px;line-height:40px;font-weight:600;color:var(--head);letter-spacing:-.01em;margin-bottom:12px}
+.sec-lead{font-size:17px;line-height:27px;font-weight:300;color:var(--text2);max-width:640px}
+.center{text-align:center}.center .sec-lead{margin:0 auto}
+@media(max-width:640px){.sec-title{font-size:25px;line-height:32px}.sec-lead{font-size:15px;line-height:24px}}
+
+/* ---- hero ---- */
+.hero{position:relative;color:#fff;background-color:var(--dark-2);background-image:url('https://images.pexels.com/photos/3520692/pexels-photo-3520692.jpeg?auto=compress&cs=tinysrgb&w=1920');background-size:cover;background-position:center;overflow:hidden}
+.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(58,68,75,.92) 0%,rgba(58,68,75,.74) 50%,rgba(58,68,75,.45) 100%)}
+.hero .wrap{position:relative;z-index:1;display:grid;grid-template-columns:1.25fr 1fr;gap:56px;align-items:center;padding-top:84px;padding-bottom:84px}
+.hero h1{font-size:46px;line-height:54px;font-weight:600;letter-spacing:-.015em;margin-bottom:18px}
+.hero h1 em{font-style:normal;color:var(--cta)}
+.hero p.lead{font-size:18px;line-height:29px;font-weight:300;color:#dde3e7;max-width:560px;margin-bottom:28px}
+.hero .actions{display:flex;flex-wrap:wrap;gap:12px}
+.glance{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.16);border-radius:6px;padding:26px 28px;backdrop-filter:blur(6px)}
+.glance h2{font-size:12px;letter-spacing:.7px;text-transform:uppercase;font-weight:600;color:#cdd5da;margin-bottom:14px}
+.glance li{display:flex;gap:14px;align-items:flex-start;padding:13px 0;border-top:1px solid rgba(255,255,255,.12);font-size:14.5px;line-height:21px;color:#eef1f3}
+.glance li:first-of-type{border-top:0}
+.glance li b{display:block;color:#fff;font-weight:600}
+.glance .ic{flex:none;width:34px;height:34px;border-radius:8px;background:rgba(238,108,77,.18);display:flex;align-items:center;justify-content:center;color:var(--cta)}
+.glance .ic svg{width:18px;height:18px}
+@media(max-width:900px){.hero .wrap{grid-template-columns:1fr;gap:34px;padding-top:56px;padding-bottom:56px}.hero h1{font-size:32px;line-height:40px}.hero p.lead{font-size:16px;line-height:26px}}
+
+/* ---- sticky in-page nav ---- */
+.subnav{position:sticky;top:64px;z-index:20;background:rgba(255,255,255,.95);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.subnav .wrap{display:flex;align-items:center;gap:6px;overflow-x:auto;scrollbar-width:none;height:50px}
+.subnav .wrap::-webkit-scrollbar{display:none}
+.subnav a{flex:none;position:relative;display:flex;align-items:center;height:50px;padding:0 14px;font-size:13.5px;font-weight:600;color:var(--text2);text-decoration:none;transition:color .15s ease}
+.subnav a:hover{color:var(--head)}
+.subnav a::after{content:"";position:absolute;left:14px;right:14px;bottom:-1px;height:2px;background:var(--cta);transform:scaleX(0);transform-origin:left;transition:transform .22s ease}
+.subnav a.is-current{color:var(--head)}
+.subnav a.is-current::after{transform:scaleX(1)}
+.subnav .push{margin-left:auto}
+.subnav .push a{color:var(--cta)}
+@media(max-width:860px){.subnav{top:64px}.subnav .push{display:none}}
+
+/* ---- solution boxes ---- */
+.sec{padding:80px 0}
+.sec.alt{background:#f7f8f9}
+@media(max-width:640px){.sec{padding:56px 0}}
+.sol-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:22px;margin-top:44px}
+.sol{display:flex;flex-direction:column;background:#fff;border:1px solid var(--line);border-top:3px solid var(--line);border-radius:4px;padding:28px 24px 24px;text-decoration:none;color:inherit;transition:box-shadow .2s ease,transform .2s ease,border-top-color .2s ease}
+.sol:hover{box-shadow:0 18px 36px -26px rgba(20,30,40,.35);transform:translateY(-3px);border-top-color:var(--cta)}
+.sol .ic{width:48px;height:48px;border-radius:10px;background:#eef3f8;color:var(--link);display:flex;align-items:center;justify-content:center;margin-bottom:18px;transition:background .2s ease,color .2s ease}
+.sol:hover .ic{background:var(--cta);color:#fff}
+.sol .ic svg{width:25px;height:25px}
+.sol h3{font-size:18px;line-height:24px;font-weight:600;color:var(--head);margin-bottom:8px}
+.sol p{font-size:14px;line-height:22px;font-weight:300;color:var(--text2);flex:1;margin-bottom:16px}
+.sol .more{font-size:13.5px;font-weight:600;color:var(--link);display:inline-flex;align-items:center;gap:5px}
+.sol .more svg{width:12px;height:12px;transition:transform .15s ease}
+.sol:hover .more svg{transform:translateX(3px)}
+@media(max-width:1020px){.sol-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.sol-grid{grid-template-columns:1fr}}
+
+/* ---- detail split sections ---- */
+.split{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
+.split.rev .split-media{order:2}
+.split-media{position:relative;aspect-ratio:4/3;border-radius:6px;overflow:hidden;background:#e4e8ea;box-shadow:0 24px 50px -30px rgba(20,30,40,.4)}
+.split-media img{width:100%;height:100%;object-fit:cover}
+.split-media .tag{position:absolute;left:16px;bottom:16px;background:rgba(58,68,75,.9);color:#fff;font-size:12px;font-weight:600;padding:7px 12px;border-radius:3px;letter-spacing:.2px}
+.split h2{font-size:30px;line-height:38px;font-weight:600;color:var(--head);letter-spacing:-.01em;margin-bottom:14px}
+.split p.body{font-size:16px;line-height:26px;font-weight:300;color:var(--text2);margin-bottom:18px}
+.ticks{margin:6px 0 22px}
+.ticks li{position:relative;padding:6px 0 6px 30px;font-size:15px;line-height:23px;color:var(--text)}
+.ticks li::before{content:"";position:absolute;left:0;top:10px;width:18px;height:18px;border-radius:50%;background:var(--cta) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none'%3E%3Cpath d='M4 8.5l2.5 2.5L12 5.5' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/12px no-repeat}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:24px}
+.chips span{font-size:11.5px;font-family:ui-monospace,monospace;background:var(--grey);color:var(--text2);padding:4px 10px;border-radius:3px}
+@media(max-width:900px){.split{grid-template-columns:1fr;gap:30px}.split.rev .split-media{order:0}.split h2{font-size:25px;line-height:32px}}
+.split-row + .split-row{margin-top:84px}
+@media(max-width:900px){.split-row + .split-row{margin-top:60px}}
+
+/* ---- process ---- */
+.proc-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:48px;position:relative}
+.proc-grid::before{content:"";position:absolute;top:23px;left:12%;right:12%;height:2px;background:linear-gradient(90deg,var(--line),var(--link-l),var(--line))}
+.proc{position:relative;text-align:center;padding:0 18px}
+.proc .n{position:relative;width:48px;height:48px;border-radius:50%;background:#fff;border:2px solid var(--link-l);color:var(--head);font-weight:600;font-size:16px;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;transition:background .2s ease,color .2s ease,border-color .2s ease}
+.proc:hover .n{background:var(--cta);border-color:var(--cta);color:#fff}
+.proc h3{font-size:17px;font-weight:600;color:var(--head);margin-bottom:6px}
+.proc p{font-size:14px;line-height:22px;font-weight:300;color:var(--text2)}
+@media(max-width:860px){.proc-grid{grid-template-columns:1fr 1fr;row-gap:36px}.proc-grid::before{display:none}}
+@media(max-width:520px){.proc-grid{grid-template-columns:1fr}}
+
+/* ---- engagement ---- */
+.eng-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:44px;align-items:stretch}
+.eng{display:flex;flex-direction:column;background:#fff;border:1px solid var(--line);border-radius:6px;padding:32px 28px;position:relative;transition:box-shadow .2s ease,transform .2s ease}
+.eng:hover{box-shadow:0 18px 38px -26px rgba(20,30,40,.35);transform:translateY(-3px)}
+.eng.feature{background:var(--dark-2);color:#fff;border-color:var(--dark-2)}
+.eng .flag{position:absolute;top:-12px;left:28px;background:var(--cta);color:#fff;font-size:11px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;padding:4px 12px;border-radius:3px}
+.eng .kind{font-size:12px;font-weight:600;letter-spacing:.6px;text-transform:uppercase;color:var(--link);margin-bottom:8px}
+.eng.feature .kind{color:var(--link-l)}
+.eng h3{font-size:22px;line-height:28px;font-weight:600;color:var(--head);margin-bottom:4px}
+.eng.feature h3{color:#fff}
+.eng .dur{font-size:13px;color:var(--text2);margin-bottom:16px}
+.eng.feature .dur{color:#c9d0d4}
+.eng p{font-size:14.5px;line-height:23px;font-weight:300;color:var(--text2);margin-bottom:18px}
+.eng.feature p{color:#dde3e7}
+.eng ul{margin-bottom:22px}
+.eng li{position:relative;padding:5px 0 5px 22px;font-size:14px;line-height:21px}
+.eng li::before{content:"";position:absolute;left:0;top:12px;width:8px;height:8px;border-radius:2px;background:var(--cta)}
+.eng .foot{margin-top:auto;padding-top:18px;border-top:1px solid var(--line);font-size:14px;font-weight:600;color:var(--head)}
+.eng.feature .foot{border-top-color:rgba(255,255,255,.18);color:#fff}
+@media(max-width:960px){.eng-grid{grid-template-columns:1fr;max-width:520px;margin-left:auto;margin-right:auto}}
+
+/* ---- industries band ---- */
+.ind{background:var(--dark);color:#fff;padding:64px 0}
+.ind h2{font-size:28px;line-height:36px;font-weight:600;letter-spacing:-.01em;margin-bottom:8px}
+.ind p.sub{font-size:16px;line-height:25px;font-weight:300;color:#cdd5da;max-width:560px}
+.ind-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:14px;margin-top:34px}
+.ind-item{border:1px solid rgba(255,255,255,.16);border-radius:6px;padding:20px 12px;text-align:center;font-size:13.5px;font-weight:500;color:#eef1f3;transition:background .2s ease,border-color .2s ease}
+.ind-item:hover{background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.34)}
+.ind-item svg{width:28px;height:28px;margin:0 auto 10px;color:var(--cta)}
+@media(max-width:960px){.ind-grid{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:520px){.ind-grid{grid-template-columns:repeat(2,1fr)}}
+
+/* ---- FAQ ---- */
+.faq-wrap{display:grid;grid-template-columns:1fr 1.7fr;gap:60px}
+.faq-list{border-top:1px solid var(--line)}
+.faq-item{border-bottom:1px solid var(--line)}
+.faq-item summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:20px;padding:20px 0;font-size:17px;line-height:24px;font-weight:600;color:var(--head);transition:color .15s ease}
+.faq-item summary::-webkit-details-marker{display:none}
+.faq-item summary:hover{color:var(--link)}
+.faq-item summary svg{flex:none;width:18px;height:18px;transition:transform .22s ease;color:var(--link)}
+.faq-item[open] summary svg{transform:rotate(180deg)}
+.faq-item .ans{padding:0 40px 22px 0;font-size:15px;line-height:24px;font-weight:300;color:var(--text2)}
+@media(max-width:900px){.faq-wrap{grid-template-columns:1fr;gap:26px}}
+
+/* ---- enquiry ---- */
+.enq{background:linear-gradient(180deg,#f7f8f9,#fff)}
+.enq-grid{display:grid;grid-template-columns:1fr 1.25fr;gap:56px;align-items:start}
+.enq-facts{margin-top:28px;border-top:1px solid var(--line)}
+.enq-facts div{display:flex;gap:18px;padding:14px 0;border-bottom:1px solid var(--line);font-size:14.5px}
+.enq-facts dt{width:96px;flex:none;font-size:12px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;color:var(--text2);padding-top:2px}
+.enq-facts dd{color:var(--head);font-weight:500}
+.enq-facts .live{display:inline-block;width:8px;height:8px;border-radius:50%;background:#3aa76d;margin-right:8px;box-shadow:0 0 0 3px rgba(58,167,109,.18)}
+.form-card{background:#fff;border:1px solid var(--line);border-radius:6px;padding:34px;box-shadow:0 24px 50px -34px rgba(20,30,40,.35)}
+.form-card h3{font-size:20px;font-weight:600;color:var(--head);margin-bottom:4px}
+.form-card .hint{font-size:13.5px;color:var(--text2);margin-bottom:24px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.field{margin-bottom:18px}
+.field label{display:block;font-size:12px;font-weight:600;letter-spacing:.4px;text-transform:uppercase;color:var(--text2);margin-bottom:6px}
+.field label .req{color:var(--cta)}
+.field input,.field select,.field textarea{width:100%;border:1.5px solid #d9dee1;border-radius:3px;padding:11px 13px;font:400 15px/22px var(--font);color:var(--text);background:#fff;outline:none;transition:border-color .15s ease,box-shadow .15s ease}
+.field textarea{resize:vertical;min-height:120px}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--link);box-shadow:0 0 0 3px rgba(59,130,196,.14)}
+.field .err{display:none;font-size:12.5px;color:#c0392b;margin-top:5px}
+.field.bad input,.field.bad textarea{border-color:#c0392b}
+.field.bad .err{display:block}
+.form-foot{display:flex;flex-wrap:wrap;align-items:center;gap:16px;margin-top:6px}
+.form-foot small{font-size:13px;color:var(--text2)}
+#formStatus{display:none;margin-top:18px;padding:12px 14px;background:#edf7f1;border-left:3px solid #3aa76d;font-size:14px;color:#2d6a4a}
+@media(max-width:900px){.enq-grid{grid-template-columns:1fr;gap:34px}.row2{grid-template-columns:1fr;gap:0}.form-card{padding:24px 20px}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap bar">
+    <a class="brand" href="/" aria-label="GN Labs home">
+      <svg viewBox="0 0 32 32" fill="none" aria-hidden="true"><rect x="2" y="2" width="28" height="28" rx="7" style="fill:var(--cta)"/><path d="M10 16h5v5h-5zM17 11h5v5h-5z" style="fill:var(--dark-2)"/><path d="M12.5 16v-3.5h4.5" style="stroke:var(--dark-2)" stroke-width="2"/></svg>
+      GN Labs
+    </a>
+    <button class="burger" id="burger" aria-label="Toggle menu" aria-expanded="false">&#9776;</button>
+    <nav id="nav"><ul id="nav-list"></ul></nav>
+  </div>
+</header>
+
+<main>
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <div class="wrap">
+    <div class="fade-in">
+      <p class="eyebrow">Services</p>
+      <h1>Hardware that reports in, alarms that actually wake someone, <em>controls that stay up.</em></h1>
+      <p class="lead">GN Labs designs and builds the devices, control logic and data links that sit between a physical process and the people responsible for it. Scoped in writing, tested before it touches your plant, and handed over so your own team can run it.</p>
+      <div class="actions">
+        <a class="btn" href="#enquire">Send a brief</a>
+        <a class="btn hollow-light" href="#overview">See what we build</a>
+      </div>
+    </div>
+    <aside class="glance fade-in" aria-label="At a glance">
+      <h2>At a glance</h2>
+      <ul>
+        <li><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="7" width="10" height="10" rx="1"/><path d="M10 3v4M14 3v4M10 17v4M14 17v4M3 10h4M3 14h4M17 10h4M17 14h4"/></svg></span><span><b>Firmware to field</b>Boards, sensors, enclosures and the code on them</span></li>
+        <li><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 8 3 8H3s3-1 3-8"/><path d="M10 20a2 2 0 0 0 4 0"/></svg></span><span><b>Alerts that get answered</b>Escalation paths, not just thresholds</span></li>
+        <li><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="1"/><path d="M3 9h18M8 14h3M8 17h8"/></svg></span><span><b>PLC &amp; SCADA</b>Readable programs, tested before commissioning</span></li>
+        <li><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 18a4 4 0 0 1-.6-7.96 5.5 5.5 0 0 1 10.7-1.3A3.75 3.75 0 0 1 17.5 18H7Z"/></svg></span><span><b>Cloud &amp; data</b>Dashboards and APIs on top of live plant data</span></li>
+      </ul>
+    </aside>
+  </div>
+</section>
+
+<!-- ============ STICKY IN-PAGE NAV ============ -->
+<div class="subnav" aria-label="On this page">
+  <div class="wrap">
+    <a href="#overview" data-spy="overview">Overview</a>
+    <a href="#sensor-nodes" data-spy="sensor-nodes">Sensor nodes</a>
+    <a href="#alarms" data-spy="alarms">Alarm systems</a>
+    <a href="#control" data-spy="control">PLC &amp; SCADA</a>
+    <a href="#integration" data-spy="integration">Cloud &amp; data</a>
+    <a href="#process" data-spy="process">How we work</a>
+    <a href="#engagement" data-spy="engagement">Engagement</a>
+    <a href="#faq" data-spy="faq">FAQ</a>
+    <span class="push"><a href="#enquire" data-spy="enquire">Send a brief &rarr;</a></span>
+  </div>
+</div>
+
+<!-- ============ OVERVIEW / SOLUTION BOXES ============ -->
+<section class="sec" id="overview">
+  <div class="wrap">
+    <div class="center fade-in">
+      <p class="eyebrow">What we build</p>
+      <h2 class="sec-title">Four disciplines, one accountable team</h2>
+      <p class="sec-lead">Most projects touch more than one of these. Having them under one roof means the seams between hardware, logic and software get designed on purpose.</p>
+    </div>
+    <div class="sol-grid">
+      <a class="sol fade-in" href="#sensor-nodes">
+        <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="7" width="10" height="10" rx="1"/><path d="M10 3v4M14 3v4M10 17v4M14 17v4M3 10h4M3 14h4M17 10h4M17 14h4"/></svg></span>
+        <h3>Sensor nodes &amp; IoT firmware</h3>
+        <p>Battery or mains powered devices that measure, buffer and report reliably, even when the network doesn't.</p>
+        <span class="more">Explore <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </a>
+      <a class="sol fade-in" href="#alarms">
+        <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 8 3 8H3s3-1 3-8"/><path d="M10 20a2 2 0 0 0 4 0"/></svg></span>
+        <h3>Alarm &amp; monitoring systems</h3>
+        <p>Detection, escalation and acknowledgement, built so the right person hears about a fault in time to act.</p>
+        <span class="more">Explore <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </a>
+      <a class="sol fade-in" href="#control">
+        <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="1"/><path d="M3 9h18M8 14h3M8 17h8"/></svg></span>
+        <h3>PLC, SCADA &amp; control panels</h3>
+        <p>New builds and retrofits: panel design, control logic and operator screens that the next engineer can follow.</p>
+        <span class="more">Explore <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </a>
+      <a class="sol fade-in" href="#integration">
+        <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 18a4 4 0 0 1-.6-7.96 5.5 5.5 0 0 1 10.7-1.3A3.75 3.75 0 0 1 17.5 18H7Z"/></svg></span>
+        <h3>Cloud &amp; data integration</h3>
+        <p>Pipelines, dashboards and APIs that turn plant signals into something a manager can read at a glance.</p>
+        <span class="more">Explore <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ DETAIL SECTIONS ============ -->
+<section class="sec alt" id="sensor-nodes">
+  <div class="wrap">
+    <div class="split-row split fade-in">
+      <div class="split-media">
+        <img src="https://picsum.photos/seed/gnlabs-svc-node/900/675" alt="" loading="lazy">
+        <span class="tag">Sensor nodes</span>
+      </div>
+      <div>
+        <p class="eyebrow">Sensor nodes &amp; IoT firmware</p>
+        <h2>Devices you can leave in the field and forget about</h2>
+        <p class="body">A sensor is only useful if its readings arrive. We design the whole node: the board, the power plan, the enclosure and the firmware, with the working assumption that connectivity will drop and batteries will age.</p>
+        <ul class="ticks">
+          <li>Power budgets worked out before a board is ordered</li>
+          <li>Readings stored on the device and sent when a link returns</li>
+          <li>Secure over-the-air updates, with a safe fallback if one fails</li>
+          <li>Calibration and self-check routines that flag drifting sensors</li>
+        </ul>
+        <div class="chips"><span>ESP32</span><span>ARM Cortex-M</span><span>LoRaWAN</span><span>BLE</span><span>MQTT</span><span>MicroPython</span></div>
+        <a class="link-arrow" href="/projects">See sensor network projects <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="alarms">
+  <div class="wrap">
+    <div class="split-row split rev fade-in">
+      <div class="split-media">
+        <img src="https://picsum.photos/seed/gnlabs-svc-alarm/900/675" alt="" loading="lazy">
+        <span class="tag">Alarm systems</span>
+      </div>
+      <div>
+        <p class="eyebrow">Alarm &amp; monitoring systems</p>
+        <h2>An alarm is a promise that someone will respond</h2>
+        <p class="body">Plenty of sites already have alarms nobody trusts, because they trigger too often or too late. We design monitoring around what an operator can realistically act on, then build the path from detection to a human who owns the problem.</p>
+        <ul class="ticks">
+          <li>Alarm rationalisation: fewer, clearer, prioritised alerts</li>
+          <li>SMS, voice and app notification with escalation if unacknowledged</li>
+          <li>Event history and reporting for audits and post-incident review</li>
+          <li>Works standalone or alongside your existing controller</li>
+        </ul>
+        <div class="chips"><span>Modbus</span><span>SMS / voice gateways</span><span>Grafana</span><span>Webhooks</span></div>
+        <a class="link-arrow" href="#enquire">Talk through your alarm setup <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec alt" id="control">
+  <div class="wrap">
+    <div class="split-row split fade-in">
+      <div class="split-media">
+        <img src="https://picsum.photos/seed/gnlabs-svc-plc/900/675" alt="" loading="lazy">
+        <span class="tag">PLC &amp; SCADA</span>
+      </div>
+      <div>
+        <p class="eyebrow">PLC, SCADA &amp; control panels</p>
+        <h2>Control logic your next engineer will thank you for</h2>
+        <p class="body">From a single machine to a multi-tank process line, we write control programs that are tidy, commented and structured around clear states. Before anything goes live, it runs against a model on a test bench, and cutover happens in steps you can reverse.</p>
+        <ul class="ticks">
+          <li>Panel design, wiring schedules and as-built drawings</li>
+          <li>IEC 61131-3 programming with documented state machines</li>
+          <li>Operator screens designed for a quick glance, not a data dump</li>
+          <li>Legacy relay and PLC retrofits with a rollback plan</li>
+        </ul>
+        <div class="chips"><span>CODESYS</span><span>IEC 61131-3</span><span>Modbus TCP/RTU</span><span>PROFINET</span><span>HMI / SCADA</span></div>
+        <a class="link-arrow" href="/projects">See control system projects <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="integration">
+  <div class="wrap">
+    <div class="split-row split rev fade-in">
+      <div class="split-media">
+        <img src="https://picsum.photos/seed/gnlabs-svc-cloud/900/675" alt="" loading="lazy">
+        <span class="tag">Cloud &amp; data</span>
+      </div>
+      <div>
+        <p class="eyebrow">Cloud &amp; data integration</p>
+        <h2>Plant data where decisions actually get made</h2>
+        <p class="body">The value of a sensor reading grows when someone can see it, trend it and act on it. We build the secure link from your equipment to dashboards, reports and APIs, with buffering so an outage leaves a delay, not a hole in the data.</p>
+        <ul class="ticks">
+          <li>Gateways that bridge plant networks to the cloud safely</li>
+          <li>Time-series storage, dashboards and scheduled reports</li>
+          <li>APIs so other business systems can use the same data</li>
+          <li>Monitoring on the pipeline itself, so gaps are noticed early</li>
+        </ul>
+        <div class="chips"><span>Python</span><span>MQTT</span><span>InfluxDB</span><span>PostgreSQL</span><span>Docker</span><span>REST</span></div>
+        <a class="link-arrow" href="/resources">Read our field notes <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PROCESS ============ -->
+<section class="sec alt" id="process">
+  <div class="wrap">
+    <div class="center fade-in">
+      <p class="eyebrow">How we work</p>
+      <h2 class="sec-title">From first call to handover</h2>
+      <p class="sec-lead">The same four stages on every project, sized to fit the job.</p>
+    </div>
+    <div class="proc-grid">
+      <div class="proc fade-in"><div class="n">1</div><h3>Understand</h3><p>We look at what exists, what's failing and what a good result looks like, then agree the scope in writing.</p></div>
+      <div class="proc fade-in"><div class="n">2</div><h3>Design &amp; prove</h3><p>Hardware and logic are designed, simulated and bench-tested before they go anywhere near live equipment.</p></div>
+      <div class="proc fade-in"><div class="n">3</div><h3>Install &amp; commission</h3><p>Rollout happens in stages, each with a tested way back, working around your production schedule.</p></div>
+      <div class="proc fade-in"><div class="n">4</div><h3>Hand over</h3><p>You receive source, drawings and a runbook, plus a working session with the people who will run it.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ENGAGEMENT ============ -->
+<section class="sec" id="engagement">
+  <div class="wrap">
+    <div class="center fade-in">
+      <p class="eyebrow">Engagement</p>
+      <h2 class="sec-title">Three ways to work together</h2>
+      <p class="sec-lead">Most relationships start small. Pick the format that fits where you are today.</p>
+    </div>
+    <div class="eng-grid">
+      <article class="eng fade-in">
+        <p class="kind">Assessment</p>
+        <h3>Site &amp; system review</h3>
+        <p class="dur">Usually 1 to 2 weeks</p>
+        <p>We study an existing installation and tell you plainly what's wrong, what matters most, and what it would take to fix.</p>
+        <ul><li>Written findings, ranked by impact</li><li>Fix options with effort estimates</li><li>No commitment to continue</li></ul>
+        <p class="foot">Best when something keeps failing and nobody agrees why.</p>
+      </article>
+      <article class="eng feature fade-in">
+        <span class="flag">Most requested</span>
+        <p class="kind">Project</p>
+        <h3>Fixed-scope build</h3>
+        <p class="dur">Usually 6 to 16 weeks</p>
+        <p>A defined system delivered end to end: design, build, installation and handover, priced against a scope you've signed off.</p>
+        <ul><li>Staged delivery with review points</li><li>Full source, drawings and runbook</li><li>Support window after commissioning</li></ul>
+        <p class="foot">Best when you know the outcome you need.</p>
+      </article>
+      <article class="eng fade-in">
+        <p class="kind">Support</p>
+        <h3>Ongoing support plan</h3>
+        <p class="dur">Monthly, rolling</p>
+        <p>Reserved time each month for systems we've built or reviewed: updates, fault finding and questions that are cheaper to ask early.</p>
+        <ul><li>Agreed response times</li><li>Priority over new enquiries</li><li>Available after a first project</li></ul>
+        <p class="foot">Best when a live system keeps evolving.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ INDUSTRIES ============ -->
+<section class="ind">
+  <div class="wrap">
+    <div class="fade-in">
+      <h2>Built for working environments</h2>
+      <p class="sub">The same engineering applies wherever a process needs watching and a fault has a cost.</p>
+    </div>
+    <div class="ind-grid fade-in">
+      <div class="ind-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V9l5 3V9l5 3V6h6v14z"/></svg>Manufacturing</div>
+      <div class="ind-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3s6 6 6 11a6 6 0 0 1-12 0c0-5 6-11 6-11z"/></svg>Water &amp; utilities</div>
+      <div class="ind-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M7 7l5-4 5 4M7 17l5 4 5-4M3 12h18"/></svg>Cold chain</div>
+      <div class="ind-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21c-4-3-7-6-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 11c0 4-3 7-7 10z"/></svg>Agriculture</div>
+      <div class="ind-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M13 3L5 14h6l-1 7 8-11h-6z"/></svg>Energy</div>
+      <div class="ind-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21V8l9-5 9 5v13M9 21v-6h6v6"/></svg>Commercial buildings</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FAQ ============ -->
+<section class="sec" id="faq">
+  <div class="wrap faq-wrap">
+    <div class="fade-in">
+      <p class="eyebrow">FAQ</p>
+      <h2 class="sec-title">Practical questions</h2>
+      <p class="sec-lead">The commercial detail, stated up front.</p>
+    </div>
+    <div class="faq-list fade-in">
+      <details class="faq-item">
+        <summary>How is work priced?<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg></summary>
+        <p class="ans">Most projects are quoted as a fixed fee against a written scope, so the price doesn't drift with the hours. Ongoing support is a monthly figure. Quotes follow a short scoping call, because the same task can vary a lot depending on what it connects to.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Do you work on site?<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg></summary>
+        <p class="ans">Design and software are done remotely. Site visits are used for surveys, commissioning and anything that needs hands on the equipment. Travel is agreed beforehand and billed at cost.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Who owns the code and drawings?<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg></summary>
+        <p class="ans">You do, on delivery and payment. Generic tools developed across projects stay with GN Labs and are licensed to you for as long as you run the system. This is spelled out in the agreement.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Can you work alongside our existing team or contractor?<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg></summary>
+        <p class="ans">Yes. A common setup is GN Labs owning one clearly defined part, such as the firmware or the data link, while your team keeps the rest. Responsibilities are written down before work starts.</p>
+      </details>
+      <details class="faq-item">
+        <summary>What happens after handover?<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg></summary>
+        <p class="ans">Every project includes a support window after commissioning to fix anything that surfaces. After that you can run the system yourselves or keep us on a support plan. Either is fine; the documentation is written so that you can do both.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ENQUIRY ============ -->
+<section class="sec enq" id="enquire">
+  <div class="wrap enq-grid">
+    <div class="fade-in">
+      <p class="eyebrow">Get started</p>
+      <h2 class="sec-title">Tell us what you're dealing with</h2>
+      <p class="sec-lead">A few lines on the problem and what's been tried is plenty. If it's a fit we'll scope it; if it isn't, we'll say so and suggest who might be better placed.</p>
+      <dl class="enq-facts">
+        <div><dt>Reply</dt><dd>Within one business day</dd></div>
+        <div><dt>Location</dt><dd>Remote first, on site when needed</dd></div>
+        <div><dt>Formats</dt><dd>Review &middot; Fixed-scope build &middot; Support</dd></div>
+        <div><dt>Status</dt><dd><span class="live"></span>Taking enquiries for the next cycle</dd></div>
+      </dl>
+    </div>
+
+    <form class="form-card fade-in" id="contactForm" novalidate>
+      <h3>Project enquiry</h3>
+      <p class="hint">Fields marked * are required.</p>
+      <div class="row2">
+        <div class="field"><label for="name">Name <span class="req">*</span></label><input id="name" name="name" type="text" autocomplete="name" required><p class="err">Please enter your name.</p></div>
+        <div class="field"><label for="email">Email <span class="req">*</span></label><input id="email" name="email" type="email" autocomplete="email" required><p class="err">Please enter a valid email.</p></div>
+      </div>
+      <div class="row2">
+        <div class="field"><label for="org">Organisation</label><input id="org" name="org" type="text" autocomplete="organization"></div>
+        <div class="field"><label for="interest">I'm interested in</label>
+          <select id="interest" name="interest">
+            <option value="">Not sure yet</option>
+            <option>Sensor nodes &amp; IoT firmware</option>
+            <option>Alarm &amp; monitoring systems</option>
+            <option>PLC, SCADA &amp; control panels</option>
+            <option>Cloud &amp; data integration</option>
+          </select>
+        </div>
+      </div>
+      <div class="field"><label for="message">What's going on? <span class="req">*</span></label><textarea id="message" name="message" required placeholder="What the system does, where it falls short, and what you've already tried."></textarea><p class="err">Tell us a little about the problem.</p></div>
+      <div class="form-foot">
+        <button class="btn" type="submit" id="submitBtn">Send enquiry</button>
+        <small>We reply within one business day.</small>
+      </div>
+      <p id="formStatus" role="status" aria-live="polite">Thanks, your enquiry is in. We'll reply within one business day.</p>
+    </form>
+  </div>
+</section>
+
+<div class="news">
+  <div class="wrap">
+    <p>Get new write-ups and build notes by email. Roughly monthly, no spam.</p>
+    <form id="newsForm">
+      <input type="email" required placeholder="Email address" aria-label="Email address">
+      <button class="btn" type="submit">Subscribe</button>
+      <div class="msg" id="newsMsg" role="status"></div>
+    </form>
+  </div>
+</div>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="f-grid" id="footer-grid"></div>
+    <div class="f-bottom"><span>&copy; <span id="year"></span> GN Labs</span><span>All rights reserved</span></div>
+  </div>
+</footer>
+
+<script>
+/* Header / footer content — mirrors the homepage defaults (and resources / projects).
+   Footer service links point at this page's own sections until separate
+   service pages exist. */
+const NAV = [
+  {label:"Services", url:"/services", current:true},
+  {label:"Projects", url:"/projects"},
+  {label:"Resources", url:"/resources"},
+  {label:"About", url:"/about"},
+  {label:"Contact", url:"/contact"}
+];
+const NAV_CTA = {label:"Send a brief", url:"#enquire"};
+const FOOTER = {
+  blurb:"Embedded systems, IoT firmware and industrial control.",
+  columns:[
+    {title:"Services", links:[["Sensor nodes","/services#sensor-nodes"],["Alarm systems","/services#alarms"],["PLC & SCADA","/services#control"]]},
+    {title:"Resources", links:[["Articles","/resources"],["Projects","/projects"],["Docs","/docs"]]},
+    {title:"Company", links:[["About","/about"],["Contact","/contact"],["Privacy","/privacy"]]}
+  ]
+};
+document.getElementById("nav-list").innerHTML =
+  NAV.map(n => `<li><a href="${n.url}"${n.current ? ' class="current" aria-current="page"' : ''}>${n.label}</a></li>`).join("")
+  + `<li class="nav-cta"><a class="btn" href="${NAV_CTA.url}">${NAV_CTA.label}</a></li>`;
+document.getElementById("footer-grid").innerHTML =
+  `<div><a class="brand" href="/" style="color:#fff;margin-bottom:12px">GN Labs</a><p>${FOOTER.blurb}</p></div>`
+  + FOOTER.columns.map(c => `<div><h4>${c.title}</h4><ul>${c.links.map(l => `<li><a href="${l[1]}">${l[0]}</a></li>`).join("")}</ul></div>`).join("");
+document.getElementById("year").textContent = new Date().getFullYear();
+
+const burger = document.getElementById("burger"), navEl = document.getElementById("nav");
+burger.addEventListener("click", () => { const o = navEl.classList.toggle("open"); burger.setAttribute("aria-expanded", o); });
+navEl.addEventListener("click", e => { if (e.target.closest("a")) { navEl.classList.remove("open"); burger.setAttribute("aria-expanded", false); } });
+
+/* ---- scrollspy for the in-page nav ---- */
+const spyLinks = Array.from(document.querySelectorAll("[data-spy]"));
+const spyTargets = spyLinks.map(l => document.getElementById(l.dataset.spy)).filter(Boolean);
+const spy = new IntersectionObserver(entries => {
+  entries.forEach(en => {
+    if (!en.isIntersecting) return;
+    spyLinks.forEach(l => l.classList.toggle("is-current", l.dataset.spy === en.target.id));
+    const active = spyLinks.find(l => l.dataset.spy === en.target.id);
+    if (active && active.scrollIntoView && active.closest(".wrap").scrollWidth > active.closest(".wrap").clientWidth) {
+      active.scrollIntoView({inline:"center", block:"nearest", behavior:"smooth"});
+    }
+  });
+}, { rootMargin:"-25% 0px -65% 0px", threshold:0 });
+spyTargets.forEach(t => spy.observe(t));
+
+/* ---- enquiry form (local validation + success state; wire an endpoint here) ---- */
+const FORM_ENDPOINT = ""; // e.g. a Formspree / Cloudflare Worker URL
+const form = document.getElementById("contactForm");
+const submitBtn = document.getElementById("submitBtn");
+const formMsg = document.getElementById("formStatus");
+function validateField(el){
+  const wrap = el.closest(".field"); if (!wrap) return true;
+  const ok = el.checkValidity() && (el.type !== "text" || el.value.trim() !== "");
+  wrap.classList.toggle("bad", !ok);
+  return ok;
+}
+form.querySelectorAll("[required]").forEach(el => el.addEventListener("blur", () => validateField(el)));
+form.addEventListener("submit", async e => {
+  e.preventDefault();
+  const fields = Array.from(form.querySelectorAll("[required]"));
+  const results = fields.map(validateField);
+  if (results.includes(false)) { fields[results.indexOf(false)].focus(); formMsg.style.display = "none"; return; }
+  submitBtn.disabled = true; submitBtn.textContent = "Sending…";
+  try {
+    if (FORM_ENDPOINT) {
+      const res = await fetch(FORM_ENDPOINT, { method:"POST", headers:{ "Accept":"application/json" }, body:new FormData(form) });
+      if (!res.ok) throw new Error("Request failed");
+    } else {
+      await new Promise(r => setTimeout(r, 600));
+    }
+    formMsg.style.display = "block"; form.reset();
+  } catch (err) {
+    formMsg.style.display = "block"; formMsg.style.background = "#fdf0ee"; formMsg.style.borderLeftColor = "#c0392b"; formMsg.style.color = "#8a2c20";
+    formMsg.textContent = "Something went wrong sending that. Please try again, or use the contact page.";
+  } finally {
+    submitBtn.disabled = false; submitBtn.textContent = "Send enquiry";
+  }
+});
+
+document.getElementById("newsForm").addEventListener("submit", e => {
+  e.preventDefault();
+  const msg = document.getElementById("newsMsg");
+  msg.textContent = "Sending…";
+  setTimeout(() => { msg.textContent = "Thanks, you're subscribed."; e.target.reset(); }, 500);
+});
+
+const fadeObserver = new IntersectionObserver(entries => {
+  entries.forEach(en => { if (en.isIntersecting) { en.target.classList.add("is-visible"); fadeObserver.unobserve(en.target); } });
+}, { threshold: 0.12 });
+document.querySelectorAll(".fade-in").forEach(el => fadeObserver.observe(el));
+</script>
+</body>
+</html>

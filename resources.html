@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Resources | GN Labs</title>
+<meta name="description" content="Technical articles and field notes on embedded systems, industrial automation and control, written by the engineer who builds them.">
+<link rel="canonical" href="https://gnlabs.site/resources/">
+<meta property="og:title" content="Resources | GN Labs">
+<meta property="og:description" content="Technical articles and field notes on embedded systems, industrial automation and control.">
+<meta property="og:type" content="website">
+<script>
+/* Font loader — identical to the homepage's. Put an Adobe Fonts kit id in
+   `kit` to use Proxima Nova (add this domain to the kit first). Without a
+   kit id, Figtree from Google Fonts is used, same as the homepage. */
+(function(){
+  var kit = "";
+  var l = document.createElement("link"); l.rel = "stylesheet";
+  l.href = kit ? "https://use.typekit.net/" + kit + ".css"
+               : "https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600&display=swap";
+  document.head.appendChild(l);
+})();
+</script>
+<style>
+/* ==========================================================================
+   SHARED BRAND TOKENS + CHROME
+   Copied from the homepage so this page renders as the same site, not a
+   reskin. If the homepage's palette, header or footer change, mirror the
+   change here too — the two files don't share a stylesheet, by design,
+   since each page is meant to stay a single self-contained file.
+========================================================================== */
+:root{
+  --font:"proxima-nova","Figtree",Arial,Helvetica,sans-serif;
+  --dark:#4a555d; --dark-2:#3a444b; --slate:#3f546d; --news:#39464b;
+  --cta:#ee6c4d; --cta-h:#d85a3c; --link:#3b82c4; --link-l:#6aa9de;
+  --head:#3f546d; --text:#4e4e4e; --text2:#666; --grey:#eeeeee; --line:#e6e6e6; --max:1200px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font:400 16px/26px var(--font);color:var(--text);background:#fff;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+a{color:inherit}
+ul{list-style:none}
+button{font-family:inherit}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 15px}
+.h36{font-size:30px;line-height:38px;font-weight:500;color:var(--head);margin-bottom:8px;letter-spacing:-.005em}
+.btn{display:inline-block;height:42px;padding:11px 20px;border:0;border-radius:3px;background:var(--cta);color:#fff;font:500 15px/20px var(--font);text-decoration:none;text-align:center;cursor:pointer}
+.btn:hover{background:var(--cta-h)}
+.btn.hollow{background:transparent;border:2px solid var(--link-l);line-height:16px;padding:10px 18px;color:var(--head)}
+.btn.hollow:hover{background:var(--link);color:#fff;border-color:var(--link)}
+.btn:disabled{opacity:.5;cursor:default}
+.link-arrow{display:inline-flex;align-items:center;gap:6px;font-size:15px;line-height:20px;font-weight:500;color:var(--link);text-decoration:none}
+.link-arrow svg{width:14px;height:14px;transition:transform .15s ease}
+.link-arrow:hover svg{transform:translateX(3px)}
+
+/* ===== header (identical to homepage) ===== */
+header{position:sticky;top:0;z-index:30;background:var(--dark);color:#fff}
+.bar{display:flex;align-items:center;justify-content:space-between;height:64px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:600;font-size:1.1rem;text-decoration:none;letter-spacing:.3px}
+.brand svg{width:30px;height:30px}
+nav ul{display:flex;gap:6px;align-items:center}
+nav a:not(.btn){display:block;padding:8px 12px;text-decoration:none;border-radius:6px;font-size:14px;font-weight:500;color:#e6e9ec;line-height:1.4}
+nav a:not(.btn):hover{background:#ffffff1a;color:#fff}
+nav a.current{background:#ffffff1a;color:#fff}
+nav .btn{height:auto;padding:8px 16px;font-size:14px;line-height:1.3}
+.nav-cta{margin-left:8px}
+.burger{display:none;background:none;border:0;color:#fff;font-size:1.6rem;cursor:pointer}
+@media(max-width:860px){
+  .burger{display:block}
+  nav{position:absolute;left:0;right:0;top:64px;background:var(--dark-2);display:none;padding:10px 20px 18px}
+  nav.open{display:block}
+  nav ul{flex-direction:column;align-items:stretch}
+  .nav-cta{margin:8px 0 0}
+}
+
+/* ===== newsletter (identical to homepage) ===== */
+.news{background:var(--news);padding:28px 0;color:#fff}
+.news .wrap{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
+.news p{font-size:14px;line-height:20px;max-width:420px}
+.news form{display:flex;gap:12px;flex-wrap:wrap;justify-content:flex-end}
+.news input{height:42px;width:340px;max-width:100%;border:0;border-radius:3px;padding:12px;font:300 16px var(--font)}
+.news .btn{width:130px;padding:11px 0}
+.news .msg{width:100%;font-size:14px;min-height:20px;text-align:right}
+@media(max-width:745px){.news .wrap{flex-direction:column;text-align:center}.news form{justify-content:center}.news .msg{text-align:center}}
+
+/* ===== footer (identical to homepage) ===== */
+footer{background:var(--dark);color:#dfdfdf;padding:52px 0 26px;font-size:14px;line-height:1.6}
+.f-grid{display:grid;grid-template-columns:1.4fr repeat(3,1fr);gap:30px}
+footer h4{color:#fff;margin-bottom:12px;font-size:15px;font-weight:600}
+footer li{margin-bottom:8px}
+footer a{text-decoration:none;font-weight:300}
+footer a:hover{color:#fff;text-decoration:underline}
+.f-bottom{border-top:1px solid #87979d;margin-top:34px;padding-top:18px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;color:#cfd4d7;font-weight:300}
+@media(max-width:760px){.f-grid{grid-template-columns:1fr 1fr}}
+
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}html{scroll-behavior:auto}}
+
+/* ==========================================================================
+   RESOURCES PAGE — new for this page
+========================================================================== */
+
+/* ---- page header band ---- */
+.res-header{background:linear-gradient(180deg,#f7f8f9,#fff);padding:70px 0 20px;text-align:center}
+.res-header .eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:600;letter-spacing:.6px;text-transform:uppercase;color:var(--cta);margin-bottom:14px}
+.res-header h1{font-size:40px;line-height:48px;font-weight:600;color:var(--head);letter-spacing:-.01em;margin-bottom:14px}
+.res-header p{max-width:620px;margin:0 auto;font-size:17px;line-height:27px;font-weight:300;color:var(--text2)}
+@media(max-width:640px){.res-header{padding:50px 0 10px}.res-header h1{font-size:28px;line-height:35px}.res-header p{font-size:15px;line-height:24px}}
+
+/* ---- breadcrumb ---- */
+.crumb{padding:22px 0 0}
+.crumb .wrap{font-size:13px;color:var(--text2)}
+.crumb a{color:var(--link);text-decoration:none}
+.crumb a:hover{text-decoration:underline}
+
+/* ---- featured ---- */
+.featured-wrap{padding:30px 0 10px}
+.featured-card{display:grid;grid-template-columns:1.1fr 1fr;gap:0;border:1px solid var(--line);border-radius:4px;overflow:hidden;text-decoration:none;color:inherit;background:#fff;transition:box-shadow .2s ease,border-color .2s ease}
+.featured-card:hover{box-shadow:0 18px 40px -24px rgba(20,30,40,.25);border-color:#d8dde0}
+.featured-card .fpic{position:relative;aspect-ratio:4/3;background:#e4e8ea;overflow:hidden}
+.featured-card .fpic img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease}
+.featured-card:hover .fpic img{transform:scale(1.04)}
+.featured-card .fbadge{position:absolute;top:16px;left:16px;background:var(--cta);color:#fff;font-size:11px;font-weight:600;letter-spacing:.4px;text-transform:uppercase;padding:5px 10px;border-radius:3px}
+.featured-card .fcontent{padding:38px 40px;display:flex;flex-direction:column;justify-content:center}
+.featured-card .ftopic{font-size:12px;font-weight:600;letter-spacing:.4px;text-transform:uppercase;color:var(--link);margin-bottom:10px}
+.featured-card h2{font-size:24px;line-height:31px;font-weight:600;color:var(--head);margin-bottom:12px;letter-spacing:-.005em}
+.featured-card p.excerpt{font-size:15px;line-height:24px;font-weight:300;color:var(--text2);margin-bottom:18px}
+.featured-card .fmeta{font-size:13px;color:var(--text2);margin-bottom:16px}
+@media(max-width:860px){.featured-card{grid-template-columns:1fr}.featured-card .fcontent{padding:28px 24px}}
+
+/* ---- filter bar ---- */
+.filter-bar{position:sticky;top:64px;z-index:20;background:rgba(255,255,255,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding:16px 0;margin-top:30px}
+.filter-row{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.chip-scroll{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;flex:1;min-width:0}
+.chip-scroll::-webkit-scrollbar{display:none}
+.chip{flex:none;display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 16px;border-radius:20px;border:1.5px solid var(--line);background:#fff;color:var(--text2);font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;transition:border-color .15s ease,color .15s ease,background-color .15s ease}
+.chip:hover{border-color:var(--link-l);color:var(--head)}
+.chip.active{background:var(--head);border-color:var(--head);color:#fff}
+.chip .count{opacity:.6;font-weight:400}
+.filter-right{display:flex;align-items:center;gap:14px;flex:none}
+.search-shell{display:flex;align-items:center;gap:8px;height:36px;padding:0 14px;border:1.5px solid var(--line);border-radius:20px;background:#fff;transition:border-color .15s ease}
+.search-shell:focus-within{border-color:var(--link)}
+.search-shell svg{width:15px;height:15px;flex:none;color:var(--text2)}
+.search-shell input{border:0;outline:0;font:400 14px var(--font);width:150px;background:transparent}
+.sort-group{display:flex;align-items:center;gap:4px;font-size:13px;color:var(--text2)}
+.sort-group button{background:none;border:0;cursor:pointer;font:500 13px var(--font);color:var(--text2);padding:6px 8px;border-radius:14px}
+.sort-group button.active{color:var(--head);background:var(--grey)}
+@media(max-width:745px){
+  .filter-bar{top:0}
+  .filter-row{flex-wrap:wrap}
+  .filter-right{width:100%;justify-content:space-between}
+  .search-shell input{width:100%}
+}
+
+/* ---- empty / notice ---- */
+.result-note{padding:18px 0 0;font-size:13px;color:var(--text2)}
+#sampleNotice{background:var(--grey);padding:10px 16px;margin-top:18px;font-size:13px;color:var(--text2);border-left:3px solid var(--cta)}
+.empty-state{text-align:center;padding:70px 20px;border:1.5px dashed var(--line);margin-top:30px;border-radius:4px}
+.empty-state p{margin-bottom:16px}
+
+/* ---- card grid ---- */
+.res-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;padding:34px 0}
+.res-card{display:flex;flex-direction:column;border:1px solid var(--line);border-radius:4px;overflow:hidden;text-decoration:none;color:inherit;background:#fff;transition:box-shadow .2s ease,border-color .2s ease,transform .2s ease}
+.res-card:hover{box-shadow:0 16px 36px -26px rgba(20,30,40,.3);border-color:#d8dde0;transform:translateY(-2px)}
+.res-card .pic{position:relative;aspect-ratio:3/2;background:#e4e8ea;overflow:hidden}
+.res-card .pic img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease}
+.res-card:hover .pic img{transform:scale(1.06)}
+.res-card .topic-tag{position:absolute;top:12px;left:12px;background:rgba(58,68,75,.88);color:#fff;font-size:10.5px;font-weight:600;letter-spacing:.4px;text-transform:uppercase;padding:5px 9px;border-radius:3px}
+.res-card .body{padding:20px 22px 22px;display:flex;flex-direction:column;flex:1}
+.res-card h3{font-size:17px;line-height:23px;font-weight:600;color:var(--head);margin-bottom:8px;letter-spacing:-.003em}
+.res-card p.excerpt{font-size:14px;line-height:22px;font-weight:300;color:var(--text2);flex:1}
+.res-card .foot{display:flex;align-items:center;justify-content:space-between;margin-top:16px;padding-top:14px;border-top:1px solid var(--line)}
+.res-card .footnote{font-size:12.5px;color:var(--text2)}
+.res-card .cta{display:inline-flex;align-items:center;gap:5px;font-size:13px;font-weight:600;color:var(--link)}
+.res-card .cta svg{width:12px;height:12px;transition:transform .15s ease}
+.res-card:hover .cta svg{transform:translateX(3px)}
+@media(max-width:1024px){.res-grid{grid-template-columns:repeat(2,1fr);gap:22px}}
+@media(max-width:640px){.res-grid{grid-template-columns:1fr}}
+
+/* ---- skeletons ---- */
+.skel{background:linear-gradient(90deg,#f0f1f2 25%,#e5e7e9 37%,#f0f1f2 63%);background-size:400% 100%;animation:skelshine 1.4s ease-in-out infinite;border-radius:3px}
+@keyframes skelshine{0%{background-position:100% 50%}100%{background-position:0 50%}}
+
+/* ---- show more ---- */
+.show-more-wrap{text-align:center;padding:10px 0 60px}
+
+/* ---- fade-in ---- */
+.fade-in{opacity:0;transform:translateY(14px);transition:opacity .45s ease-out,transform .45s ease-out}
+.fade-in.is-visible{opacity:1;transform:translateY(0)}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap bar">
+    <a class="brand" href="/" aria-label="GN Labs home">
+      <svg viewBox="0 0 32 32" fill="none" aria-hidden="true"><rect x="2" y="2" width="28" height="28" rx="7" style="fill:var(--cta)"/><path d="M10 16h5v5h-5zM17 11h5v5h-5z" style="fill:var(--dark-2)"/><path d="M12.5 16v-3.5h4.5" style="stroke:var(--dark-2)" stroke-width="2"/></svg>
+      GN Labs
+    </a>
+    <button class="burger" id="burger" aria-label="Toggle menu" aria-expanded="false">&#9776;</button>
+    <nav id="nav">
+      <ul id="nav-list"></ul>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <section class="res-header">
+    <div class="wrap">
+      <p class="eyebrow fade-in"><span>&#9670;</span> Resources</p>
+      <h1 class="fade-in">Field Notes From the Bench</h1>
+      <p class="fade-in">Write-ups on sensor nodes, alarm systems and control panels — the signal path, the firmware, and the failures we learned from, published with the parts list.</p>
+    </div>
+  </section>
+
+  <div class="crumb">
+    <div class="wrap"><a href="/">Home</a> / <span>Resources</span></div>
+  </div>
+
+  <div class="wrap">
+
+    <!-- Featured article -->
+    <div class="featured-wrap">
+      <div id="featuredSlot" class="fade-in"></div>
+    </div>
+
+    <!-- Filter bar -->
+    <div class="filter-bar">
+      <div class="filter-row">
+        <div class="chip-scroll" id="chipBar" role="group" aria-label="Filter by topic"></div>
+        <div class="filter-right">
+          <div class="search-shell">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+            <label for="searchInput" class="sr-only" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)">Search resources</label>
+            <input id="searchInput" type="search" placeholder="Search" autocomplete="off">
+          </div>
+          <div class="sort-group" role="group" aria-label="Sort order">
+            <span>Sort:</span>
+            <button type="button" class="active" data-sort="featured">Featured</button>
+            <button type="button" data-sort="recent">Most Recent</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <p id="resultNote" class="result-note" role="status" aria-live="polite" hidden></p>
+    <p id="sampleNotice" hidden>Showing sample resources. Once articles are published in Contentful, these are replaced automatically.</p>
+
+    <!-- Grid -->
+    <div id="resGrid" class="res-grid" aria-live="polite"></div>
+
+    <div id="emptyState" class="empty-state" hidden>
+      <p><strong>Nothing matches that search.</strong></p>
+      <p style="color:var(--text2);font-size:14px">Try a different term, or clear the topic filter.</p>
+      <button type="button" id="resetFilters" class="btn hollow">Clear search and filters</button>
+    </div>
+
+    <div class="show-more-wrap">
+      <button id="loadMoreBtn" type="button" class="btn hollow" hidden>Show More</button>
+    </div>
+
+  </div>
+
+  <div class="news" id="newsBand">
+    <div class="wrap">
+      <p>Get new write-ups and build notes by email. Roughly monthly, no spam.</p>
+      <form id="newsForm">
+        <input type="email" required placeholder="Email address" aria-label="Email address" id="newsEmail">
+        <button class="btn" type="submit">Subscribe</button>
+        <div class="msg" id="newsMsg" role="status"></div>
+      </form>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="f-grid" id="footer-grid"></div>
+    <div class="f-bottom"><span>&copy; <span id="year"></span> GN Labs</span><span>All rights reserved</span></div>
+  </div>
+</footer>
+
+<script src="contentful.js"></script>
+<script>
+/* ==========================================================================
+   HEADER / FOOTER CONTENT
+   ==========================================================================
+   Hardcoded here to match the homepage's current DEFAULTS, since this page
+   doesn't (yet) share the homepage's own Contentful siteSettings/navItem
+   wiring — that's a separate content model from the `article` type below,
+   and unifying them is a decision for later, not folded into this page.
+   If the homepage's nav/footer copy changes, mirror the change here too.
+========================================================================== */
+const NAV = [
+  {label:"Services", url:"/services"},
+  {label:"Projects", url:"/projects"},
+  {label:"Resources", url:"/resources", current:true},
+  {label:"About", url:"/about"},
+  {label:"Contact", url:"/contact"}
+];
+const NAV_CTA = {label:"Send a brief", url:"/contact"};
+const FOOTER = {
+  blurb:"Embedded systems, IoT firmware and industrial control.",
+  columns:[
+    {title:"Services", links:[["Sensor nodes","/services/sensor-nodes"],["Alarm systems","/services/alarms"],["PLC & SCADA","/services/control"]]},
+    {title:"Resources", links:[["Articles","/resources"],["Projects","/projects"],["Docs","/docs"]]},
+    {title:"Company", links:[["About","/about"],["Contact","/contact"],["Privacy","/privacy"]]}
+  ]
+};
+
+function renderChrome(){
+  document.getElementById("nav-list").innerHTML =
+    NAV.map(n => `<li><a href="${n.url}"${n.current ? ' class="current" aria-current="page"' : ''}>${n.label}</a></li>`).join("")
+    + `<li class="nav-cta"><a class="btn" href="${NAV_CTA.url}">${NAV_CTA.label}</a></li>`;
+
+  document.getElementById("footer-grid").innerHTML =
+    `<div><a class="brand" href="/" style="color:#fff;margin-bottom:12px">GN Labs</a><p>${FOOTER.blurb}</p></div>`
+    + FOOTER.columns.map(c => `<div><h4>${c.title}</h4><ul>${c.links.map(l => `<li><a href="${l[1]}">${l[0]}</a></li>`).join("")}</ul></div>`).join("");
+
+  document.getElementById("year").textContent = new Date().getFullYear();
+}
+renderChrome();
+
+const burger = document.getElementById("burger"), navEl = document.getElementById("nav");
+burger.addEventListener("click", () => {
+  const open = navEl.classList.toggle("open");
+  burger.setAttribute("aria-expanded", open);
+});
+
+/* ==========================================================================
+   RESOURCES / ARTICLES
+   ==========================================================================
+   Uses the shared contentful.js client (`article` content type, caching,
+   rich-text resolution) — unchanged from the previous blog page. Category
+   ids are kept exactly as already stored on published entries; only their
+   display labels are shown differently here.
+========================================================================== */
+const CATEGORIES = [
+  {id:"automation", label:"Industrial Automation"},
+  {id:"control",    label:"Systems & Control"},
+  {id:"embedded",   label:"Embedded & Hardware"},
+  {id:"software",   label:"Software & Cloud"}
+];
+const CATEGORY_LABEL = Object.fromEntries(CATEGORIES.map(c => [c.id, c.label]));
+
+const placeholderArticles = [
+  {title:"Why relay logic still runs a third of production lines — and when to leave it alone", slug:"relay-logic-still-runs-lines", excerpt:"A framework for deciding whether a legacy control system needs replacing or just needs to be understood.", category:"automation", image:"https://picsum.photos/seed/gnlabs-res-relay/700/460", date:"2026-09-08", readTime:"7 min read", featured:true},
+  {title:"Store-and-forward buffering for sensors that lose signal for hours", slug:"store-and-forward-buffering", excerpt:"Designing an edge device around the assumption that the network is absent, not present.", category:"embedded", image:"https://picsum.photos/seed/gnlabs-res-buffer/700/460", date:"2026-08-22", readTime:"6 min read"},
+  {title:"Idempotency keys are not optional at the OT/IT boundary", slug:"idempotency-ot-it-boundary", excerpt:"A dropped acknowledgement over an unreliable fieldbus link can double-write a batch record.", category:"software", image:"https://picsum.photos/seed/gnlabs-res-idempotent/700/460", date:"2026-08-05", readTime:"5 min read"},
+  {title:"Tuning a PID loop against a model before it ever sees a real tank", slug:"tuning-pid-against-a-model", excerpt:"A practical walkthrough of building a thermal model, then validating tuned gains on a hardware-in-the-loop bench.", category:"control", image:"https://picsum.photos/seed/gnlabs-res-pid/700/460", date:"2026-07-19", readTime:"9 min read"},
+  {title:"Structured text over ladder: an argument, not a preference", slug:"structured-text-over-ladder", excerpt:"Ladder logic optimises for reading current state at a glance. Structured text optimises for reasoning about behaviour.", category:"automation", image:"https://picsum.photos/seed/gnlabs-res-structext/700/460", date:"2026-07-02", readTime:"8 min read"},
+  {title:"Grafana dashboards operators actually look at", slug:"grafana-dashboards-operators-use", excerpt:"Most plant dashboards are built for the engineer who made them, not the operator with thirty seconds to glance.", category:"software", image:"https://picsum.photos/seed/gnlabs-res-grafana/700/460", date:"2026-06-14", readTime:"5 min read"},
+  {title:"Power budgeting an ESP32 sensor node for an 18-month battery life", slug:"power-budgeting-esp32-sensor-node", excerpt:"Deep sleep current, wake cadence, and the radio transmission cost that dominates the whole budget.", category:"embedded", image:"https://picsum.photos/seed/gnlabs-res-esp32/700/460", date:"2026-05-28", readTime:"7 min read"},
+  {title:"What a hardware-in-the-loop bench actually needs to catch", slug:"what-a-hil-bench-needs-to-catch", excerpt:"Not every fault is worth simulating. A working list of the failure classes that justify building a HIL rig.", category:"control", image:"https://picsum.photos/seed/gnlabs-res-hil/700/460", date:"2026-05-11", readTime:"6 min read"},
+  {title:"Documenting a panel for an engineer who will never meet you", slug:"documenting-a-panel-for-a-stranger", excerpt:"A concrete standard for handover documentation, built from watching what gets referenced six months in.", category:"automation", image:"https://picsum.photos/seed/gnlabs-res-doc/700/460", date:"2026-04-30", readTime:"6 min read"}
+];
+
+let articles = [];
+let usingPlaceholders = true;
+let activeCategory = "all";
+let searchTerm = "";
+let sortMode = "featured";
+let visibleCount = 6;
+const PAGE_SIZE = 6;
+
+const chipBar = document.getElementById("chipBar");
+const featuredSlot = document.getElementById("featuredSlot");
+const resGrid = document.getElementById("resGrid");
+const emptyState = document.getElementById("emptyState");
+const loadMoreBtn = document.getElementById("loadMoreBtn");
+const searchInput = document.getElementById("searchInput");
+const resultNote = document.getElementById("resultNote");
+const sampleNotice = document.getElementById("sampleNotice");
+const resetFilters = document.getElementById("resetFilters");
+
+function esc(s){ return String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c])); }
+function fmtDate(iso){ const d = new Date(iso); return isNaN(d) ? iso : d.toLocaleDateString("en-US",{month:"short",day:"numeric",year:"numeric"}); }
+function articleUrl(a){ return `/article.html?slug=${encodeURIComponent(a.slug)}`; }
+const arrowSvg = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+
+function skeletonCard(){
+  return `<div class="res-card" aria-hidden="true" style="cursor:default">
+    <div class="skel pic" style="aspect-ratio:3/2"></div>
+    <div class="body">
+      <div class="skel" style="height:14px;width:60%;margin-bottom:12px"></div>
+      <div class="skel" style="height:14px;width:90%;margin-bottom:8px"></div>
+      <div class="skel" style="height:14px;width:70%"></div>
+    </div>
+  </div>`;
+}
+function renderSkeletons(){
+  featuredSlot.innerHTML = `<div class="featured-card" aria-hidden="true" style="cursor:default">
+    <div class="skel fpic"></div>
+    <div class="fcontent">
+      <div class="skel" style="height:12px;width:30%;margin-bottom:14px"></div>
+      <div class="skel" style="height:22px;width:85%;margin-bottom:10px"></div>
+      <div class="skel" style="height:22px;width:60%;margin-bottom:18px"></div>
+      <div class="skel" style="height:14px;width:100%;margin-bottom:6px"></div>
+      <div class="skel" style="height:14px;width:80%"></div>
+    </div>
+  </div>`;
+  resGrid.innerHTML = Array.from({length:6}, skeletonCard).join("");
+}
+
+function cardTemplate(a){
+  return `<a href="${articleUrl(a)}" class="res-card">
+    <div class="pic">
+      <img src="${esc(a.image)}" alt="" loading="lazy">
+      <span class="topic-tag">${esc(CATEGORY_LABEL[a.category] || a.category)}</span>
+    </div>
+    <div class="body">
+      <h3>${esc(a.title)}</h3>
+      <p class="excerpt">${esc(a.excerpt)}</p>
+      <div class="foot">
+        <span class="footnote">${fmtDate(a.date)} &middot; ${esc(a.readTime)}</span>
+        <span class="cta">Read ${arrowSvg}</span>
+      </div>
+    </div>
+  </a>`;
+}
+
+function featuredTemplate(a){
+  return `<a href="${articleUrl(a)}" class="featured-card">
+    <div class="fpic">
+      <img src="${esc(a.image)}" alt="">
+      <span class="fbadge">Featured</span>
+    </div>
+    <div class="fcontent">
+      <span class="ftopic">${esc(CATEGORY_LABEL[a.category] || a.category)}</span>
+      <h2>${esc(a.title)}</h2>
+      <p class="excerpt">${esc(a.excerpt)}</p>
+      <p class="fmeta">${fmtDate(a.date)} &middot; ${esc(a.readTime)}</p>
+      <span class="link-arrow">Read the full article ${arrowSvg}</span>
+    </div>
+  </a>`;
+}
+
+function getFiltered(){
+  const term = searchTerm.trim().toLowerCase();
+  return articles.filter(a => {
+    if (activeCategory !== "all" && a.category !== activeCategory) return false;
+    if (!term) return true;
+    return a.title.toLowerCase().includes(term)
+      || a.excerpt.toLowerCase().includes(term)
+      || (CATEGORY_LABEL[a.category] || "").toLowerCase().includes(term);
+  });
+}
+
+function sortArticles(list){
+  const byDateDesc = (a,b) => new Date(b.date) - new Date(a.date);
+  if (sortMode === "recent") return [...list].sort(byDateDesc);
+  return [...list].sort((a,b) => (b.featured === true) - (a.featured === true) || byDateDesc(a,b));
+}
+
+function render(){
+  const term = searchTerm.trim();
+  const filtered = sortArticles(getFiltered());
+  const showFeatured = activeCategory === "all" && !term && sortMode === "featured";
+
+  let gridSource = filtered;
+  if (showFeatured) {
+    const featured = articles.find(a => a.featured) || articles[0];
+    featuredSlot.innerHTML = featured ? featuredTemplate(featured) : "";
+    gridSource = filtered.filter(a => a !== featured);
+  } else {
+    featuredSlot.innerHTML = "";
+  }
+
+  const visible = gridSource.slice(0, visibleCount);
+  resGrid.innerHTML = visible.map(cardTemplate).join("");
+
+  const isEmpty = gridSource.length === 0 && !showFeatured;
+  emptyState.hidden = !isEmpty;
+  loadMoreBtn.hidden = visible.length >= gridSource.length;
+
+  if (term) {
+    resultNote.hidden = false;
+    resultNote.textContent = filtered.length === 1 ? `1 result for "${term}"` : `${filtered.length} results for "${term}"`;
+  } else {
+    resultNote.hidden = true;
+  }
+}
+
+function renderChips(){
+  const counts = {};
+  articles.forEach(a => { counts[a.category] = (counts[a.category] || 0) + 1; });
+  chipBar.innerHTML =
+    `<button type="button" class="chip active" data-filter="all">All <span class="count">${articles.length}</span></button>`
+    + CATEGORIES.filter(c => counts[c.id]).map(c =>
+      `<button type="button" class="chip" data-filter="${c.id}">${esc(c.label)} <span class="count">${counts[c.id]}</span></button>`
+    ).join("");
+}
+
+function setActiveChip(filter){
+  chipBar.querySelectorAll(".chip").forEach(c => c.classList.toggle("active", c.dataset.filter === filter));
+}
+function setActiveSort(mode){
+  document.querySelectorAll(".sort-group button").forEach(b => b.classList.toggle("active", b.dataset.sort === mode));
+}
+
+chipBar.addEventListener("click", e => {
+  const btn = e.target.closest("[data-filter]");
+  if (!btn) return;
+  activeCategory = btn.dataset.filter;
+  visibleCount = PAGE_SIZE;
+  setActiveChip(activeCategory);
+  render();
+});
+
+document.querySelectorAll(".sort-group button").forEach(btn => {
+  btn.addEventListener("click", () => {
+    sortMode = btn.dataset.sort;
+    visibleCount = PAGE_SIZE;
+    setActiveSort(sortMode);
+    render();
+  });
+});
+
+let searchDebounce;
+searchInput.addEventListener("input", e => {
+  clearTimeout(searchDebounce);
+  const value = e.target.value;
+  searchDebounce = setTimeout(() => {
+    searchTerm = value;
+    visibleCount = PAGE_SIZE;
+    render();
+  }, 180);
+});
+
+loadMoreBtn.addEventListener("click", () => {
+  visibleCount += PAGE_SIZE;
+  render();
+});
+
+resetFilters.addEventListener("click", () => {
+  searchInput.value = "";
+  searchTerm = "";
+  activeCategory = "all";
+  sortMode = "featured";
+  setActiveChip("all");
+  setActiveSort("featured");
+  visibleCount = PAGE_SIZE;
+  render();
+});
+
+async function initResources(){
+  renderSkeletons();
+  const forceFresh = new URLSearchParams(window.location.search).has("fresh");
+  const remote = window.GNContentful
+    ? await window.GNContentful.fetchArticles({ force: forceFresh })
+    : null;
+  if (remote && remote.length) {
+    articles = remote.map(a => ({ ...a, image: a.image || "https://picsum.photos/seed/gnlabs-res-fallback/700/460" }));
+    usingPlaceholders = false;
+  } else {
+    articles = placeholderArticles;
+    usingPlaceholders = true;
+  }
+  sampleNotice.hidden = !usingPlaceholders;
+  renderChips();
+  render();
+}
+initResources();
+
+/* ---- newsletter band: local success state until a real endpoint exists ---- */
+document.getElementById("newsForm").addEventListener("submit", e => {
+  e.preventDefault();
+  const msg = document.getElementById("newsMsg");
+  msg.textContent = "Sending…";
+  setTimeout(() => { msg.textContent = "Thanks, you're subscribed."; e.target.reset(); }, 500);
+});
+
+/* ---- fade-ins ---- */
+const fadeObserver = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) { entry.target.classList.add("is-visible"); fadeObserver.unobserve(entry.target); }
+  });
+}, { threshold: 0.12 });
+document.querySelectorAll(".fade-in").forEach(el => fadeObserver.observe(el));
+</script>
+</body>
+</html>

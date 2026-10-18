@@ -1,0 +1,16 @@
+# Cloudflare Pages redirects. Cloudflare already serves about.html as /about and
+# sends /about.html and /about/ to /about, so only aliases are listed here.
+
+# Short footer/nav URLs -> the real legal pages
+/privacy          /privacy-policy     301
+/terms            /terms-of-service   301
+
+# Old site structure -> new pages
+/blog             /resources          301
+/blog/*           /resources          301
+/practice         /services           301
+
+# Homepage links to separate service pages that now live as sections of /services
+/services/sensor-nodes   /services#sensor-nodes   301
+/services/alarms         /services#alarms         301
+/services/control        /services#control        301

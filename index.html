@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Embedded Systems and Industrial Control | GN Labs</title>
+<meta name="description" content="GN Labs designs sensor nodes, alarm systems and control panels: circuit, firmware and dashboard, built and tested on one bench.">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#4a555d">
+<link rel="canonical" href="https://gnlabs.site/">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='2' y='2' width='28' height='28' rx='7' fill='%23ee6c4d'/%3E%3Cpath d='M10 16h5v5h-5zM17 11h5v5h-5z' fill='%233a444b'/%3E%3Cpath d='M12.5 16v-3.5h4.5' stroke='%233a444b' stroke-width='2' fill='none'/%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%234a555d'/%3E%3Crect x='3' y='3' width='26' height='26' rx='6' fill='%23ee6c4d'/%3E%3Cpath d='M10 16h5v5h-5zM17 11h5v5h-5z' fill='%233a444b'/%3E%3Cpath d='M12.5 16v-3.5h4.5' stroke='%233a444b' stroke-width='2' fill='none'/%3E%3C/svg%3E">
+<meta property="og:title" content="Embedded Systems and Industrial Control | GN Labs">
+<meta property="og:description" content="Embedded systems, IoT firmware and industrial control.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="GN Labs">
+<meta property="og:url" content="https://gnlabs.site/">
+<meta property="og:image" content="https://gnlabs.site/og-cover.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Embedded Systems and Industrial Control | GN Labs">
+<meta name="twitter:description" content="GN Labs designs sensor nodes, alarm systems and control panels: circuit, firmware and dashboard, built and tested on one bench.">
+<meta name="twitter:image" content="https://gnlabs.site/og-cover.jpg">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://gnlabs.site/#org","name":"GN Labs","url":"https://gnlabs.site/","description":"Embedded systems, IoT firmware and industrial control."},{"@type":"WebSite","@id":"https://gnlabs.site/#site","url":"https://gnlabs.site/","name":"GN Labs","publisher":{"@id":"https://gnlabs.site/#org"}}]}</script>
+<script>
+/* Font loader. Put your Adobe Fonts kit id in `kit` to use Proxima Nova (add your domain to the kit first).
+   Without a kit id, Figtree from Google Fonts is used. */
+(function(){
+  var kit = "";
+  var l = document.createElement("link"); l.rel = "stylesheet";
+  l.href = kit ? "https://use.typekit.net/" + kit + ".css"
+               : "https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600&display=swap";
+  document.head.appendChild(l);
+})();
+</script>
+<style>
+:root{
+  --font:"proxima-nova","Figtree",Arial,Helvetica,sans-serif;
+  --dark:#4a555d; --dark-2:#3a444b; --slate:#3f546d; --news:#39464b;
+  --cta:#ee6c4d; --cta-h:#d85a3c; --link:#3b82c4; --link-l:#6aa9de; --link-ov:rgba(59,130,196,.75);
+  --head:#3f546d; --text:#4e4e4e; --text2:#666; --grey:#eeeeee; --line:#e6e6e6; --max:1200px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font:400 16px/26px var(--font);color:var(--text);background:#fff;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+a{color:inherit}
+ul{list-style:none}
+button{font-family:inherit}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 15px}
+.h36{font-size:30px;line-height:38px;font-weight:500;color:var(--head);margin-bottom:8px;letter-spacing:-.005em}
+.btn{display:inline-block;height:42px;padding:11px 20px;border:0;border-radius:3px;background:var(--cta);color:#fff;font:500 15px/20px var(--font);text-decoration:none;text-align:center;cursor:pointer}
+.btn:hover{background:var(--cta-h)}
+.btn.hollow{background:transparent;border:2px solid var(--link-l);line-height:16px;padding:10px 18px}
+.btn.hollow:hover{background:var(--link)}
+.link-arrow{font-size:15px;line-height:20px;font-weight:500;color:var(--link);text-decoration:none}
+.link-arrow::after{content:" →"}
+.link-arrow:hover{text-decoration:underline}
+
+/* ===== header ===== */
+header{position:sticky;top:0;z-index:30;background:var(--dark);color:#fff}
+.bar{display:flex;align-items:center;justify-content:space-between;height:64px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:600;font-size:1.1rem;text-decoration:none;letter-spacing:.3px}
+.brand svg{width:30px;height:30px}
+nav ul{display:flex;gap:6px;align-items:center}
+nav a:not(.btn){display:block;padding:8px 12px;text-decoration:none;border-radius:6px;font-size:14px;font-weight:500;color:#e6e9ec;line-height:1.4}
+nav a:not(.btn):hover{background:#ffffff1a;color:#fff}
+nav .btn{height:auto;padding:8px 16px;font-size:14px;line-height:1.3}
+.nav-cta{margin-left:8px}
+.burger{display:none;background:none;border:0;color:#fff;font-size:1.6rem;cursor:pointer}
+@media(max-width:860px){
+  .burger{display:block}
+  nav{position:absolute;left:0;right:0;top:64px;background:var(--dark-2);display:none;padding:10px 20px 18px}
+  nav.open{display:block}
+  nav ul{flex-direction:column;align-items:stretch}
+  .nav-cta{margin:8px 0 0}
+}
+
+/* ===== hero ===== */
+.hero{position:relative}
+.hero-slideshow{position:relative;height:600px;color:#fff;background:var(--dark);overflow:hidden}
+.slide{display:none;position:absolute;inset:0;padding:120px 0 160px;background-color:var(--dark);background-size:cover;background-position:center;background-repeat:no-repeat}
+.slide.active{display:block;animation:fade .6s}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+.slide::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(58,68,75,.9) 0%,rgba(58,68,75,.68) 48%,rgba(58,68,75,.3) 100%)}
+.slide .wrap{position:relative;z-index:1}
+.slide h2{color:#fff;font-size:40px;line-height:50px;font-weight:600;margin-bottom:16px;max-width:640px;letter-spacing:-.01em}
+.slide p{color:#fff;font-size:18px;line-height:28px;font-weight:300;margin-bottom:32px;max-width:580px}
+.slide .btn+.btn{margin-left:12px}
+.arrow{position:absolute;top:calc(50% - 16px);z-index:4;width:32px;height:32px;border-radius:50%;border:2px solid rgba(255,255,255,.6);background:none;color:rgba(255,255,255,.6);font-size:24px;line-height:20px;cursor:pointer;padding:0 0 3px}
+.arrow:hover{color:#fff;border-color:#fff}
+.arrow.prev{left:20px}.arrow.next{right:20px}
+.tab-wrapper{position:absolute;left:0;right:0;bottom:0;height:90px;background:rgba(30,37,40,.72);z-index:3}
+.dots{display:flex;height:90px;max-width:1400px;margin:auto}
+.dots li{flex:1;border-left:1px solid #000;border-right:1px solid #000;padding:14px 28px;position:relative;cursor:pointer;text-align:left}
+.dots li:first-child{border-left:0}.dots li:last-child{border-right:0}
+.dots h3{font-size:11px;line-height:16px;font-weight:500;text-transform:uppercase;letter-spacing:.4px;color:#a3abb0;margin:0 0 3px}
+.dots p{font-size:13px;line-height:19px;font-weight:300;color:#fff;margin:0}
+.dots li:hover h3,.dots li.active h3{color:var(--cta)}
+.dots li.active{background:rgba(19,21,21,.7);box-shadow:0 0 10px rgba(0,0,0,.5)}
+.dots .bg,.dots .fg{position:absolute;top:0;left:0;width:100%;height:2px;display:none}
+.dots .bg{background:rgba(238,108,77,.35)}
+.dots .fg{background:var(--cta);transform-origin:left;transform:scaleX(0)}
+.dots li.active .bg,.dots li.active .fg{display:block}
+.dots li.active .fg{animation:prog var(--dur,8s) linear forwards}
+.hero:hover .dots li.active .fg{animation-play-state:paused}
+@keyframes prog{to{transform:scaleX(1)}}
+.mobile-dots{display:none}
+@media(max-width:1024px){
+  .hero-slideshow{height:560px}
+  .slide{padding:80px 40px 200px}
+  .slide h2{font-size:34px;line-height:42px}
+  .slide p{font-size:16px;line-height:25px;margin-bottom:26px}
+  .dots li{padding:14px 18px}.dots p{font-size:12px;line-height:17px}
+}
+@media(max-width:640px){
+  .hero-slideshow{height:480px}
+  .slide{padding:44px 15px 170px;text-align:center}
+  .slide h2{font-size:26px;line-height:34px;margin:0 auto 26px}
+  .slide p{display:none}
+  .slide .btn+.btn{margin:12px 0 0;display:block;background:none;border:0;border-bottom:1px solid #fff;border-radius:0;height:auto;padding:0;width:max-content;margin-left:auto;margin-right:auto}
+  .dots li{display:none;width:100%;padding:14px 60px}.dots li.active{display:block}
+  .arrow{top:unset;bottom:34px;width:25px;height:25px;font-size:18px;line-height:12px}
+  .arrow.prev{left:10px}.arrow.next{right:10px}
+  .mobile-dots{position:absolute;bottom:106px;left:0;right:0;display:flex;justify-content:center;z-index:4}
+  .mobile-dots li{width:10px;height:10px;border-radius:50%;background:#9b9b9b;margin-left:10px}
+  .mobile-dots li:first-child{margin-left:0}.mobile-dots li.current{background:#fff}
+}
+
+/* ===== trusted by ===== */
+.trusted-by{position:relative;margin-top:25px}
+.trusted-by .wrap{display:flex;justify-content:space-between;align-items:center;min-height:70px}
+.trusted-by .lbl{position:absolute;left:0;right:0;text-align:center;color:var(--cta);font-size:12px;line-height:36px;text-transform:uppercase;letter-spacing:.5px}
+.trusted-by .side{display:flex;gap:46px;align-items:center;width:41%;justify-content:space-around}
+.wm{font-weight:600;color:#8b97a3;font-size:18px;letter-spacing:.3px;white-space:nowrap}
+.trusted-by img,.companies img{height:28px;width:auto;opacity:.7}
+@media(max-width:640px){.trusted-by{padding-top:30px}.trusted-by .wrap{flex-direction:column;gap:12px}.trusted-by .lbl{top:0;line-height:25px}.trusted-by .side{width:100%}}
+
+/* ===== split sections ===== */
+.tlpr{padding:90px 15px 0}
+.split{display:grid;align-items:center}
+.meet{overflow:hidden}
+.meet .split{grid-template-columns:5fr 7fr;gap:8%}
+.pic{background:#e4e8ea;border-radius:4px;aspect-ratio:3/2;overflow:hidden}
+.pic img{width:100%;height:100%;object-fit:cover}
+.meet .pic{margin-right:-8vw;border-radius:4px 0 0 4px}
+.meet p{margin-bottom:26px}
+.playlink{display:flex;align-items:center;gap:14px;background:none;border:0;cursor:pointer;color:var(--link);font:400 16px/26px var(--font);padding:0}
+.playlink i{width:38px;height:38px;border-radius:50%;background:var(--cta);display:flex;align-items:center;justify-content:center;flex:none}
+.playlink i::after{content:"";border-left:11px solid #fff;border-top:7px solid transparent;border-bottom:7px solid transparent;margin-left:3px}
+.trpl .split{grid-template-columns:6fr 5fr;gap:8%}
+.trpl .pic{position:relative}
+.trpl .over{position:absolute;inset:0;background:none;border:0;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.trpl .over i{width:76px;height:76px;border-radius:50%;background:rgba(238,108,77,.92);display:flex;align-items:center;justify-content:center;box-shadow:0 8px 24px rgba(0,0,0,.35)}
+.trpl .over i::after{content:"";border-left:22px solid #fff;border-top:13px solid transparent;border-bottom:13px solid transparent;margin-left:6px}
+.trpl p{margin-bottom:22px}
+.info{padding:90px 15px 30px;text-align:center}
+.info .in{max-width:880px;margin:0 auto}
+@media(max-width:1024px){.meet .split,.trpl .split{gap:40px}.h36{font-size:26px;line-height:32px}.tlpr{padding-top:80px}}
+@media(max-width:860px){.meet .split,.trpl .split{grid-template-columns:1fr}.meet .pic{margin-right:0;border-radius:4px}.trpl .pic{order:2}.meet .text,.trpl .text{text-align:center}.playlink{justify-content:center}}
+@media(max-width:640px){.h36{font-size:22px;line-height:29px}.tlpr{padding:50px 15px 40px}.trpl.tlpr{padding-bottom:80px}.info{padding:60px 15px 30px}}
+
+/* ===== solution boxes ===== */
+.solutions{margin-bottom:160px}
+.solutions .grid{display:grid;grid-template-columns:repeat(3,1fr);justify-items:center}
+a.box{display:block;width:313px;max-width:100%;min-height:190px;margin:0 auto 30px;border:1px solid var(--line);border-radius:3px;padding:28px 20px;text-align:center;text-decoration:none;background:#fff}
+a.box svg{width:32px;height:32px;margin:0 auto 16px;color:var(--link)}
+a.box .h4w{margin-bottom:14px}
+a.box h4{display:inline;font-size:18px;line-height:28px;font-weight:400;color:var(--text);border-bottom:1px solid var(--link)}
+a.box p{font-size:14px;line-height:22px;font-weight:300;color:var(--text2)}
+a.box:hover{border-color:var(--link)}
+a.box:hover h4{border-bottom-width:2px}
+@media(max-width:1024px){.solutions{margin-bottom:110px}a.box{width:100%;min-width:155px;min-height:170px;padding:20px 10px;margin-bottom:10px}a.box h4{font-size:17px}a.box p{font-size:13px;line-height:20px}}
+@media(max-width:640px){
+  .solutions{margin-bottom:50px}
+  .solutions .grid{grid-template-columns:1fr}
+  a.box{min-height:100px;text-align:left;padding:14px 10px;display:flex;align-items:center;gap:15px}
+  a.box svg{margin:0;flex:none}
+  a.box .h4w{margin-bottom:0}
+}
+
+/* ===== community ===== */
+.community{position:relative;background:var(--slate)}
+.cslide{display:none;height:560px;align-items:center;background-color:var(--slate);background-size:cover;background-position:right center}
+.cslide.active{display:flex;animation:fade .6s}
+.cslide .row{display:flex;justify-content:space-between;align-items:center;width:100%}
+.cslide .l{width:41.6%}
+.cslide .r{width:41.6%;text-align:center}
+.cslide h5{font-size:28px;line-height:36px;font-weight:500;color:#fff;margin-bottom:12px}
+.cslide p{font-size:16px;line-height:26px;font-weight:300;color:#fff}
+.cslide .r svg{width:40px;height:40px;margin:0 auto 22px;display:block;fill:#fff}
+.cslide p.quote{font-size:20px;line-height:32px;font-style:italic;letter-spacing:.5px}
+.cslide p.attr{font-size:15px;line-height:24px;margin-top:6px}
+.cslide p.attr strong{font-weight:500}
+.heads{position:absolute;left:0;right:0;bottom:-38px;height:90px;z-index:3}
+.heads ul{display:flex;justify-content:center;align-items:center;height:100%}
+.heads li{flex-basis:100px;display:flex;justify-content:center;align-items:center;cursor:pointer}
+.heads button{width:70px;height:70px;border-radius:50%;border:3px solid #fff;background:var(--dark);color:#fff;font:500 22px var(--font);cursor:pointer;overflow:hidden;padding:0;transition:all .15s ease;opacity:.85}
+.heads img{width:100%;height:100%;object-fit:cover}
+.heads li:hover button{width:80px;height:80px;opacity:1}
+.heads li.active button{width:80px;height:80px;opacity:1;border-color:var(--cta)}
+@media(max-width:1024px){.cslide h5{font-size:24px;line-height:30px}.cslide p.quote{font-size:18px;line-height:28px}}
+@media(max-width:860px){.cslide{height:auto;padding:45px 0 70px}.cslide .row{flex-direction:column;gap:28px}.cslide .l,.cslide .r{width:100%;text-align:center}}
+@media(max-width:640px){.cslide h5{font-size:22px;line-height:29px}.heads li{flex-basis:67px}.heads button,.heads li:hover button,.heads li.active button{width:58px;height:58px;font-size:18px}}
+.community-video{background:var(--grey);padding-top:100px}
+.community-video .frame{max-width:880px;margin:0 auto;aspect-ratio:16/9;background:#000}
+.community-video iframe,.community-video video{width:100%;height:100%;border:0}
+
+/* ===== other companies ===== */
+.companies{background:var(--grey);padding:50px 0 130px;margin-bottom:130px;text-align:center}
+.companies h3{font-size:22px;line-height:30px;font-weight:300;color:var(--text);margin:50px 0 44px}
+.companies .grid{display:flex;flex-wrap:wrap;justify-content:center;gap:30px 56px;max-width:1000px;margin:0 auto 44px}
+@media(max-width:1024px){.companies{padding:90px 0 70px}.companies h3{font-size:19px;line-height:26px;margin:0 0 28px}}
+@media(max-width:640px){.companies{margin-bottom:70px}.companies .grid{gap:18px 28px}}
+
+/* ===== featured ===== */
+.featured{margin-bottom:130px;text-align:center}
+.featured h3{margin-bottom:60px}
+.fgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:30px 20px;justify-items:center}
+.fbox{display:block;position:relative;width:313px;max-width:100%;height:313px;border-radius:3px;color:#fff;text-decoration:none;background-size:cover;background-position:center;text-align:left}
+.fbox .cs{position:absolute;inset:0;padding:20px 10px 20px 20px;background:linear-gradient(180deg,rgba(0,0,0,.2),rgba(0,0,0,.6))}
+.fbox h6{font-size:12px;line-height:18px;font-weight:500;text-transform:uppercase;letter-spacing:.5px;color:#fff}
+.fbox .pb{height:46px;margin:40px 20px 40px 0;display:flex;align-items:center;justify-content:center}
+.fbox .pb svg{height:46px;width:46px;fill:none;stroke:#fff;stroke-width:2}
+.fbox p{font-size:16px;line-height:25px;font-weight:300;color:#fff;margin-top:-16px}
+.fbox .watch{position:absolute;left:20px;bottom:26px;font-size:13px;line-height:17px;font-weight:500}
+.fbox:hover .cs{background:var(--link-ov)}
+.fbox:hover .watch{text-decoration:underline}
+.flink{margin-top:26px}
+@media(max-width:1024px){.featured{margin-bottom:90px}.featured h3{margin-bottom:44px}.fbox{width:100%;height:226px}.fbox .cs{padding:15px}.fbox p{font-size:15px;line-height:23px;margin-top:0}.fbox .pb{margin:10px 0}.fbox .watch{left:15px;bottom:15px}}
+@media(max-width:860px){.fgrid{grid-template-columns:1fr}.fbox{width:290px;height:290px}.fbox .pb{margin:28px 0}}
+
+/* ===== faq ===== */
+.faq{background:var(--grey);padding:70px 0}
+.faq h3{font-size:24px;line-height:30px;font-weight:300;color:var(--text);text-align:center;margin-bottom:44px}
+.faq .cols{display:grid;grid-template-columns:1fr 1fr;gap:0 40px;align-items:start}
+details{border-bottom:1px solid #d6d6d6}
+summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:16px;padding:15px 4px;font-size:16px;line-height:25px;color:var(--text)}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"";width:8px;height:8px;border-right:2px solid var(--link);border-bottom:2px solid var(--link);transform:rotate(45deg);margin-top:7px;flex:none;transition:transform .2s}
+details[open] summary::after{transform:rotate(-135deg);margin-top:11px}
+details p{padding:0 4px 16px;font-size:15px;line-height:24px;font-weight:300;color:var(--text2)}
+@media(max-width:860px){.faq .cols{grid-template-columns:1fr}.faq{padding:50px 0}.faq h3{font-size:21px;line-height:27px;margin-bottom:28px}}
+
+/* ===== try ===== */
+.try{background:linear-gradient(135deg,var(--dark-2),var(--dark));color:#fff;text-align:center;padding:80px 0}
+.try h2{font-size:28px;line-height:36px;font-weight:500;color:#fff;margin-bottom:12px}
+.try p{max-width:640px;margin:0 auto 12px;font-weight:300;font-size:17px;line-height:27px}
+.try .btn{margin:14px 0 32px;height:auto;padding:12px 28px;font-size:16px}
+.try .specs{font-size:12px;line-height:18px;letter-spacing:.5px;text-transform:uppercase;color:#b4bcc1;margin:0 0 12px}
+.try .tags{display:flex;gap:40px;justify-content:center;flex-wrap:wrap}
+.try .wm{color:#b4bcc1}
+@media(max-width:640px){.try h2{font-size:22px;line-height:29px}.try{padding:56px 0}}
+
+/* ===== newsletter ===== */
+.news{background:var(--news);padding:28px 0;color:#fff}
+.news .wrap{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
+.news p{font-size:14px;line-height:20px;max-width:420px}
+.news form{display:flex;gap:12px;flex-wrap:wrap;justify-content:flex-end}
+.news input{height:42px;width:340px;max-width:100%;border:0;border-radius:3px;padding:12px;font:300 16px var(--font)}
+.news .btn{width:130px;padding:11px 0}
+.news .msg{width:100%;font-size:14px;min-height:20px;text-align:right}
+@media(max-width:745px){.news .wrap{flex-direction:column;text-align:center}.news form{justify-content:center}.news .msg{text-align:center}}
+
+/* ===== footer ===== */
+footer{background:var(--dark);color:#dfdfdf;padding:52px 0 26px;font-size:14px;line-height:1.6}
+.f-grid{display:grid;grid-template-columns:1.4fr repeat(3,1fr);gap:30px}
+footer h4{color:#fff;margin-bottom:12px;font-size:15px;font-weight:600}
+footer li{margin-bottom:8px}
+footer a{text-decoration:none;font-weight:300}
+footer a:hover{color:#fff;text-decoration:underline}
+.f-bottom{border-top:1px solid #87979d;margin-top:34px;padding-top:18px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;color:#cfd4d7;font-weight:300}
+@media(max-width:760px){.f-grid{grid-template-columns:1fr 1fr}}
+
+dialog{border:0;border-radius:6px;padding:0;width:min(900px,94vw);background:#000;overflow:visible}
+dialog::backdrop{background:rgba(0,0,0,.7)}
+dialog .x{position:absolute;right:-6px;top:-40px;background:none;color:#fff;border:0;font-size:2rem;cursor:pointer}
+dialog .box16{aspect-ratio:16/9}
+dialog iframe,dialog video{width:100%;height:100%;border:0}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}html{scroll-behavior:auto}.dots li.active .fg{transform:scaleX(1)}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap bar">
+    <a class="brand" href="/" aria-label="GN Labs home">
+      <svg viewBox="0 0 32 32" fill="none" aria-hidden="true"><rect x="2" y="2" width="28" height="28" rx="7" style="fill:var(--cta)"/><path d="M10 16h5v5h-5zM17 11h5v5h-5z" style="fill:var(--dark-2)"/><path d="M12.5 16v-3.5h4.5" style="stroke:var(--dark-2)" stroke-width="2"/></svg>
+      GN Labs
+    </a>
+    <button class="burger" id="burger" aria-label="Toggle menu" aria-expanded="false">☰</button>
+    <nav id="nav" aria-label="Main"><ul id="nav-list"></ul></nav>
+  </div>
+</header>
+
+<main>
+  <div class="hero">
+    <div class="hero-slideshow" id="slides"></div>
+    <button class="arrow prev" id="prev" aria-label="Previous slide">‹</button>
+    <button class="arrow next" id="next" aria-label="Next slide">›</button>
+    <ul class="mobile-dots" id="mdots"></ul>
+    <div class="tab-wrapper"><ul class="dots" id="tabs" role="tablist"></ul></div>
+  </div>
+
+  <div class="trusted-by"><div class="wrap">
+    <div class="side" id="trust-l"></div><span class="lbl" id="trust-label"></span><div class="side" id="trust-r"></div>
+  </div></div>
+
+  <div class="meet tlpr"><div class="wrap split" id="meet"></div></div>
+  <div class="trpl tlpr"><div class="wrap split" id="docs"></div></div>
+
+  <div class="info"><div class="in"><h3 class="h36" id="pos-title"></h3><p id="pos-text"></p></div></div>
+  <div class="solutions"><div class="wrap"><div class="grid" id="boxes"></div></div></div>
+
+  <div class="community">
+    <div id="notes"></div>
+    <div class="heads"><ul id="heads"></ul></div>
+  </div>
+  <div class="community-video" id="vidband" hidden><div class="wrap"><div class="frame" id="vidframe"></div></div></div>
+
+  <div class="companies"><div class="wrap">
+    <h3 id="wall-title"></h3><div class="grid" id="wall-grid"></div>
+    <a class="link-arrow" id="wall-link" href="/projects"></a>
+  </div></div>
+
+  <div class="featured"><div class="wrap"><h3 class="h36">Featured Content</h3><div class="fgrid" id="fgrid"></div></div></div>
+
+  <div class="faq"><div class="wrap"><h3 id="faq-title"></h3><div class="cols" id="faq"></div></div></div>
+
+  <div class="try"><div class="wrap">
+    <h2 id="try-title"></h2><p id="try-1"></p><p id="try-2"></p>
+    <a class="btn" id="try-btn" href="/contact"></a>
+    <p class="specs" id="try-specs"></p><div class="tags" id="try-tags"></div>
+  </div></div>
+
+  <div class="news" id="news" hidden><div class="wrap">
+    <p id="news-text"></p>
+    <form id="news-form"><input type="email" required placeholder="Email address" aria-label="Email address" id="news-email"><button class="btn" type="submit">Subscribe</button><div class="msg" id="news-msg" role="status"></div></form>
+  </div></div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="f-grid" id="footer-grid"></div>
+    <div class="f-bottom"><span>© <span id="year"></span> GN Labs</span><span id="f-note"></span></div>
+  </div>
+</footer>
+
+<dialog id="vid"><button class="x" id="vid-x" aria-label="Close video">×</button><div class="box16" id="vid-box"></div></dialog>
+
+<script src="contentful.js"></script>
+<script>
+/* ---------- Config ----------
+   spaceId + accessToken (Content Delivery API token): pull content from Contentful. Empty = built-in content.
+   newsletterEndpoint: URL accepting a JSON POST {email}. Empty hides the newsletter strip.
+   heroSeconds: seconds each hero slide stays up.
+   Content types (API ids): navItem, heroSlide, solutionBox, labNote, featured, faq, section, siteSettings. */
+const CONFIG = { spaceId:"", accessToken:"", environment:"master", preview:false, newsletterEndpoint:"", heroSeconds:8 };
+
+/* Default photos: Pexels (free to use, no attribution required). Any `image`/`background` asset set in Contentful replaces them. */
+const px=(id,w)=>`https://images.pexels.com/photos/${id}/pexels-photo-${id}.jpeg?auto=compress&cs=tinysrgb&w=${w}`;
+
+const DEFAULTS = {
+  nav:[ /* navItem: label, url, order */
+    {label:"Services",url:"/services"},{label:"Projects",url:"/projects"},{label:"Resources",url:"/resources"},
+    {label:"About",url:"/about"},{label:"Contact",url:"/contact"}],
+  hero:[ /* heroSlide: tabTitle, tabDescription, headline, body, primaryLabel, primaryUrl, secondaryLabel, secondaryUrl, background(asset), order */
+    {tabTitle:"GN Labs",tabDescription:"Embedded systems and IoT",headline:"Build, Test and Deploy Embedded Systems That Report Back",
+     body:"GN Labs designs sensor nodes, alarm systems and control panels. Circuit, firmware and dashboard come from one bench.",
+     primaryLabel:"See our projects",primaryUrl:"/projects",secondaryLabel:"Talk to us",secondaryUrl:"/contact",background:px(3520692,1920)},
+    {tabTitle:"Safety",tabDescription:"Alarms with remote notification",headline:"Alarm Systems That Say Which Zone and Why",
+     body:"Smoke, heat, gas and flame sensing with SMS and app alerts, plus an on-site panel showing the same state.",
+     primaryLabel:"Alarm systems",primaryUrl:"/services#alarms",secondaryLabel:"See our projects",secondaryUrl:"/projects",background:px(34194580,1920)},
+    {tabTitle:"Control",tabDescription:"PLC, SCADA and instrumentation",headline:"Control Panels Designed Around the Operator",
+     body:"Instrumentation, PLC logic and monitoring screens laid out for the person standing at the cabinet.",
+     primaryLabel:"Control services",primaryUrl:"/services#control",background:px(39639325,1920)},
+    {tabTitle:"Learn",tabDescription:"Guides and write-ups",headline:"Write-Ups You Can Repeat on Your Own Bench",
+     body:"Wiring diagrams, firmware walk-throughs and test results, published with the parts list.",
+     primaryLabel:"Read the notes",primaryUrl:"/resources",background:px(3912983,1920)}],
+  sections:{ /* section: key(meet|docs), heading, body, linkLabel, linkUrl, videoLabel, videoUrl, image(asset) */
+    meet:{heading:"Meet GN Labs — Embedded Systems & Industrial Control",
+      body:"GN Labs designs sensor nodes, alarm systems and control panels. The circuit, the firmware and the dashboard are built together, so a fault is traced in one place instead of across three suppliers.",
+      linkLabel:"How we work",linkUrl:"/about",videoLabel:"Our process in 2 minutes",videoUrl:"",image:px(37426135,1400)},
+    docs:{heading:"Documentation With Every Build",
+      body:"Schematics, firmware source, a bill of materials and an operating guide come with each project, so your team can maintain it without us.",
+      linkLabel:"Browse the notes",linkUrl:"/resources",videoUrl:"",image:px(4709389,1200)}},
+  settings:{ /* siteSettings: trustLabel, trustLogos(list), possibilitiesTitle, possibilitiesText, communityTitle, communityText, communityVideo, wallTitle, wallLogos(list), wallLinkLabel, wallLinkUrl, faqTitle, tryTitle, tryText1, tryText2, tryLabel, tryUrl, trySpecs, tryTags(list), newsletterText, footerColumns(JSON), footerBlurb, footerNote */
+    trustLabel:"Built With",trustLogos:["ESP32","STM32","Arduino","MQTT","Modbus","Node-RED"],
+    possibilitiesTitle:"One Workshop, Many Applications",
+    possibilitiesText:"From a single battery-powered sensor to a multi-zone alarm panel, the method is the same: define the signal, build the node, prove it on the bench, deploy it and watch it remotely.",
+    communityTitle:"The GN Labs Method",communityText:"How we work, in three lines.",communityVideo:"",
+    wallTitle:"Platforms and Parts We Work With",
+    wallLogos:["ESP32","STM32","Arduino","Raspberry Pi","Modbus","MQTT","Node-RED","Grafana"],
+    wallLinkLabel:"See our projects",wallLinkUrl:"/projects",
+    faqTitle:"GN Labs FAQs",
+    tryTitle:"Start With a Short Brief",
+    tryText1:"Tell us what you need to read, control or send, and we'll come back with a parts list and a schedule.",
+    tryText2:"A paragraph is enough to begin.",tryLabel:"Send a brief",tryUrl:"/contact",
+    trySpecs:"Typical starting points",tryTags:["Temperature","Gas","Flow","Level","Vibration","Power"],
+    newsletterText:"Get new write-ups and build notes by email.",
+    footerBlurb:"Embedded systems, IoT firmware and industrial control.",footerNote:"All rights reserved",
+    footerColumns:[
+      {title:"Services",links:[["Sensor nodes","/services#sensor-nodes"],["Alarm systems","/services#alarms"],["PLC & SCADA","/services#control"],["Integration","/services#integration"]]},
+      {title:"Resources",links:[["Articles","/resources"],["Projects","/projects"]]},
+      {title:"Company",links:[["About","/about"],["Contact","/contact"],["Privacy","/privacy-policy"],["Terms","/terms-of-service"]]}]},
+  boxes:[ /* solutionBox: title, body, url, icon(chip|wave|bell|dash|doc|edge|gear|net|code), order */
+    {title:"Sensor Nodes",body:"Low-power boards for temperature, gas, flow and level.",url:"/services#sensor-nodes",icon:"chip"},
+    {title:"IoT Connectivity",body:"Wi-Fi, LoRa and cellular links over MQTT or HTTP.",url:"/services#integration",icon:"wave"},
+    {title:"Alarm Systems",body:"Multi-zone detection with SMS and app notification.",url:"/services#alarms",icon:"bell"},
+    {title:"Dashboards",body:"Live and historical views of every reading.",url:"/services#integration",icon:"dash"},
+    {title:"Reporting",body:"Scheduled summaries and exports from your data.",url:"/services#integration",icon:"doc"},
+    {title:"Edge Computing",body:"Process readings on site when the network is slow.",url:"/services#integration",icon:"edge"},
+    {title:"PLC & SCADA",body:"Control logic and supervisory screens.",url:"/services#control",icon:"gear"},
+    {title:"Gateways",body:"Bridge field devices to the network and the cloud.",url:"/services#integration",icon:"net"},
+    {title:"Custom Firmware",body:"Drivers, power management and over-the-air updates.",url:"/services#sensor-nodes",icon:"code"}],
+  notes:[ /* labNote: name, role, quote, image(asset avatar), background(asset), order */
+    {name:"Test first",role:"Method",quote:"Every circuit is powered and measured on the bench before production firmware is written.",image:px(6755083,200),background:px(38217230,1920)},
+    {name:"Write it down",role:"Documentation",quote:"Schematics, pin maps and calibration values are recorded as we go, not reconstructed at handover.",image:px(4709389,200),background:px(28265032,1920)},
+    {name:"Fail loudly",role:"Reliability",quote:"A device that fails silently is worse than one that fails loudly. Alerts reach a phone, not a log file.",image:px(19841115,200),background:px(33706880,1920)}],
+  featured:[ /* featured: kind, title, actionLabel, url, type(video|article), image(asset), listLabel, listUrl, order */
+    {kind:"Featured Project",title:"Multi-Sensor Fire Alarm With Remote Notification",actionLabel:"Read the write-up",url:"/projects",type:"article",image:px(19841115,900),listLabel:"View all projects",listUrl:"/projects"},
+    {kind:"Featured Guide",title:"Wiring and Calibrating Gas Sensors on an ESP32",actionLabel:"Read the guide",url:"/resources",type:"article",image:px(6755083,900),listLabel:"View all guides",listUrl:"/resources"},
+    {kind:"Featured Note",title:"MQTT or HTTP for Field Devices: How to Choose",actionLabel:"Read the note",url:"/resources",type:"article",image:px(28942196,900),listLabel:"View all notes",listUrl:"/resources"}],
+  faq:[ /* faq: question, answer, order */
+    {question:"What kinds of devices do you build?",answer:"Battery or mains-powered sensor nodes, alarm panels, gateways and control cabinets. If it reads a signal and acts on it, we can build it."},
+    {question:"Do you work with existing PLCs and SCADA?",answer:"Yes. We connect over Modbus, OPC UA and MQTT, so new devices sit alongside what you already run."},
+    {question:"Which microcontrollers do you use?",answer:"Mostly ESP32, STM32 and AVR boards, chosen by power budget, connectivity and cost."},
+    {question:"How long does a prototype take?",answer:"A single-function prototype usually takes a few weeks. Multi-sensor systems with a dashboard take longer; you get a schedule after the first call."},
+    {question:"What do I receive at handover?",answer:"Schematics, firmware source, a bill of materials and a short operating guide."},
+    {question:"Can devices report remotely?",answer:"Yes. Readings go to a dashboard you control, with alerts to phone or email when a value leaves its range."}]
+};
+
+const ICONS={
+  chip:'<path d="M9 3v3M15 3v3M9 18v3M15 18v3M3 9h3M3 15h3M18 9h3M18 15h3"/><rect x="6" y="6" width="12" height="12" rx="2"/>',
+  bell:'<path d="M6 16V11a6 6 0 1 1 12 0v5l2 2H4zM10 21h4"/>',
+  dash:'<rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4M7 12l3-3 3 2 4-4"/>',
+  gear:'<circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/>',
+  net:'<circle cx="12" cy="5" r="2"/><circle cx="5" cy="19" r="2"/><circle cx="19" cy="19" r="2"/><path d="M12 7v5M12 12L6 17M12 12l6 5"/>',
+  code:'<path d="M8 8l-5 4 5 4M16 8l5 4-5 4M14 5l-4 14"/>',
+  doc:'<path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4M9 12h6M9 16h6"/>',
+  edge:'<rect x="4" y="8" width="16" height="8" rx="2"/><path d="M8 12h.01M12 12h.01M7 8V5M17 8V5"/>',
+  wave:'<path d="M3 12h3l2-6 4 12 3-9 2 3h4"/>'
+};
+const icon=k=>`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONS[k]||ICONS.chip}</svg>`;
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const $=id=>document.getElementById(id);
+const photo=(url,alt)=>url?`<img src="${esc(url)}" alt="${esc(alt||"")}" loading="lazy" onerror="this.remove()">`:"";
+
+/* ---------- Contentful ---------- */
+async function cf(type){
+  const host=CONFIG.preview?"preview.contentful.com":"cdn.contentful.com";
+  const url=`https://${host}/spaces/${CONFIG.spaceId}/environments/${CONFIG.environment}/entries?content_type=${type}&include=2&access_token=${CONFIG.accessToken}`+(type==="siteSettings"||type==="section"?"":"&order=fields.order");
+  const r=await fetch(url); if(!r.ok) throw new Error(type+" "+r.status);
+  const j=await r.json(), assets={};
+  (j.includes?.Asset||[]).forEach(a=>{assets[a.sys.id]=a.fields.file?.url?"https:"+a.fields.file.url:""});
+  return j.items.map(i=>{const f={...i.fields};["image","background"].forEach(k=>{if(f[k]?.sys)f[k]=assets[f[k].sys.id]||""});return f});
+}
+async function loadContent(){
+  const out=JSON.parse(JSON.stringify(DEFAULTS));
+  if(!CONFIG.spaceId||!CONFIG.accessToken){await featureArticles(out);return out}
+  const map={nav:"navItem",hero:"heroSlide",boxes:"solutionBox",notes:"labNote",featured:"featured",faq:"faq"};
+  await Promise.all(Object.entries(map).map(async([k,t])=>{try{const r=await cf(t);if(r.length)out[k]=r}catch(e){console.warn("Contentful:",e.message)}}));
+  try{(await cf("section")).forEach(s=>{if(s.key&&out.sections[s.key])out.sections[s.key]={...out.sections[s.key],...s}})}catch(e){console.warn("Contentful sections:",e.message)}
+  try{const s=(await cf("siteSettings"))[0];if(s)Object.keys(out.settings).forEach(k=>{if(s[k]!=null&&s[k]!=="")out.settings[k]=s[k]})}catch(e){console.warn("Contentful settings:",e.message)}
+  await featureArticles(out);
+  return out;
+}
+
+/* Featured Content: real articles from Contentful's `article` type. Entries flagged
+   "featured" come first (newest first), then the newest others, up to three cards.
+   If Contentful isn't configured, has no articles, or can't be reached, the cards above are used. */
+const ARTICLE_KIND={automation:"Industrial Automation",control:"Systems & Control",embedded:"Embedded & Hardware",software:"Software & Cloud"};
+async function featureArticles(out){
+  try{
+    if(!window.GNContentful||!GNContentful.isConfigured()) return;
+    const list=await GNContentful.fetchArticles(); if(!list||!list.length) return;
+    const pick=[...list.filter(a=>a.featured),...list.filter(a=>!a.featured)].slice(0,3);
+    out.featured=pick.map(a=>({kind:(a.featured?"Featured · ":"")+(ARTICLE_KIND[a.category]||"Article"),title:a.title,actionLabel:"Read the article",
+      url:"/article?slug="+encodeURIComponent(a.slug),type:"article",image:a.image,listLabel:"View all articles",listUrl:"/resources"}));
+  }catch(e){console.warn("Featured articles:",e.message)}
+}
+
+/* ---------- Render ---------- */
+const wm=a=>a.map(l=>/^https?:/.test(l)?`<img src="${esc(l)}" alt="">`:`<span class="wm">${esc(l)}</span>`).join("");
+const grads=["linear-gradient(135deg,#3a444b,#3b82c4)","linear-gradient(135deg,#3a444b,#5a6fa8)","linear-gradient(135deg,#3a444b,#4f7f9e)"];
+const playSvg='<svg viewBox="0 0 50 50"><circle cx="25" cy="25" r="23"/><path d="M20 16l16 9-16 9z" fill="#fff" stroke="none"/></svg>';
+const docSvg='<svg viewBox="0 0 50 50"><path d="M14 6h16l8 8v30H14z"/><path d="M30 6v8h8M19 24h14M19 31h14M19 38h9"/></svg>';
+
+function render(c){
+  const S=c.settings;
+  $("nav-list").innerHTML=c.nav.map(n=>`<li><a href="${esc(n.url)}">${esc(n.label)}</a></li>`).join("")+`<li class="nav-cta"><a class="btn" href="${esc(S.tryUrl)}">${esc(S.tryLabel)}</a></li>`;
+
+  document.documentElement.style.setProperty("--dur",CONFIG.heroSeconds+"s");
+  $("slides").innerHTML=c.hero.map((s,i)=>`<div class="slide${i?"":" active"}" role="tabpanel"${s.background?` style="background-image:url('${esc(s.background)}')"`:""}>
+    <div class="wrap">
+      <h2>${esc(s.headline)}</h2><p>${esc(s.body)}</p>
+      <a class="btn" href="${esc(s.primaryUrl)}">${esc(s.primaryLabel)}</a>${s.secondaryLabel?`<a class="btn hollow" href="${esc(s.secondaryUrl)}">${esc(s.secondaryLabel)}</a>`:""}
+    </div></div>`).join("");
+  $("tabs").innerHTML=c.hero.map((s,i)=>`<li role="tab" class="${i?"":"active"}" tabindex="0"><div class="bg"></div><div class="fg"></div><h3>${esc(s.tabTitle)}</h3><p>${esc(s.tabDescription||"")}</p></li>`).join("");
+  $("mdots").innerHTML=c.hero.map((_,i)=>`<li class="${i?"":"current"}"></li>`).join("");
+
+  const tl=S.trustLogos, half=Math.ceil(tl.length/2);
+  $("trust-label").textContent=S.trustLabel; $("trust-l").innerHTML=wm(tl.slice(0,half)); $("trust-r").innerHTML=wm(tl.slice(half));
+
+  const m=c.sections.meet, d=c.sections.docs;
+  $("meet").innerHTML=`<div class="text"><h1 class="h36">${esc(m.heading)}</h1><p>${esc(m.body)}</p>
+    ${m.videoUrl?`<button class="playlink" data-video="${esc(m.videoUrl)}"><i></i>${esc(m.videoLabel||"Watch the video")}</button>`:(m.linkLabel?`<a class="link-arrow" href="${esc(m.linkUrl)}">${esc(m.linkLabel)}</a>`:"")}</div>
+    <div class="pic">${photo(m.image,m.heading)}</div>`;
+  $("docs").innerHTML=`<div class="pic">${photo(d.image,d.heading)}${d.videoUrl?`<button class="over" data-video="${esc(d.videoUrl)}" aria-label="Play video"><i></i></button>`:""}</div>
+    <div class="text"><h3 class="h36">${esc(d.heading)}</h3><p>${esc(d.body)}</p>${d.linkLabel?`<a class="link-arrow" href="${esc(d.linkUrl)}">${esc(d.linkLabel)}</a>`:""}</div>`;
+
+  $("pos-title").textContent=S.possibilitiesTitle; $("pos-text").textContent=S.possibilitiesText;
+  $("boxes").innerHTML=c.boxes.map(b=>`<a class="box" href="${esc(b.url)}">${icon(b.icon)}<div><div class="h4w"><h4>${esc(b.title)}</h4></div><p>${esc(b.body)}</p></div></a>`).join("");
+
+  $("notes").innerHTML=c.notes.map((n,i)=>`<div class="cslide${i?"":" active"}"${n.background?` style="background-image:linear-gradient(90deg,#3f546d 0%,rgba(63,84,109,.92) 40%,rgba(63,84,109,.5) 100%),url('${esc(n.background)}')"`:""}><div class="wrap row">
+    <div class="l"><h5>${esc(S.communityTitle)}</h5><p>${esc(S.communityText)}</p></div>
+    <div class="r"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 17c0-4 1-8 5-10l1 2c-2 1-3 3-3 5h3v5H4zm10 0c0-4 1-8 5-10l1 2c-2 1-3 3-3 5h3v5h-6z"/></svg><p class="quote">“${esc(n.quote)}”</p><p class="attr"><strong>– ${esc(n.name)}</strong>${n.role?`<br>${esc(n.role)}`:""}</p></div></div></div>`).join("");
+  $("heads").innerHTML=c.notes.map((n,i)=>`<li class="${i?"":"active"}"><button aria-label="${esc(n.name)}">${n.image?`<img src="${esc(n.image)}" alt="" onerror="this.remove()">`:esc((n.name||"?").charAt(0).toUpperCase())}</button></li>`).join("");
+  if(S.communityVideo){$("vidband").hidden=false;$("vidframe").innerHTML=embed(S.communityVideo,false)}
+
+  $("wall-title").textContent=S.wallTitle; $("wall-grid").innerHTML=wm(S.wallLogos);
+  $("wall-link").textContent=S.wallLinkLabel; $("wall-link").href=S.wallLinkUrl;
+
+  $("fgrid").innerHTML=c.featured.map((f,i)=>`<div><a class="fbox" href="${esc(f.url)}" style="background-image:${f.image?`url('${esc(f.image)}'),`:""}${grads[i%3]}"><div class="cs"><h6>${esc(f.kind)}</h6><div class="pb">${f.type==="video"?playSvg:docSvg}</div><p>${esc(f.title)}</p><span class="watch">${esc(f.actionLabel)}</span></div></a><div class="flink"><a class="link-arrow" href="${esc(f.listUrl)}">${esc(f.listLabel)}</a></div></div>`).join("");
+
+  $("faq-title").textContent=S.faqTitle;
+  const h=Math.ceil(c.faq.length/2), col=a=>`<div>${a.map(q=>`<details><summary>${esc(q.question)}</summary><p>${esc(q.answer)}</p></details>`).join("")}</div>`;
+  $("faq").innerHTML=col(c.faq.slice(0,h))+col(c.faq.slice(h));
+
+  $("try-title").textContent=S.tryTitle; $("try-1").textContent=S.tryText1; $("try-2").textContent=S.tryText2;
+  $("try-btn").textContent=S.tryLabel; $("try-btn").href=S.tryUrl; $("try-specs").textContent=S.trySpecs; $("try-tags").innerHTML=wm(S.tryTags);
+  if(CONFIG.newsletterEndpoint){$("news").hidden=false;$("news-text").textContent=S.newsletterText}
+
+  const cols=typeof S.footerColumns==="string"?JSON.parse(S.footerColumns):S.footerColumns;
+  $("footer-grid").innerHTML=`<div><a class="brand" href="/" style="color:#fff;margin-bottom:12px">GN Labs</a><p>${esc(S.footerBlurb)}</p></div>`
+    +cols.map(k=>`<div><h4>${esc(k.title)}</h4><ul>${k.links.map(l=>`<li><a href="${esc(l[1])}">${esc(l[0])}</a></li>`).join("")}</ul></div>`).join("");
+  $("f-note").textContent=S.footerNote; $("year").textContent=new Date().getFullYear();
+}
+
+function embed(url,auto){
+  const y=url.match(/(?:youtu\.be\/|v=|embed\/)([\w-]{11})/);
+  if(y) return `<iframe src="https://www.youtube-nocookie.com/embed/${y[1]}${auto?"?autoplay=1":""}" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen title="Video"></iframe>`;
+  return `<video src="${esc(url)}" controls ${auto?"autoplay":""}></video>`;
+}
+
+/* ---------- Behaviour ---------- */
+function wire(){
+  const slides=[...document.querySelectorAll(".slide")], tabs=[...document.querySelectorAll("#tabs li")], md=[...document.querySelectorAll("#mdots li")];
+  let cur=0;
+  const go=n=>{cur=(n+slides.length)%slides.length;
+    slides.forEach((s,i)=>s.classList.toggle("active",i===cur));
+    tabs.forEach((t,i)=>{t.classList.remove("active");t.setAttribute("aria-selected",i===cur)});
+    md.forEach((d,i)=>d.classList.toggle("current",i===cur));
+    void tabs[cur].offsetWidth; tabs[cur].classList.add("active")};
+  tabs.forEach((t,i)=>{t.addEventListener("click",()=>go(i));t.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();go(i)}});
+    t.querySelector(".fg").addEventListener("animationend",()=>go(cur+1))});
+  $("prev").addEventListener("click",()=>go(cur-1)); $("next").addEventListener("click",()=>go(cur+1));
+
+  const cs=[...document.querySelectorAll(".cslide")], hs=[...document.querySelectorAll("#heads li")];
+  let ci=0,ct; const show=n=>{ci=(n+cs.length)%cs.length;cs.forEach((q,i)=>q.classList.toggle("active",i===ci));hs.forEach((h,i)=>h.classList.toggle("active",i===ci))};
+  const run=()=>{clearInterval(ct);if(!matchMedia("(prefers-reduced-motion: reduce)").matches)ct=setInterval(()=>show(ci+1),9000)};
+  hs.forEach((h,i)=>h.addEventListener("click",()=>{show(i);run()})); run();
+
+  const burger=$("burger"),nav=$("nav");
+  burger.addEventListener("click",()=>{const o=nav.classList.toggle("open");burger.setAttribute("aria-expanded",o)});
+
+  const dlg=$("vid"),box=$("vid-box");
+  document.addEventListener("click",e=>{const b=e.target.closest("[data-video]");if(!b)return;box.innerHTML=embed(b.dataset.video,true);dlg.showModal()});
+  const closeV=()=>{dlg.close();box.innerHTML=""};
+  $("vid-x").addEventListener("click",closeV); dlg.addEventListener("click",e=>{if(e.target===dlg)closeV()}); dlg.addEventListener("cancel",()=>{box.innerHTML=""});
+
+  $("news-form").addEventListener("submit",async e=>{
+    e.preventDefault(); const msg=$("news-msg"); msg.textContent="Sending…";
+    try{
+      const r=await fetch(CONFIG.newsletterEndpoint,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({email:$("news-email").value})});
+      if(!r.ok) throw new Error(r.status);
+      msg.textContent="Thanks, you're subscribed."; e.target.reset();
+    }catch(err){ msg.textContent="That didn't go through. Please try again."; }
+  });
+}
+loadContent().then(c=>{render(c);wire()});
+</script>
+</body>
+</html>
