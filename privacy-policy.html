@@ -186,7 +186,7 @@ footer a:hover{color:#fff;text-decoration:underline}
       <p class="eyebrow">Privacy</p>
       <h1>What I collect, and what I do with it</h1>
       <p class="intro">GN Labs is a one-person engineering practice, not a data company. This page says, plainly, what information this site gathers, why, and how to make me delete it if you'd rather I didn't have it.</p>
-      <span class="upd">Last updated September 16, 2026</span>
+      <span class="upd">Last updated October 20, 2026</span>
     </div>
   </div>
 </section>
@@ -221,7 +221,7 @@ footer a:hover{color:#fff;text-decoration:underline}
           </div>
           <div class="data-row">
             <h3>Ordinary site visits</h3>
-            <p>Basic, aggregated traffic figures — which pages get read, roughly how many visits, and which country they're from. This comes from the hosting provider's server logs, not a tracking script, and it can't be tied back to you as an individual.</p>
+            <p>Basic, aggregated traffic figures — which pages get read, roughly how many visits, and which country they're from. This comes from the hosting provider's server logs and from Google Analytics (GA4), set up to report in aggregate with advertising features switched off. It isn't used to identify you personally.</p>
           </div>
           <div class="data-row">
             <h3>What I don't collect</h3>
@@ -238,14 +238,15 @@ footer a:hover{color:#fff;text-decoration:underline}
           That's the complete list. Nothing here is used to build an advertising profile, and nothing is repurposed for a use you weren't told about at the point you handed it over.
         </p></section>
 <section class="lsec" id="cookies"><p class="num">04</p><h2>Cookies &amp; local storage</h2><p>
-          This site avoids cookies wherever the browser lets it. A couple of small, unavoidable exceptions:
+          This site avoids cookies wherever the browser lets it. A few small exceptions:
         </p>
         <ul class="dots">
           <li><span>A short-lived preference, like whether you've already dismissed the newsletter prompt, stored only in your own browser and never sent anywhere.</span></li>
+          <li><span>Google Analytics sets a small number of first-party cookies to count visits and see which pages are read. Advertising and Google signals are turned off, and nothing is sent to Google if your browser sends a Do Not Track or Global Privacy Control signal. You can also opt out with Google's <a href="https://tools.google.com/dlpage/gaoptout" rel="noopener" class="inline-link">browser add-on</a>.</span></li>
           <li><span>Standard server logs kept by the hosting provider for security and uptime, which age out automatically after a short window.</span></li>
         </ul>
         <p>
-          There's no consent banner because there's nothing here that needs one under most regional rules — no advertising or cross-site tracking cookies are set. If that ever changes, a banner will appear before it does.
+          The only cookies set are those analytics cookies; no advertising or cross-site tracking cookies are set. If that ever changes, this page gets updated first.
         </p></section>
 <section class="lsec" id="third-parties"><p class="num">05</p><h2>Third parties involved</h2><p>
           A handful of well-known services keep this site running. Each one only ever sees the minimum it needs to do its job:
@@ -347,8 +348,8 @@ const FOOTER = {
   blurb:"Embedded systems, IoT firmware and industrial control.",
   columns:[
     {title:"Services", links:[["Sensor nodes","/services#sensor-nodes"],["Alarm systems","/services#alarms"],["PLC & SCADA","/services#control"]]},
-    {title:"Resources", links:[["Articles","/resources"],["Projects","/projects"],["Docs","/docs"]]},
-    {title:"Company", links:[["About","/about"],["Contact","/contact"],["Privacy","/privacy"],["Terms","/terms"]]}
+    {title:"Resources", links:[["Articles","/resources"],["Projects","/projects"]]},
+    {title:"Company", links:[["About","/about"],["Contact","/contact"],["Privacy","/privacy-policy"],["Terms","/terms-of-service"]]}
   ]
 };
 document.getElementById("nav-list").innerHTML =
