@@ -7,6 +7,10 @@
 // The values below are the same public, read-only Content Delivery values used in
 // contentful.js. Optional env vars CF_SPACE_ID / CF_ACCESS_TOKEN override them.
 
+// Google Analytics 4 Measurement ID, e.g. "G-ABC123XYZ9". Leave empty to keep analytics off.
+// This is the ONLY place it goes: the worker adds the tag to every page automatically.
+const GA_ID = "";
+
 const SITE = "https://gnlabs.site";
 const SPACE = "qz1tpi20918f";
 const TOKEN = "B3_yCnVFGynp0gz5wQe_7yZ_wHovCmpuSFcW7_ai8NY";
@@ -67,12 +71,24 @@ async function article(request, env, slug) {
   return out;
 }
 
+// Adds the GA4 tag to every HTML page. Skipped when GA_ID is empty, or when the visitor's browser
+// sends Do Not Track / Global Privacy Control.
+function withAnalytics(request, res) {
+  if (!GA_ID) return res;
+  if (request.headers.get("DNT") === "1" || request.headers.get("Sec-GPC") === "1") return res;
+  if (!(res.headers.get("content-type") || "").includes("text/html")) return res;
+  const tag = `<script async src="https://www.googletagmanager.com/gtag/js?id=${GA_ID}"></script>` +
+    `<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date());` +
+    `gtag("config","${GA_ID}",{allow_google_signals:false,allow_ad_personalization_signals:false});</script>`;
+  return new HTMLRewriter().on("head", { element(el) { el.append(tag, { html: true }); } }).transform(res);
+}
+
 export default {
   async fetch(request, env) {
     const u = new URL(request.url);
     if (u.pathname === "/sitemap.xml") return sitemap(env);
     if ((u.pathname === "/article" || u.pathname === "/article.html") && u.searchParams.get("slug") && request.method === "GET")
-      return article(request, env, u.searchParams.get("slug"));
-    return env.ASSETS.fetch(request);
+      return withAnalytics(request, await article(request, env, u.searchParams.get("slug")));
+    return withAnalytics(request, await env.ASSETS.fetch(request));
   }
 };
