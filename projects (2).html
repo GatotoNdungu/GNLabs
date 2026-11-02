@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Projects | GN Labs — Control Systems, Embedded &amp; Edge Case Studies</title>
+<meta name="description" content="Selected engineering work from GN Labs: PLC retrofits, closed-loop control design, embedded sensor networks, and the software pipelines connecting plant floor to cloud — with scope, stack and measured result.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://gnlabs.site/projects">
+<meta property="og:site_name" content="GN Labs">
+<meta property="og:title" content="Projects | GN Labs">
+<meta property="og:description" content="Selected engineering work: control systems, embedded hardware and the software connecting them — with scope, stack and measured result.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://gnlabs.site/projects">
+<meta property="og:image" content="https://gnlabs.site/og-cover.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Projects | GN Labs">
+<meta name="twitter:description" content="Selected engineering work: control systems, embedded hardware and the software connecting them.">
+
+<!-- Favicon — same mark as the header logo, so the tab icon matches the brand. -->
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='2' y='2' width='28' height='28' rx='7' fill='%23ee6c4d'/%3E%3Cpath d='M10 16h5v5h-5zM17 11h5v5h-5z' fill='%233a444b'/%3E%3Cpath d='M12.5 16v-3.5h4.5' stroke='%233a444b' stroke-width='2' fill='none'/%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%234a555d'/%3E%3Crect x='3' y='3' width='26' height='26' rx='6' fill='%23ee6c4d'/%3E%3Cpath d='M10 16h5v5h-5zM17 11h5v5h-5z' fill='%233a444b'/%3E%3Cpath d='M12.5 16v-3.5h4.5' stroke='%233a444b' stroke-width='2' fill='none'/%3E%3C/svg%3E">
+<meta name="theme-color" content="#4a555d">
+
+<!-- JSON-LD — helps this page render as a rich result and ties it to the org. -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {"@type":"ListItem","position":1,"name":"Home","item":"https://gnlabs.site/"},
+        {"@type":"ListItem","position":2,"name":"Projects","item":"https://gnlabs.site/projects"}
+      ]
+    },
+    {
+      "@type": "CollectionPage",
+      "name": "Projects | GN Labs",
+      "url": "https://gnlabs.site/projects",
+      "description": "Selected engineering work from GN Labs: PLC retrofits, closed-loop control design, embedded sensor networks, and the software pipelines connecting plant floor to cloud.",
+      "isPartOf": {"@type": "WebSite", "name": "GN Labs", "url": "https://gnlabs.site/"},
+      "publisher": {"@type": "Organization", "name": "GN Labs", "url": "https://gnlabs.site/"}
+    }
+  ]
+}
+</script>
+
+<script>
+/* Font loader — identical to the homepage's / resources page's. */
+(function(){
+  var kit = "";
+  var l = document.createElement("link"); l.rel = "stylesheet";
+  l.href = kit ? "https://use.typekit.net/" + kit + ".css"
+               : "https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600&display=swap";
+  document.head.appendChild(l);
+})();
+</script>
+<style>
+/* ==========================================================================
+   SHARED BRAND TOKENS + CHROME
+   Copied from the homepage / resources page so this page renders as the
+   same site, not a reskin. If the shared palette, header or footer change,
+   mirror the change here too — each page stays a single self-contained
+   file by design.
+========================================================================== */
+:root{
+  --font:"proxima-nova","Figtree",Arial,Helvetica,sans-serif;
+  --dark:#4a555d; --dark-2:#3a444b; --slate:#3f546d; --news:#39464b;
+  --cta:#ee6c4d; --cta-h:#d85a3c; --link:#3b82c4; --link-l:#6aa9de;
+  --head:#3f546d; --text:#4e4e4e; --text2:#666; --grey:#eeeeee; --line:#e6e6e6; --max:1200px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font:400 16px/26px var(--font);color:var(--text);background:#fff;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+a{color:inherit}
+ul{list-style:none}
+button{font-family:inherit}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 15px}
+.h36{font-size:30px;line-height:38px;font-weight:500;color:var(--head);margin-bottom:8px;letter-spacing:-.005em}
+.btn{display:inline-block;height:42px;padding:11px 20px;border:0;border-radius:3px;background:var(--cta);color:#fff;font:500 15px/20px var(--font);text-decoration:none;text-align:center;cursor:pointer}
+.btn:hover{background:var(--cta-h)}
+.btn.hollow{background:transparent;border:2px solid var(--link-l);line-height:16px;padding:10px 18px;color:var(--head)}
+.btn.hollow:hover{background:var(--link);color:#fff;border-color:var(--link)}
+.btn:disabled{opacity:.5;cursor:default}
+.link-arrow{display:inline-flex;align-items:center;gap:6px;font-size:15px;line-height:20px;font-weight:500;color:var(--link);text-decoration:none}
+.link-arrow svg{width:14px;height:14px;transition:transform .15s ease}
+.link-arrow:hover svg{transform:translateX(3px)}
+
+/* ===== header (identical to homepage / resources) ===== */
+header{position:sticky;top:0;z-index:30;background:var(--dark);color:#fff}
+.bar{display:flex;align-items:center;justify-content:space-between;height:64px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:600;font-size:1.1rem;text-decoration:none;letter-spacing:.3px}
+.brand svg{width:30px;height:30px}
+nav ul{display:flex;gap:6px;align-items:center}
+nav a:not(.btn){display:block;padding:8px 12px;text-decoration:none;border-radius:6px;font-size:14px;font-weight:500;color:#e6e9ec;line-height:1.4}
+nav a:not(.btn):hover{background:#ffffff1a;color:#fff}
+nav a.current{background:#ffffff1a;color:#fff}
+nav .btn{height:auto;padding:8px 16px;font-size:14px;line-height:1.3}
+.nav-cta{margin-left:8px}
+.burger{display:none;background:none;border:0;color:#fff;font-size:1.6rem;cursor:pointer}
+@media(max-width:860px){
+  .burger{display:block}
+  nav{position:absolute;left:0;right:0;top:64px;background:var(--dark-2);display:none;padding:10px 20px 18px}
+  nav.open{display:block}
+  nav ul{flex-direction:column;align-items:stretch}
+  .nav-cta{margin:8px 0 0}
+}
+
+/* ===== newsletter (identical) ===== */
+.news{background:var(--news);padding:28px 0;color:#fff}
+.news .wrap{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
+.news p{font-size:14px;line-height:20px;max-width:420px}
+.news form{display:flex;gap:12px;flex-wrap:wrap;justify-content:flex-end}
+.news input{height:42px;width:340px;max-width:100%;border:0;border-radius:3px;padding:12px;font:300 16px var(--font)}
+.news .btn{width:130px;padding:11px 0}
+.news .msg{width:100%;font-size:14px;min-height:20px;text-align:right}
+@media(max-width:745px){.news .wrap{flex-direction:column;text-align:center}.news form{justify-content:center}.news .msg{text-align:center}}
+
+/* ===== footer (identical) ===== */
+footer{background:var(--dark);color:#dfdfdf;padding:52px 0 26px;font-size:14px;line-height:1.6}
+.f-grid{display:grid;grid-template-columns:1.4fr repeat(3,1fr);gap:30px}
+footer h4{color:#fff;margin-bottom:12px;font-size:15px;font-weight:600}
+footer li{margin-bottom:8px}
+footer a{text-decoration:none;font-weight:300}
+footer a:hover{color:#fff;text-decoration:underline}
+.f-bottom{border-top:1px solid #87979d;margin-top:34px;padding-top:18px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;color:#cfd4d7;font-weight:300}
+@media(max-width:760px){.f-grid{grid-template-columns:1fr 1fr}}
+
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}html{scroll-behavior:auto}}
+
+/* ==========================================================================
+   PROJECTS PAGE — new for this page
+========================================================================== */
+
+/* ---- page header band ---- */
+.res-header{background:linear-gradient(180deg,#f7f8f9,#fff);padding:70px 0 20px;text-align:center}
+.res-header .eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:600;letter-spacing:.6px;text-transform:uppercase;color:var(--cta);margin-bottom:14px}
+.res-header h1{font-size:40px;line-height:48px;font-weight:600;color:var(--head);letter-spacing:-.01em;margin-bottom:14px}
+.res-header p{max-width:640px;margin:0 auto;font-size:17px;line-height:27px;font-weight:300;color:var(--text2)}
+@media(max-width:640px){.res-header{padding:50px 0 10px}.res-header h1{font-size:28px;line-height:35px}.res-header p{font-size:15px;line-height:24px}}
+
+/* ---- breadcrumb ---- */
+.crumb{padding:22px 0 0}
+.crumb .wrap{font-size:13px;color:var(--text2)}
+.crumb a{color:var(--link);text-decoration:none}
+.crumb a:hover{text-decoration:underline}
+
+/* ---- stat strip ---- */
+.stat-strip{padding:30px 0 10px}
+.stat-row{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:28px 0}
+.stat-row div{text-align:center}
+.stat-row dt{font-size:30px;font-weight:600;color:var(--head);letter-spacing:-.01em}
+.stat-row dt span{color:var(--cta)}
+.stat-row dd{margin-top:4px;font-size:13px;color:var(--text2)}
+@media(max-width:640px){.stat-row{grid-template-columns:repeat(2,1fr);row-gap:22px}}
+
+/* ---- featured case study (shares featured-card visual language with resources) ---- */
+.featured-wrap{padding:50px 0 10px}
+.featured-card{display:grid;grid-template-columns:1.1fr 1fr;gap:0;border:1px solid var(--line);border-radius:4px;overflow:hidden;text-decoration:none;color:inherit;background:#fff;transition:box-shadow .2s ease,border-color .2s ease}
+.featured-card:hover{box-shadow:0 18px 40px -24px rgba(20,30,40,.25);border-color:#d8dde0}
+.featured-card .fpic{position:relative;aspect-ratio:4/3;background:#e4e8ea;overflow:hidden}
+.featured-card .fpic img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease}
+.featured-card:hover .fpic img{transform:scale(1.04)}
+.featured-card .fbadge{position:absolute;top:16px;left:16px;background:var(--cta);color:#fff;font-size:11px;font-weight:600;letter-spacing:.4px;text-transform:uppercase;padding:5px 10px;border-radius:3px}
+.featured-card .fcontent{padding:40px 44px;display:flex;flex-direction:column;justify-content:center}
+.featured-card .ftopic{font-size:12px;font-weight:600;letter-spacing:.4px;text-transform:uppercase;color:var(--link);margin-bottom:10px}
+.featured-card h2{font-size:25px;line-height:32px;font-weight:600;color:var(--head);margin-bottom:12px;letter-spacing:-.005em}
+.featured-card p.excerpt{font-size:15px;line-height:24px;font-weight:300;color:var(--text2);margin-bottom:16px}
+.featured-card .fstats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:6px 0 18px;padding-top:16px;border-top:1px solid var(--line)}
+.featured-card .fstats b{display:block;font-size:19px;font-weight:600;color:var(--head)}
+.featured-card .fstats b span{color:var(--cta)}
+.featured-card .fstats small{display:block;font-size:11.5px;color:var(--text2);margin-top:2px;line-height:1.35}
+.featured-card .ftags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:18px}
+.featured-card .tag{font-size:11.5px;font-family:ui-monospace,monospace;background:var(--grey);color:var(--text2);padding:4px 9px;border-radius:3px}
+@media(max-width:860px){.featured-card{grid-template-columns:minmax(0,1fr)}.featured-card .fcontent{padding:28px 24px}.featured-card .fstats{grid-template-columns:repeat(3,1fr)}}
+
+/* ---- filter bar (identical mechanics to resources) ---- */
+.filter-bar{position:sticky;top:64px;z-index:20;background:rgba(255,255,255,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding:16px 0;margin-top:36px}
+.filter-row{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}
+.chip-scroll{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;flex:1;min-width:0}
+.chip-scroll::-webkit-scrollbar{display:none}
+.chip{flex:none;display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 16px;border-radius:20px;border:1.5px solid var(--line);background:#fff;color:var(--text2);font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;transition:border-color .15s ease,color .15s ease,background-color .15s ease}
+.chip:hover{border-color:var(--link-l);color:var(--head)}
+.chip.active{background:var(--head);border-color:var(--head);color:#fff}
+.chip .count{opacity:.6;font-weight:400}
+#resultCount{font-size:13px;color:var(--text2);flex:none;white-space:nowrap}
+@media(max-width:745px){.filter-bar{top:0}.filter-row{flex-wrap:wrap}#resultCount{width:100%;order:3}}
+
+/* ---- card grid ---- */
+.proj-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;padding:34px 0}
+.proj-card{display:flex;flex-direction:column;border:1px solid var(--line);border-radius:4px;overflow:hidden;text-decoration:none;color:inherit;background:#fff;transition:box-shadow .2s ease,border-color .2s ease,transform .2s ease}
+.proj-card:hover{box-shadow:0 16px 36px -26px rgba(20,30,40,.3);border-color:#d8dde0;transform:translateY(-2px)}
+.proj-card .pic{position:relative;aspect-ratio:16/11;background:#e4e8ea;overflow:hidden}
+.proj-card .pic img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease}
+.proj-card:hover .pic img{transform:scale(1.06)}
+.proj-card .topic-tag{position:absolute;top:12px;left:12px;background:rgba(58,68,75,.88);color:#fff;font-size:10.5px;font-weight:600;letter-spacing:.4px;text-transform:uppercase;padding:5px 9px;border-radius:3px}
+.proj-card .year-tag{position:absolute;top:12px;right:12px;background:rgba(255,255,255,.92);color:var(--head);font-size:10.5px;font-weight:700;font-family:ui-monospace,monospace;padding:5px 8px;border-radius:3px}
+.proj-card .body{padding:20px 22px 22px;display:flex;flex-direction:column;flex:1}
+.proj-card h3{font-size:17px;line-height:23px;font-weight:600;color:var(--head);margin-bottom:8px;letter-spacing:-.003em}
+.proj-card p.excerpt{font-size:14px;line-height:22px;font-weight:300;color:var(--text2);flex:1;margin-bottom:12px}
+.proj-card .stack{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.proj-card .stack span{font-size:11px;font-family:ui-monospace,monospace;background:var(--grey);color:var(--text2);padding:3px 8px;border-radius:3px}
+.proj-card .foot{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-top:auto;padding-top:14px;border-top:1px solid var(--line)}
+.proj-card .result{font-size:12.5px;color:var(--text2);line-height:1.4}
+.proj-card .result b{display:block;color:var(--head);font-weight:600;font-size:13px}
+.proj-card .cta{flex:none;display:inline-flex;align-items:center;gap:5px;font-size:13px;font-weight:600;color:var(--link);margin-top:1px}
+.proj-card .cta svg{width:12px;height:12px;transition:transform .15s ease}
+.proj-card:hover .cta svg{transform:translateX(3px)}
+@media(max-width:1024px){.proj-grid{grid-template-columns:repeat(2,1fr);gap:22px}}
+@media(max-width:640px){.proj-grid{grid-template-columns:minmax(0,1fr)}}
+
+.empty-state{text-align:center;padding:70px 20px;border:1.5px dashed var(--line);margin-top:10px;border-radius:4px}
+.empty-state p{margin-bottom:16px}
+
+/* ---- process ---- */
+.process-wrap{background:var(--grey);padding:70px 0}
+.process-head{max-width:560px;margin-bottom:44px}
+.process-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:30px}
+.process-step{border-top:2px solid var(--line);padding-top:20px;transition:border-color .2s ease}
+.process-step:hover{border-top-color:var(--cta)}
+.process-step .num{font-family:ui-monospace,monospace;font-size:12px;font-weight:600;color:var(--cta);letter-spacing:.4px;margin-bottom:10px}
+.process-step h3{font-size:16px;font-weight:600;color:var(--head);margin-bottom:8px}
+.process-step p{font-size:13.5px;line-height:21px;color:var(--text2)}
+@media(max-width:860px){.process-grid{grid-template-columns:1fr 1fr;row-gap:34px}}
+@media(max-width:500px){.process-grid{grid-template-columns:minmax(0,1fr)}}
+
+/* ---- testimonial ---- */
+.testimonial{background:var(--dark);color:#fff;padding:80px 0;text-align:center}
+.testimonial svg{margin:0 auto 26px}
+.testimonial blockquote{max-width:760px;margin:0 auto;font-size:22px;line-height:32px;font-weight:500;letter-spacing:-.005em}
+.testimonial figcaption{margin-top:28px;font-size:14px;color:#c9d0d4}
+.testimonial figcaption b{color:#fff;font-weight:600}
+
+/* ---- cta band ---- */
+.cta-band{padding:70px 0}
+.cta-box{border:1px solid var(--line);border-radius:6px;padding:44px 40px;display:grid;grid-template-columns:1.5fr 1fr;gap:30px;align-items:center}
+.cta-box h2{font-size:26px;line-height:33px;font-weight:600;color:var(--head);letter-spacing:-.008em;margin-bottom:10px}
+.cta-box p{font-size:15px;line-height:24px;color:var(--text2);max-width:480px}
+.cta-actions{display:flex;flex-wrap:wrap;gap:12px;justify-content:flex-end}
+@media(max-width:780px){.cta-box{grid-template-columns:minmax(0,1fr)}.cta-actions{justify-content:flex-start}}
+
+/* ---- skeletons / fade-in (shared) ---- */
+.skel{background:linear-gradient(90deg,#f0f1f2 25%,#e5e7e9 37%,#f0f1f2 63%);background-size:400% 100%;animation:skelshine 1.4s ease-in-out infinite;border-radius:3px}
+@keyframes skelshine{0%{background-position:100% 50%}100%{background-position:0 50%}}
+.fade-in{opacity:0;transform:translateY(14px);transition:opacity .45s ease-out,transform .45s ease-out}
+.fade-in.is-visible{opacity:1;transform:translateY(0)}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap bar">
+    <a class="brand" href="/" aria-label="GN Labs home">
+      <svg viewBox="0 0 32 32" fill="none" aria-hidden="true"><rect x="2" y="2" width="28" height="28" rx="7" style="fill:var(--cta)"/><path d="M10 16h5v5h-5zM17 11h5v5h-5z" style="fill:var(--dark-2)"/><path d="M12.5 16v-3.5h4.5" style="stroke:var(--dark-2)" stroke-width="2"/></svg>
+      GN Labs
+    </a>
+    <button class="burger" id="burger" aria-label="Toggle menu" aria-expanded="false">&#9776;</button>
+    <nav id="nav">
+      <ul id="nav-list"></ul>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <section class="res-header">
+    <div class="wrap">
+      <p class="eyebrow fade-in"><span>&#9670;</span> Projects</p>
+      <h1 class="fade-in">Systems That Had to Work on the First Shift Back</h1>
+      <p class="fade-in">Commissioned work across control systems, embedded hardware, and the software connecting plant floor to cloud. Each entry lists the real scope, the stack, and the measured outcome — not a mood board.</p>
+    </div>
+  </section>
+
+  <div class="crumb">
+    <div class="wrap"><a href="/">Home</a> / <span>Projects</span></div>
+  </div>
+
+  <div class="wrap">
+
+    <div class="stat-strip fade-in">
+      <dl class="stat-row">
+        <div><dt>40<span>+</span></dt><dd>Systems in production</dd></div>
+        <div><dt>0</dt><dd>Unplanned rollbacks</dd></div>
+        <div><dt>52<span>h</span></dt><dd>Longest commissioning window</dd></div>
+        <div><dt>6</dt><dd>Industries served</dd></div>
+      </dl>
+    </div>
+
+    <!-- Featured case study -->
+    <div class="featured-wrap">
+      <div id="featuredSlot" class="fade-in"></div>
+    </div>
+
+    <!-- Filter bar -->
+    <div class="filter-bar">
+      <div class="filter-row">
+        <div class="chip-scroll" id="chipBar" role="group" aria-label="Filter by domain"></div>
+        <p id="resultCount" role="status" aria-live="polite"></p>
+      </div>
+    </div>
+
+    <!-- Grid -->
+    <div id="projGrid" class="proj-grid" aria-live="polite"></div>
+
+    <div id="emptyState" class="empty-state" hidden>
+      <p><strong>No projects in this domain yet.</strong></p>
+      <p style="color:var(--text2);font-size:14px">Try another filter.</p>
+      <button type="button" id="resetFilters" class="btn hollow">Show all work</button>
+    </div>
+
+  </div>
+
+  <section class="process-wrap">
+    <div class="wrap">
+      <div class="process-head fade-in">
+        <h2 class="h36">How an engagement runs</h2>
+        <p style="color:var(--text2);font-size:15px;line-height:24px">The same four stages on every project, whether it's a two-week diagnostic or a six-month retrofit.</p>
+      </div>
+      <div class="process-grid">
+        <div class="process-step fade-in">
+          <p class="num">01 / SCOPE</p>
+          <h3>Walk the system</h3>
+          <p>On-site or over a call, we map what exists now — including the undocumented workarounds every plant accumulates.</p>
+        </div>
+        <div class="process-step fade-in">
+          <p class="num">02 / MODEL</p>
+          <h3>Prove it off-line</h3>
+          <p>Control logic is simulated and bench-tested against a model before it's allowed near live equipment.</p>
+        </div>
+        <div class="process-step fade-in">
+          <p class="num">03 / COMMISSION</p>
+          <h3>Stage the cutover</h3>
+          <p>Deployment happens in reversible stages, with a tested rollback path available at every step.</p>
+        </div>
+        <div class="process-step fade-in">
+          <p class="num">04 / HAND OVER</p>
+          <h3>Document for a stranger</h3>
+          <p>You get drawings, commented source, and a runbook written for an engineer who's never met the team.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="testimonial">
+    <div class="wrap">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" class="fade-in" aria-hidden="true"><path d="M9 7H5a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h2v2a2 2 0 0 1-2 2H4M19 7h-4a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h2v2a2 2 0 0 1-2 2h-1" stroke="var(--cta)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <blockquote class="fade-in">He turned up, read our twenty-year-old panel drawings without complaining, and handed back a system our own maintenance team could actually maintain. The documentation alone was worth the engagement.</blockquote>
+      <figcaption class="fade-in"><b>Operations Manager</b> &middot; Food processing plant, Nakuru</figcaption>
+    </div>
+  </section>
+
+  <section class="cta-band">
+    <div class="wrap">
+      <div class="cta-box fade-in">
+        <div>
+          <h2>Have a system that needs this kind of attention?</h2>
+          <p>Tell me what you're running and where it's falling short. I'll reply within one business day — and if it isn't a fit, I'll say so and point you toward someone better placed.</p>
+        </div>
+        <div class="cta-actions">
+          <a href="/contact" class="btn">Send a brief</a>
+          <a href="/about" class="btn hollow">About the practice</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="news" id="newsBand">
+    <div class="wrap">
+      <p>Get new write-ups and build notes by email. Roughly monthly, no spam.</p>
+      <form id="newsForm">
+        <input type="email" required placeholder="Email address" aria-label="Email address" id="newsEmail">
+        <button class="btn" type="submit">Subscribe</button>
+        <div class="msg" id="newsMsg" role="status"></div>
+      </form>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="f-grid" id="footer-grid"></div>
+    <div class="f-bottom"><span>&copy; <span id="year"></span> GN Labs</span><span>All rights reserved</span></div>
+  </div>
+</footer>
+
+<script>
+/* ==========================================================================
+   HEADER / FOOTER CONTENT
+   ==========================================================================
+   Hardcoded here to match the homepage's current DEFAULTS and the resources
+   page — this page doesn't (yet) share the homepage's own Contentful
+   siteSettings/navItem wiring. If the homepage's nav/footer copy changes,
+   mirror the change here too, and in resources.html.
+========================================================================== */
+const NAV = [
+  {label:"Services", url:"/services"},
+  {label:"Projects", url:"/projects", current:true},
+  {label:"Resources", url:"/resources"},
+  {label:"About", url:"/about"},
+  {label:"Contact", url:"/contact"}
+];
+const NAV_CTA = {label:"Send a brief", url:"/contact"};
+const FOOTER = {
+  blurb:"Embedded systems, IoT firmware and industrial control.",
+  columns:[
+    {title:"Services", links:[["Sensor nodes","/services/sensor-nodes"],["Alarm systems","/services/alarms"],["PLC & SCADA","/services/control"]]},
+    {title:"Resources", links:[["Articles","/resources"],["Projects","/projects"]]},
+    {title:"Company", links:[["About","/about"],["Contact","/contact"],["Privacy","/privacy-policy"],["Terms","/terms-of-service"]]}
+  ]
+};
+
+function renderChrome(){
+  document.getElementById("nav-list").innerHTML =
+    NAV.map(n => `<li><a href="${n.url}"${n.current ? ' class="current" aria-current="page"' : ''}>${n.label}</a></li>`).join("")
+    + `<li class="nav-cta"><a class="btn" href="${NAV_CTA.url}">${NAV_CTA.label}</a></li>`;
+
+  document.getElementById("footer-grid").innerHTML =
+    `<div><a class="brand" href="/" style="color:#fff;margin-bottom:12px">GN Labs</a><p>${FOOTER.blurb}</p></div>`
+    + FOOTER.columns.map(c => `<div><h4>${c.title}</h4><ul>${c.links.map(l => `<li><a href="${l[1]}">${l[0]}</a></li>`).join("")}</ul></div>`).join("");
+
+  document.getElementById("year").textContent = new Date().getFullYear();
+}
+renderChrome();
+
+const burger = document.getElementById("burger"), navEl = document.getElementById("nav");
+burger.addEventListener("click", () => {
+  const open = navEl.classList.toggle("open");
+  burger.setAttribute("aria-expanded", open);
+});
+
+/* ==========================================================================
+   PROJECT ARCHIVE
+   ==========================================================================
+   Local data array, same shape and the same four domain ids used as the
+   article categories on the resources page (automation / control /
+   embedded / software), so filtering reads consistently across the site.
+   Swapping this for a live source later only means replacing this array's
+   origin — the render functions don't change.
+========================================================================== */
+const DOMAINS = [
+  {id:"automation", label:"Industrial Automation"},
+  {id:"control",    label:"Systems & Control"},
+  {id:"embedded",   label:"Embedded & Hardware"},
+  {id:"software",   label:"Software & Cloud"}
+];
+const DOMAIN_LABEL = Object.fromEntries(DOMAINS.map(d => [d.id, d.label]));
+
+const projects = [
+  {
+    title:"Batch Mixing Line Retrofit",
+    excerpt:"Replaced a relay-based mixing controller with a closed-loop PID system across four tanks, commissioned inside a single weekend.",
+    year:"2025", domain:"control",
+    stack:["CODESYS","IEC 61131-3","Modbus TCP","Simulink"],
+    result:"Batch variance <1%, from 6%",
+    image:"https://images.pexels.com/photos/35072831/pexels-photo-35072831.jpeg?auto=compress&cs=tinysrgb&w=900",
+    featured:true,
+    featuredDetail:{
+      meta:"2025 &middot; Food &amp; Beverage",
+      body:"A four-tank mixing line was still running on relay logic commissioned in the nineties. Batch consistency drifted with ambient temperature, and the only diagnostic was an operator's ear. The brief: modernise control without taking the line down for more than a single weekend.",
+      stats:[["&lt;1<span>%</span>","Batch variance, from 6%"],["52<span>h</span>","Total commissioning downtime"],["4","Tanks under closed-loop PID"]]
+    }
+  },
+  {
+    title:"Remote Sensor Telemetry Network",
+    excerpt:"An ESP32-based sensor mesh reporting into a cloud pipeline with automated anomaly flagging across distributed sites.",
+    year:"2024", domain:"embedded",
+    stack:["ESP32","MQTT","Python","REST API"],
+    result:"40 sites, <2 min alert latency",
+    image:"https://picsum.photos/seed/gnlabs-proj-telemetry/700/480"
+  },
+  {
+    title:"Fieldbus Diagnostics Toolkit",
+    excerpt:"A Python diagnostics layer that reads live fieldbus traffic and surfaces developing faults before they trip a line.",
+    year:"2024", domain:"software",
+    stack:["Python","PROFIBUS","Grafana"],
+    result:"Unplanned downtime -30% in Q1",
+    image:"https://picsum.photos/seed/gnlabs-proj-fieldbus/700/480"
+  },
+  {
+    title:"Conveyor Sequencing Rewrite",
+    excerpt:"Rewrote a sprawling ladder-logic sequencer in structured text, collapsing 14 interlocked rungs into a documented state machine.",
+    year:"2023", domain:"automation",
+    stack:["IEC 61131-3","CODESYS","Profinet"],
+    result:"Fault diagnosis: hours to minutes",
+    image:"https://picsum.photos/seed/gnlabs-proj-conveyor/700/480"
+  },
+  {
+    title:"Hardware-in-the-Loop Test Bench",
+    excerpt:"A low-cost HIL rig that emulates plant dynamics so control logic can be validated before it reaches live equipment.",
+    year:"2023", domain:"control",
+    stack:["Simulink","ESP32","Modbus RTU"],
+    result:"Defects caught pre-deployment",
+    image:"https://picsum.photos/seed/gnlabs-proj-hil/700/480"
+  },
+  {
+    title:"Cold Chain Monitoring Rollout",
+    excerpt:"Battery-powered temperature loggers with store-and-forward buffering for sites where connectivity drops for hours.",
+    year:"2023", domain:"embedded",
+    stack:["ESP32","LoRaWAN","InfluxDB"],
+    result:"Zero data loss, 6h outage",
+    image:"https://picsum.photos/seed/gnlabs-proj-coldchain/700/480"
+  },
+  {
+    title:"OT/IT Gateway Hardening",
+    excerpt:"Rebuilt the boundary between a plant network and its cloud reporting stack after writes were silently dropping.",
+    year:"2022", domain:"software",
+    stack:["Python","MQTT","Docker","TLS"],
+    result:"Write reliability 94% &rarr; 99.98%",
+    image:"https://picsum.photos/seed/gnlabs-proj-gateway/700/480"
+  },
+  {
+    title:"Water Treatment Dosing Control",
+    excerpt:"Closed-loop chemical dosing with feed-forward compensation for inlet flow variation across a municipal treatment stage.",
+    year:"2022", domain:"automation",
+    stack:["CODESYS","PID","Modbus TCP"],
+    result:"Reagent use -18% at equal quality",
+    image:"https://picsum.photos/seed/gnlabs-proj-dosing/700/480"
+  },
+  {
+    title:"Legacy Panel Documentation Recovery",
+    excerpt:"Reverse-engineered an undocumented control panel into current drawings and a maintainable, commented program.",
+    year:"2021", domain:"automation",
+    stack:["Ladder","Structured Text","AutoCAD Electrical"],
+    result:"In-house team now self-sufficient",
+    image:"https://picsum.photos/seed/gnlabs-proj-legacy/700/480"
+  }
+];
+
+let activeDomain = "all";
+const chipBar = document.getElementById("chipBar");
+const featuredSlot = document.getElementById("featuredSlot");
+const projGrid = document.getElementById("projGrid");
+const emptyState = document.getElementById("emptyState");
+const resultCount = document.getElementById("resultCount");
+const resetFilters = document.getElementById("resetFilters");
+const arrowSvg = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+
+function esc(s){ return String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c])); }
+
+function featuredTemplate(p){
+  const d = p.featuredDetail;
+  return `<a href="${p.url || '#'}" class="featured-card">
+    <div class="fpic">
+      <img src="${esc(p.image)}" alt="">
+      <span class="fbadge">Featured</span>
+    </div>
+    <div class="fcontent">
+      <span class="ftopic">${d.meta}</span>
+      <h2>${esc(p.title)}</h2>
+      <p class="excerpt">${d.body}</p>
+      <div class="fstats">${d.stats.map(s => `<div><b>${s[0]}</b><small>${s[1]}</small></div>`).join("")}</div>
+      <div class="ftags">${p.stack.map(t => `<span class="tag">${esc(t)}</span>`).join("")}</div>
+      <span class="link-arrow">Read the case study ${arrowSvg}</span>
+    </div>
+  </a>`;
+}
+
+function cardTemplate(p){
+  return `<a href="${p.url || '#'}" class="proj-card">
+    <div class="pic">
+      <img src="${esc(p.image)}" alt="" loading="lazy">
+      <span class="topic-tag">${esc(DOMAIN_LABEL[p.domain] || p.domain)}</span>
+      <span class="year-tag">${esc(p.year)}</span>
+    </div>
+    <div class="body">
+      <h3>${esc(p.title)}</h3>
+      <p class="excerpt">${esc(p.excerpt)}</p>
+      <div class="stack">${p.stack.map(t => `<span>${esc(t)}</span>`).join("")}</div>
+      <div class="foot">
+        <div class="result"><b>Result</b>${p.result}</div>
+        <span class="cta">View ${arrowSvg}</span>
+      </div>
+    </div>
+  </a>`;
+}
+
+function render(){
+  const filtered = activeDomain === "all" ? projects : projects.filter(p => p.domain === activeDomain);
+  const showFeatured = activeDomain === "all";
+  let gridSource = filtered;
+
+  if (showFeatured) {
+    const featured = projects.find(p => p.featured);
+    featuredSlot.innerHTML = featured ? featuredTemplate(featured) : "";
+    gridSource = filtered.filter(p => p !== featured);
+  } else {
+    featuredSlot.innerHTML = "";
+  }
+
+  projGrid.innerHTML = gridSource.map(cardTemplate).join("");
+  emptyState.hidden = gridSource.length > 0;
+  resultCount.textContent = filtered.length === 1 ? "1 project" : `${filtered.length} projects`;
+}
+
+function renderChips(){
+  const counts = {};
+  projects.forEach(p => { counts[p.domain] = (counts[p.domain] || 0) + 1; });
+  chipBar.innerHTML =
+    `<button type="button" class="chip active" data-filter="all">All work <span class="count">${projects.length}</span></button>`
+    + DOMAINS.filter(d => counts[d.id]).map(d =>
+      `<button type="button" class="chip" data-filter="${d.id}">${esc(d.label)} <span class="count">${counts[d.id]}</span></button>`
+    ).join("");
+}
+
+function setActiveChip(filter){
+  chipBar.querySelectorAll(".chip").forEach(c => c.classList.toggle("active", c.dataset.filter === filter));
+}
+
+chipBar.addEventListener("click", e => {
+  const btn = e.target.closest("[data-filter]");
+  if (!btn) return;
+  activeDomain = btn.dataset.filter;
+  setActiveChip(activeDomain);
+  render();
+});
+
+resetFilters.addEventListener("click", () => {
+  activeDomain = "all";
+  setActiveChip("all");
+  render();
+});
+
+renderChips();
+render();
+
+/* ---- newsletter band ---- */
+document.getElementById("newsForm").addEventListener("submit", e => {
+  e.preventDefault();
+  const msg = document.getElementById("newsMsg");
+  msg.textContent = "Sending…";
+  setTimeout(() => { msg.textContent = "Thanks, you're subscribed."; e.target.reset(); }, 500);
+});
+
+/* ---- fade-ins ---- */
+const fadeObserver = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) { entry.target.classList.add("is-visible"); fadeObserver.unobserve(entry.target); }
+  });
+}, { threshold: 0.12 });
+document.querySelectorAll(".fade-in").forEach(el => fadeObserver.observe(el));
+</script>
+</body>
+</html>
